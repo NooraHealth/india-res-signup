@@ -1,0 +1,2 @@
+class NooraProgram < ApplicationRecord
+end

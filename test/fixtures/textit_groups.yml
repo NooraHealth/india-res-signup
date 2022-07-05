@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  program_id: 1
+  textit_id: MyString
+  condition_area_id: 1
+  exotel_number: MyString
+
+two:
+  name: MyString
+  program_id: 1
+  textit_id: MyString
+  condition_area_id: 1
+  exotel_number: MyString

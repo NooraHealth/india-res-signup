@@ -1,0 +1,2 @@
+class TextitGroup < ApplicationRecord
+end

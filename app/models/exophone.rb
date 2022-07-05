@@ -1,0 +1,2 @@
+class Exophone < ApplicationRecord
+end

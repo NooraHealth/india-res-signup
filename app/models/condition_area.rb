@@ -1,0 +1,2 @@
+class ConditionArea < ApplicationRecord
+end
