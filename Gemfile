@@ -38,7 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem "hashie", '4.1.0'
 gem "roo", "~> 2.8.0"
-
+gem "annotate"
 
 gem "faraday"
 gem "sidekiq"
@@ -51,6 +51,7 @@ gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
 gem "devise"
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

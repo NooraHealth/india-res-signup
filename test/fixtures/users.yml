@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  mobile_number: MyString
+  baby_date_of_birth: 2022-08-24 02:50:15
+  date_of_discharge: 2022-08-24 02:50:15
+  incoming_call_date: 2022-08-24 02:50:15
+  program_id: 1
+  condition_area_id: 1
+  language_preference_id: 1
+  language_selected: false
+  signed_up_to_whatsapp: false
+  signed_up_to_ivr: false
+  textit_uuid: MyString
+  whatsapp_id: MyString
+
+two:
+  name: MyString
+  mobile_number: MyString
+  baby_date_of_birth: 2022-08-24 02:50:15
+  date_of_discharge: 2022-08-24 02:50:15
+  incoming_call_date: 2022-08-24 02:50:15
+  program_id: 1
+  condition_area_id: 1
+  language_preference_id: 1
+  language_selected: false
+  signed_up_to_whatsapp: false
+  signed_up_to_ivr: false
+  textit_uuid: MyString
+  whatsapp_id: MyString
