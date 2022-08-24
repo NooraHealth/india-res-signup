@@ -2,7 +2,7 @@
 #
 # Table name: exophones
 #
-#  id                :integer          not null, primary key
+#  id                :bigint           not null, primary key
 #  virtual_number    :string
 #  language_id       :integer
 #  condition_area_id :integer

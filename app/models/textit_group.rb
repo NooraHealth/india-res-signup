@@ -2,7 +2,7 @@
 #
 # Table name: textit_groups
 #
-#  id                :integer          not null, primary key
+#  id                :bigint           not null, primary key
 #  name              :string
 #  program_id        :integer
 #  textit_id         :string
@@ -12,4 +12,11 @@
 #  updated_at        :datetime         not null
 #
 class TextitGroup < ApplicationRecord
+
+  validates :name, presence: true
+  validates :textit_id, presence: true
+
+  belongs_to :condition_area, optional: true
+  belongs_to :program, class_name: "NooraProgram", optional: true
+
 end

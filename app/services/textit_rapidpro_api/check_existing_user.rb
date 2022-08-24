@@ -73,7 +73,7 @@ module TextitRapidproApi
         # if urns.first == "tel:#{number}" || urns.last ==
           # log that the user was found
           logger&.info("Found URNs: #{urns}")
-          logger&.info("User successfully found on TextIt with number #{self.user.mobile_number}")
+          logger&.info("User successfully found on TextIt with number #{self.user.mobile_number} and has UUID: #{uuid}")
           self.user.update(textit_uuid: uuid)
           self.user_found = true
         end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_23_212537) do
+ActiveRecord::Schema.define(version: 2022_08_24_200818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2022_08_23_212537) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "textit_group_user_mappings", force: :cascade do |t|
+    t.integer "textit_group_id"
+    t.integer "user_id"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["textit_group_id"], name: "index_textit_group_user_mappings_on_textit_group_id"
+    t.index ["user_id"], name: "index_textit_group_user_mappings_on_user_id"
+  end
+
   create_table "textit_groups", force: :cascade do |t|
     t.string "name"
     t.integer "program_id"
@@ -66,9 +76,9 @@ ActiveRecord::Schema.define(version: 2022_08_23_212537) do
     t.integer "program_id"
     t.integer "condition_area_id"
     t.integer "language_preference_id"
-    t.boolean "language_selected"
-    t.boolean "signed_up_to_whatsapp"
-    t.boolean "signed_up_to_ivr"
+    t.boolean "language_selected", default: false
+    t.boolean "signed_up_to_whatsapp", default: false
+    t.boolean "signed_up_to_ivr", default: false
     t.string "textit_uuid"
     t.string "whatsapp_id"
     t.datetime "created_at", null: false

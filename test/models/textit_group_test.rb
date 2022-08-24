@@ -2,7 +2,7 @@
 #
 # Table name: textit_groups
 #
-#  id                :integer          not null, primary key
+#  id                :bigint           not null, primary key
 #  name              :string
 #  program_id        :integer
 #  textit_id         :string
