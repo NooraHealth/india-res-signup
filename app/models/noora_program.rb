@@ -16,7 +16,7 @@ class NooraProgram < ApplicationRecord
       :covid_ccp_ka,
       :covid_ccp_pb,
       :unicef_sncu,
-      :aarogya_seva,
+      :mch,
       :covid_ccp_mh,
       :covid_ccp_bangladesh,
       :whatsapp_bangladesh,

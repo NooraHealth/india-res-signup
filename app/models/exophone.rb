@@ -12,6 +12,8 @@
 #
 class Exophone < ApplicationRecord
 
+  validates :virtual_number, uniqueness: true
+
   belongs_to :language, optional: true
   belongs_to :condition_area, optional: true
   belongs_to :program, class_name: "NooraProgram", optional: true

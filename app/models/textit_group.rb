@@ -10,6 +10,7 @@
 #  exotel_number     :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  language_id       :integer
 #
 class TextitGroup < ApplicationRecord
 
@@ -18,5 +19,6 @@ class TextitGroup < ApplicationRecord
 
   belongs_to :condition_area, optional: true
   belongs_to :program, class_name: "NooraProgram", optional: true
+  belongs_to :language, optional: true
 
 end

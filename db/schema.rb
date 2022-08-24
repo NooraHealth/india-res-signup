@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_24_200818) do
+ActiveRecord::Schema.define(version: 2022_08_24_203509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2022_08_24_200818) do
     t.string "exotel_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "language_id"
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
   end
