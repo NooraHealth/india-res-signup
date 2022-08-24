@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   
   get 'res/district_hospitals/whatsapp/signup', to: 'whatsapp#dh_signup'
 
+  post 'res/district_hospitals/acknowledge_condition_area_change', to: 'whatsapp#update_condition_area'
+
 end

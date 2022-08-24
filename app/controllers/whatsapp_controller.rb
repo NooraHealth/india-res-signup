@@ -12,6 +12,15 @@ class WhatsappController < ApplicationController
     render 'dh_signup'
   end
 
+
+  # this action will update the condition area of the user in our database
+  # corresponding to actions they take on Textit
+  # eg. Pressing 2 for Pre-Cardiac surgery in the Cardiac Line
+  # eg. Pressing 1 for Inpatient surgery in Inpatient line
+  def update_condition_area
+
+  end
+
   private
 
   def exotel_params
