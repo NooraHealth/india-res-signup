@@ -21,7 +21,7 @@ module Res
       end
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/aarogya_seva_text_it_api.log")
+        self.message_logger = Logger.new("#{Rails.root}/log/district_hospitals_text_it_api.log")
 
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
@@ -33,12 +33,12 @@ module Res
         # extract details of the user from parsed exotel parameters
         retrieve_user
         if self.res_user.blank?
+          # if user doesn't exist, create the user in DB
           create_res_user
+        else
+          # update user's preferences - i.e. their language of choice, condition area etc. based on the latest call
+          update_user_parameters
         end
-        return self if self.errors.present?
-
-        # update user's preferences - i.e. their language of choice, condition area etc. based on the latest call
-        update_user_parameters
         return self if self.errors.present?
 
         # retrieve the relevant TextIt group to add the user to
