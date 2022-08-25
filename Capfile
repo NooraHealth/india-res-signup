@@ -31,7 +31,6 @@ require "capistrano/rbenv"
 require "capistrano/bundler"
 require "capistrano/rails/migrations"
 require 'capistrano/puma'
-require 'rollbar/capistrano3'
 require 'capistrano/sidekiq'
 
 install_plugin Capistrano::Puma  # Default puma tasks
