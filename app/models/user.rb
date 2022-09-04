@@ -18,11 +18,14 @@
 #  whatsapp_id            :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  hospital_id            :integer
 #
 class User < ApplicationRecord
 
   belongs_to :program, class_name: "NooraProgram"
   belongs_to :condition_area
   belongs_to :language_preference, class_name: "Language"
+  belongs_to :hospital, optional: true
+  belongs_to :state, optional: true
 
 end
