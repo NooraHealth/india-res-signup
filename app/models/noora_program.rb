@@ -19,11 +19,11 @@ class NooraProgram < ApplicationRecord
       :mch,
       :covid_ccp_mh,
       :covid_ccp_bangladesh,
-      :whatsapp_bangladesh,
       :nishtha_tb,
       :cardiology,
       :inpatient,
-      :rch
+      :rch,
+      :sdh
     ]
   end
 end

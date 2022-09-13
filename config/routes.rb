@@ -13,6 +13,26 @@ Rails.application.routes.draw do
   
   get 'res/district_hospitals/whatsapp/signup', to: 'whatsapp#dh_signup'
 
-  post 'res/district_hospitals/acknowledge_condition_area_change', to: 'whatsapp#update_condition_area'
+  post 'res/district_hospitals/update_condition_area', to: 'whatsapp#update_condition_area'
+
+
+  ####################################################### SDH Endpoints #######################################################
+  # modality selection - endpoint that specifies the modalities of the user's intervention
+  get 'sdh/modality_selection', to: 'sdh#modality_selection'
+
+  # language selection - endpoint that specifies the language selected by the user
+  get 'sdh/language_selection', to: 'sdh#language_selection'
+
+  # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
+  get 'sdh/condition_area_selection', to: 'sdh#condition_area_selection'
+
+  # pin code input - endpoint that specifies the pin code of the user entered in either the IVR or chat
+  get 'sdh/pin_code_input', to: 'sdh#pin_code_input'
+
+
+  get 'sdh/days_to_delivery_input', to: 'sdh#days_to_delivery_input'
+  get 'sdh/confirm_whatsapp_number', to: 'sdh#confirm_whatsapp_number'
+  get 'sdh/change_whatsapp_number', to: 'sdh#change_whatsapp_number'
+  get 'sdh/outro_message', to: 'sdh#outro_message'
 
 end

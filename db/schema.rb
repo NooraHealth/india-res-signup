@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_04_092118) do
+ActiveRecord::Schema.define(version: 2022_09_13_220447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2022_09_04_092118) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "iso_code"
   end
 
   create_table "noora_programs", force: :cascade do |t|
@@ -99,6 +100,7 @@ ActiveRecord::Schema.define(version: 2022_09_04_092118) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "hospital_id"
+    t.string "whatsapp_mobile_number"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["program_id"], name: "index_users_on_program_id"

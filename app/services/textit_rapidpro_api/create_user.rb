@@ -48,7 +48,7 @@ module TextitRapidproApi
         "uuid" => self.user.textit_uuid,
         "groups" => [group_id],
         "language" => language_iso_code,
-        "urns" => %W[tel:#{user.international_mobile_number} whatsapp:#{user.international_mobile_number[1..user.international_mobile_number.length]}],
+        "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
         "fields" => {
           "date_joined" => (user_params[:signup_time] || DateTime.now)
         }
@@ -60,22 +60,19 @@ module TextitRapidproApi
 
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
-        self.logger&.info("SUCCESSFUL creation of User on TEXTIT with number #{self.user.mobile_number}")
-        self.user.update(signed_up_to_whatsapp: true)
+        self.logger&.info("SUCCESSFUL creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number}")
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
-        self.logger&.info("FAILED creation of User on TEXTIT with number #{self.user.mobile_number} with reason: #{parsed_response}")
-        self.errors << "FAILED creation of User on TEXTIT with number #{self.user.mobile_number} with reason: #{parsed_response}"
+        self.logger&.info("FAILED creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response}")
+        self.errors << "FAILED creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response}"
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
-        self.logger&.info("ERROR on API request to TEXTIT for user with number #{self.user.mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}")
-        self.errors << "ERROR on API request to TEXTIT for user with number #{self.user.mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
+        self.logger&.info("ERROR on API request to TEXTIT for user with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}")
+        self.errors << "ERROR on API request to TEXTIT for user with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
       end
 
       self.logger&.info("\n----------------------\n")
     end
-
-
 
   end
 

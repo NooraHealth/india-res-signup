@@ -19,6 +19,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  hospital_id            :integer
+#  whatsapp_mobile_number :string
 #
 
 one:
