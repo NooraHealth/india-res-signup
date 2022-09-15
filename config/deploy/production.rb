@@ -7,7 +7,14 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
+server 'intranet.noorahealth.org', user: 'sreeramramasubramanian', roles: %w{web app db}, port: 22
 
+set :stage, 'staging'
+set :use_sudo, false
+set :rbenv_type, :user
+set :rbenv_ruby, '2.7.2' # Edit this if you are using MRI Ruby
+
+set :sidekiq_roles, :app
 
 # role-based syntax
 # ==================
