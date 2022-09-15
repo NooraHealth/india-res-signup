@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_13_220447) do
+ActiveRecord::Schema.define(version: 2022_09_15_073507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,10 +101,18 @@ ActiveRecord::Schema.define(version: 2022_09_13_220447) do
     t.datetime "updated_at", null: false
     t.integer "hospital_id"
     t.string "whatsapp_mobile_number"
+    t.integer "state_id"
+    t.bigint "states_id"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["program_id"], name: "index_users_on_program_id"
+    t.index ["states_id"], name: "index_users_on_states_id"
   end
 
   add_foreign_key "hospitals", "states"
+  add_foreign_key "users", "condition_areas"
+  add_foreign_key "users", "hospitals"
+  add_foreign_key "users", "languages", column: "language_preference_id"
+  add_foreign_key "users", "noora_programs", column: "program_id"
+  add_foreign_key "users", "states"
 end
