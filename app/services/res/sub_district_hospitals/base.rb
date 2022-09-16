@@ -2,7 +2,10 @@ module Res
   module SubDistrictHospitals
     class Base < ApplicationService
 
-      def initialize
+      attr_accessor :logger, :errors
+
+      def initialize(logger)
+        self.logger = logger
         self.errors = []
       end
     end

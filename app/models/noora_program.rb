@@ -23,7 +23,8 @@ class NooraProgram < ApplicationRecord
       :cardiology,
       :inpatient,
       :rch,
-      :sdh
+      :sdh,
+      :mohalla_clinic
     ]
   end
 end

@@ -7,8 +7,8 @@ module Res
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :condition_area_id
 
-      def initialize(exotel_params)
-        super()
+      def initialize(logger, exotel_params)
+        super(logger)
         self.exotel_params = exotel_params
       end
 

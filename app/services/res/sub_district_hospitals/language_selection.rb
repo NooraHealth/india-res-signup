@@ -6,14 +6,13 @@ module Res
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id
 
-      def initialize(exotel_params)
-        super()
+      def initialize(logger, exotel_params)
+        super(logger)
         self.exotel_params = exotel_params
       end
 
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/sub_district_hospitals_language_selection.log")
 
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)

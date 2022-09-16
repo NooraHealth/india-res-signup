@@ -1,4 +1,5 @@
 # this operation confirms a user's mobile_number as their official WhatsApp-containing number,and then calls the WaSignup operation to sign them up
+# success and errors will be logged in sdh_whatsapp_number_confirmation.log
 
 module Res
   module SubDistrictHospitals
@@ -6,13 +7,12 @@ module Res
 
       attr_accessor :exotel_params, :res_user, :parsed_exotel_params
 
-      def initialize(exotel_params)
-        super()
+      def initialize(logger, exotel_params)
+        super(logger)
         self.exotel_params = exotel_params
       end
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/sub_district_hospitals_confirm_whatsapp_number.log")
 
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
