@@ -19,6 +19,7 @@ module Res
 
         # extract the modality stored for the user
         self.modality = self.exotel_params[:modality]
+        self.logger.info("Modality chosen by user: #{self.modality}")
 
         # check if the user already exists
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
@@ -31,6 +32,7 @@ module Res
                                       signed_up_to_ivr: (modality == "ivr" || modality == "all"))
             self.errors = self.res_user.errors.full_messages
           end
+          self.logger.info("User found with mobile number: #{self.res_user.mobile_number}")
         end
 
         self

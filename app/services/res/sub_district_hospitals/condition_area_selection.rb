@@ -20,6 +20,7 @@ module Res
 
         # extract condition area of the user from params
         self.condition_area_id = ConditionArea.id_for(self.exotel_params[:condition_area].to_s)
+        self.logger.info("Condition area chosen by user: #{ConditionArea.find(self.condition_area_id).name}")
 
         # check if the user already exists
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]

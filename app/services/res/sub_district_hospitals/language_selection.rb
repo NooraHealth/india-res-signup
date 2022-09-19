@@ -19,6 +19,7 @@ module Res
 
         # extract the language preference of the user
         self.language_id = Language.id_for(self.exotel_params[:language].to_s)
+        self.logger.info("Language selected is: #{Language.find(self.language_id).name}")
 
         # extract user from DB
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
@@ -32,8 +33,10 @@ module Res
           unless self.res_user.save
             self.errors = self.res_user.errors.full_messages
           end
+          self.logger.info("User created in DB with ID: #{self.res_user.id}")
         else
           self.res_user.update(language_preference_id: self.language_id)
+          self.logger.info("User found with mobile number: #{self.res_user.mobile_number}")
         end
 
         self

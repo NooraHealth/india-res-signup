@@ -42,6 +42,7 @@ module Res
 
         # sign the user up for WA based schedules if they have signed up
         if self.res_user.signed_up_to_whatsapp
+          self.logger.info("User satisfies all conditions for WA onboarding")
           op = Res::SubDistrictHospitals::WaSignup.(self.logger, self.exotel_params)
           if op.errors.present?
             self.errors = op.errors
