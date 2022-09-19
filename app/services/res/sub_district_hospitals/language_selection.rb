@@ -15,7 +15,7 @@ module Res
       def call
 
         # parse exotel params to get a simple hash with details like
-        self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # extract the language preference of the user
         self.language_id = Language.id_for(self.exotel_params[:language].to_s)

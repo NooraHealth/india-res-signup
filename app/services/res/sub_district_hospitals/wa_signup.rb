@@ -9,14 +9,16 @@ module Res
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user,
                     :textit_group
 
-      def initialize(exotel_params)
-        super()
+      def initialize(logger, exotel_params)
+        super(logger)
         self.exotel_params = exotel_params
       end
 
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/sub_district_hospitals_whatsapp_registration.log")
+
+        # parse exotel params to get a simple hash with details like
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # retrieve user from the database
         retrieve_user
@@ -46,9 +48,9 @@ module Res
       private
 
       def retrieve_user
-        self.res_user = User.find_by(mobile_number: self.parsed_details[:user_mobile])
+        self.res_user = User.find_by(mobile_number: self.parsed_exotel_params[:user_mobile])
         if self.res_user.present?
-          self.message_logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.exotel_user.mobile_number}")
+          self.logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.res_user.mobile_number}")
         end
       end
 
@@ -67,7 +69,7 @@ module Res
 
       # checks if a user is present on TextIt using their APIs
       def check_user_on_textit
-        op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.message_logger)
+        op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.logger)
         op.user_found
       end
 
@@ -77,10 +79,10 @@ module Res
       def create_user_with_relevant_group
 
         # Also add a mapping between user and textit groups so that we can keep track of it here
-        self.exotel_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
+        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
 
         params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.message_logger
+        params[:logger] = self.logger
         # below line interacts with the
         op = TextitRapidproApi::CreateUser.(params)
       end
@@ -91,12 +93,12 @@ module Res
       def add_user_to_existing_group
         # Also add a mapping between user and textit groups so that we can keep track of it here
         # In this case, there will be a trail of all the textit groups that the user was a part of
-        self.exotel_user.textit_group_exotel_user_mappings.update_all(active: false)
-        self.exotel_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
+        # self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
+        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
 
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.message_logger
+        params[:logger] = self.logger
         op = TextitRapidproApi::UpdateGroup.(params)
       end
 

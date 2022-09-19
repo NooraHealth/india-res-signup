@@ -14,10 +14,9 @@ module Res
 
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/sub_district_hospitals_condition_area_selection.log")
 
         # parse exotel params to get a simple hash with details like
-        self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # extract condition area of the user from params
         self.condition_area_id = ConditionArea.id_for(self.exotel_params[:condition_area].to_s)

@@ -38,7 +38,7 @@ module TextitRapidproApi
     end
 
     def retrieve_user_from_db
-      self.user = ExotelUser.find_by(id: self.user_params[:id])
+      self.user = User.find_by(id: self.user_params[:id])
     end
 
     def body_params

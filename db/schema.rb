@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_16_085054) do
+ActiveRecord::Schema.define(version: 2022_09_19_075554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,15 @@ ActiveRecord::Schema.define(version: 2022_09_16_085054) do
     t.index ["states_id"], name: "index_users_on_states_id"
   end
 
+  add_foreign_key "exophones", "condition_areas"
+  add_foreign_key "exophones", "languages"
+  add_foreign_key "exophones", "noora_programs", column: "program_id"
   add_foreign_key "hospitals", "states"
+  add_foreign_key "textit_group_user_mappings", "textit_groups"
+  add_foreign_key "textit_group_user_mappings", "users"
+  add_foreign_key "textit_groups", "condition_areas"
+  add_foreign_key "textit_groups", "languages"
+  add_foreign_key "textit_groups", "noora_programs", column: "program_id"
   add_foreign_key "users", "condition_areas"
   add_foreign_key "users", "hospitals"
   add_foreign_key "users", "languages", column: "language_preference_id"

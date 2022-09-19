@@ -22,9 +22,10 @@ module TextitRapidproApi
 
     def setup_connection
       # reading tokens and endpoints from config file
-      configs = YAML.load_file('textit_config.yml')
+      configs = YAML.load_file("#{Rails.root}/config/textit_config.yml").with_indifferent_access
 
       base_url = configs[:base_url]
+      debugger
       self.token = configs[:token]
 
       logger = Logger.new $stderr

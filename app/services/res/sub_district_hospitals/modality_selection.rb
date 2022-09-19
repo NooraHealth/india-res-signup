@@ -15,7 +15,7 @@ module Res
       def call
 
         # parse exotel params to get a simple hash with details like
-        self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # extract the modality stored for the user
         self.modality = self.exotel_params[:modality]

@@ -15,7 +15,7 @@ module Res
       def call
 
         # parse exotel params to get a simple hash with details like
-        self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
 
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
@@ -24,15 +24,32 @@ module Res
           return self
         end
 
+        # validate if all attributes are present for the user to be onboarded on WA
+        if self.res_user.condition_area_id.blank?
+          self.errors = "User has not chosen condition area"
+          return self
+        end
+
+        if self.res_user.program_id.blank?
+          self.errors = "User has is not aprt of any program"
+          return self
+        end
+
+        if self.res_user.language_preference_id.blank?
+          self.errors = "User has not chosen language preference"
+          return self
+        end
+
         # sign the user up for WA based schedules if they have signed up
         if self.res_user.signed_up_to_whatsapp
-          op = Res::SubDistrictHospitals::WaSignup.(self.exotel_params)
+          op = Res::SubDistrictHospitals::WaSignup.(self.logger, self.exotel_params)
           if op.errors.present?
             self.errors = op.errors
           end
         end
-      end
 
+        self
+      end
     end
   end
 end

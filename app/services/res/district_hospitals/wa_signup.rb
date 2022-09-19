@@ -24,7 +24,7 @@ module Res
         self.message_logger = Logger.new("#{Rails.root}/log/district_hospitals_text_it_api.log")
 
         # parse exotel params to get a simple hash with details like
-        self.parsed_exotel_params = ExotelApi::ParseExotelParams.(self.exotel_params)
+        self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # retrieve the exophone that the user has called
         retrieve_exophone
