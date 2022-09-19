@@ -18,8 +18,9 @@ module Res
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # extract the language preference of the user
+        language_name =
         self.language_id = Language.id_for(self.exotel_params[:language].to_s)
-        self.logger.info("Language selected is: #{Language.find(self.language_id).name}")
+        self.logger.info("Language selected is: #{self.exotel_params[:language].to_s}")
 
         # extract user from DB
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
