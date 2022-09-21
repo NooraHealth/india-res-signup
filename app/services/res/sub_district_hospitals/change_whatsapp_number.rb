@@ -24,6 +24,10 @@ module Res
         # extract the number entered by the user into a separate variable
         self.whatsapp_number = self.exotel_params["digits"].gsub("\"", "")
 
+        # format the number based on the way in which they entered it
+        self.whatsapp_number = format_whatsapp_number(self.whatsapp_number)
+        return self if self.errors.present?
+
         # find the user first, throw error if not
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
         if self.res_user.blank?
@@ -58,6 +62,18 @@ module Res
         end
 
         self
+      end
+
+
+      private
+
+      def format_whatsapp_number(number)
+        if number.length == 10
+          "0#{number}"
+        elsif number.length < 10
+          self.errors = "Number is not of sufficient length"
+          return number
+        end
       end
     end
   end

@@ -77,7 +77,7 @@ module Res
       # this method creates a user on TextIt with a given mobile number, language preference and
       # group ID that the user needs to be added to
       def create_user_with_relevant_group
-
+        params = {}
         # Also add a mapping between user and textit groups so that we can keep track of it here
         # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
 
