@@ -22,7 +22,7 @@ module Res
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
         # extract the number entered by the user into a separate variable
-        self.whatsapp_number = self.exotel_params["digits"]
+        self.whatsapp_number = self.exotel_params["digits"].gsub("\"", "")
 
         # find the user first, throw error if not
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
