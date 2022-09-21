@@ -11,18 +11,17 @@ module Res
 
     class WaSignup < Res::DistrictHospitals::Base
 
-      attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :logger,
+      attr_accessor :exotel_params, :parsed_exotel_params, :res_user,
                     :exophone, :textit_group, :language_id, :program_id, :condition_area_id,
                     :errors
 
       def initialize(logger, params)
         super(logger)
-        self.exotel_params = exotel_params
+        self.exotel_params = params
         self.errors = []
       end
 
       def call
-        self.logger = Logger.new("#{Rails.root}/log/district_hospitals_text_it_api.log")
 
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
@@ -58,88 +57,92 @@ module Res
         end
 
       end
-    end
 
-    protected
+      protected
 
-    # this method creates a user that belongs to the RES service based on the parameters that were
-    # sent to the user
-    def create_res_user
-      self.res_user = User.new(
-        language_id: self.exophone.language_id,
-        condition_area_id: self.exophone.condition_area_id,
-        program_id: self.exophone.program_id,
-        incoming_call_date: DateTime.now,
-        mobile_number: self.parsed_exotel_params[:mobile_number]
-      )
-      unless self.res_user.save
-        self.errors << self.res_user.errors.full_messages
+      # this method creates a user that belongs to the RES service based on the parameters that were
+      # sent to the user
+      def create_res_user
+        self.res_user = User.new(
+          language_preference_id: self.exophone.language_id,
+          condition_area_id: self.exophone.condition_area_id,
+          program_id: self.exophone.program_id,
+          incoming_call_date: DateTime.now,
+          mobile_number: self.parsed_exotel_params[:user_mobile]
+        )
+        unless self.res_user.save
+          self.errors << self.res_user.errors.full_messages
+        end
       end
-    end
 
-    # this function updates the user's preferences based on the signup instruction
-    def update_user_parameters
-      unless self.res_user.update(
-            language_id: self.exophone.language_id,
-            condition_area_id: self.exophone.condition_area_id,
-            program_id: self.exophone.program_id
-          )
-        self.errors << self.res_user.errors.full_messages
+      # this function updates the user's preferences based on the signup instruction
+      def update_user_parameters
+        unless self.res_user.update(
+          language_preference_id: self.exophone.language_id,
+          condition_area_id: self.exophone.condition_area_id,
+          program_id: self.exophone.program_id
+        )
+          self.errors << self.res_user.errors.full_messages
+        end
       end
-    end
 
-    def add_user_to_existing_group
-      # add a mapping between user and textit groups so that we can keep track of it here
-      # In this case, there will be a trail of all the textit groups that the user was a part of
-      # self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
-      # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
+      def add_user_to_existing_group
+        # add a mapping between user and textit groups so that we can keep track of it here
+        # In this case, there will be a trail of all the textit groups that the user was a part of
+        # self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
+        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
 
-      # adding user to the relevant group on Textit using the UpdateGroup class
-      params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
-      params[:textit_group_id] = self.textit_group&.textit_id
-      params[:logger] = self.logger
-      op = TextitRapidproApi::UpdateGroup.(params)
-    end
-
-    def create_user_with_relevant_group
-      # create user's TextitGroupMapping to reflect their latest preference
-      # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
-
-      # create a user on TextIt with the right group parameters
-      params = {id: self.exotel_user.id}
-      params[:textit_group_id] = self.textit_group&.textit_id
-      params[:logger] = self.logger
-      op = TextitRapidproApi::CreateUser.(params)
-    end
-
-
-    def retrieve_user
-      self.res_user = User.find_by(mobile_number: self.parsed_details[:user_mobile])
-      if self.res_user.present?
-        self.logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.exotel_user.mobile_number}")
+        # adding user to the relevant group on Textit using the UpdateGroup class
+        params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
+        params[:textit_group_id] = self.textit_group&.textit_id
+        params[:logger] = self.logger
+        op = TextitRapidproApi::UpdateGroup.(params)
       end
-    end
 
-    def retrieve_exophone
-      self.exophone = Exophone.find_by(virtual_number: self.parsed_exotel_params[:exophone])
-      if self.exophone.blank?
-        self.logger.info("Couldn't find exophone: #{self.parsed_exotel_params[:exophone]} in the database")
-        self.errors << "Exophone not found in database"
+      def create_user_with_relevant_group
+        # create user's TextitGroupMapping to reflect their latest preference
+        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
+
+        # create a user on TextIt with the right group parameters
+        params = {id: self.res_user.id}
+        params[:textit_group_id] = self.textit_group&.textit_id
+        params[:logger] = self.logger
+        op = TextitRapidproApi::CreateUser.(params)
       end
-    end
 
-    def retrieve_textit_group
-      condition_area_id = self.exophone.condition_area_id
-      program_id = self.exophone.program_id
-      language_id = self.exophone.language_id
-      self.textit_group = TextitGroup.where(condition_area_id: condition_area_id,
-                                            program_id: program_id,
-                                            language_id: language_id).first
-      if self.textit_group.blank?
-        self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"
+
+      def retrieve_user
+        self.res_user = User.find_by(mobile_number: self.parsed_exotel_params[:user_mobile])
+        if self.res_user.present?
+          self.logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.res_user.mobile_number}")
+        end
       end
+
+      def retrieve_exophone
+        self.exophone = Exophone.find_by(virtual_number: self.parsed_exotel_params[:exophone])
+        if self.exophone.blank?
+          self.logger.info("Couldn't find exophone: #{self.parsed_exotel_params[:exophone]} in the database")
+          self.errors << "Exophone not found in database"
+        end
+      end
+
+      def retrieve_textit_group
+        condition_area_id = self.exophone.condition_area_id
+        program_id = self.exophone.program_id
+        language_id = self.exophone.language_id
+        self.textit_group = TextitGroup.where(condition_area_id: condition_area_id,
+                                              program_id: program_id,
+                                              language_id: language_id).first
+        if self.textit_group.blank?
+          self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"
+        end
+      end
+
+      def check_user_on_textit
+        op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.logger)
+        op.user_found
+      end
+
     end
-
-
   end
 end

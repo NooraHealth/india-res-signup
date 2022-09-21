@@ -63,7 +63,8 @@ module ExotelWebhook
         user_mobile: user_mobile,
         current_time: current_time,
         language_id: language_id,
-        call_to: call_to
+        call_to: call_to,
+        exophone: call_to
       }
     end
 
