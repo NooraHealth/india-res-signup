@@ -71,7 +71,6 @@ module TextitRapidproApi
         self.errors << "ERROR on API request to TEXTIT for user with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
       end
 
-      self.logger&.info("\n----------------------\n")
     end
 
   end

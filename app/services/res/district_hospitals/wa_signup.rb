@@ -9,19 +9,20 @@
 module Res
   module DistrictHospitals
 
-    class WaSignup < ApplicationService
+    class WaSignup < Res::DistrictHospitals::Base
 
-      attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :message_logger,
+      attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :logger,
                     :exophone, :textit_group, :language_id, :program_id, :condition_area_id,
                     :errors
 
-      def initialize(exotel_params)
+      def initialize(logger, params)
+        super(logger)
         self.exotel_params = exotel_params
         self.errors = []
       end
 
       def call
-        self.message_logger = Logger.new("#{Rails.root}/log/district_hospitals_text_it_api.log")
+        self.logger = Logger.new("#{Rails.root}/log/district_hospitals_text_it_api.log")
 
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
@@ -90,24 +91,24 @@ module Res
     def add_user_to_existing_group
       # add a mapping between user and textit groups so that we can keep track of it here
       # In this case, there will be a trail of all the textit groups that the user was a part of
-      self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
-      self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
+      # self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
+      # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
 
       # adding user to the relevant group on Textit using the UpdateGroup class
       params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
       params[:textit_group_id] = self.textit_group&.textit_id
-      params[:logger] = self.message_logger
+      params[:logger] = self.logger
       op = TextitRapidproApi::UpdateGroup.(params)
     end
 
     def create_user_with_relevant_group
       # create user's TextitGroupMapping to reflect their latest preference
-      self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
+      # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: self.textit_group&.id, active: true)
 
       # create a user on TextIt with the right group parameters
       params = {id: self.exotel_user.id}
       params[:textit_group_id] = self.textit_group&.textit_id
-      params[:logger] = self.message_logger
+      params[:logger] = self.logger
       op = TextitRapidproApi::CreateUser.(params)
     end
 
@@ -115,14 +116,14 @@ module Res
     def retrieve_user
       self.res_user = User.find_by(mobile_number: self.parsed_details[:user_mobile])
       if self.res_user.present?
-        self.message_logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.exotel_user.mobile_number}")
+        self.logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.exotel_user.mobile_number}")
       end
     end
 
     def retrieve_exophone
       self.exophone = Exophone.find_by(virtual_number: self.parsed_exotel_params[:exophone])
       if self.exophone.blank?
-        self.message_logger.info("Couldn't find exophone: #{self.parsed_exotel_params[:exophone]} in the database")
+        self.logger.info("Couldn't find exophone: #{self.parsed_exotel_params[:exophone]} in the database")
         self.errors << "Exophone not found in database"
       end
     end

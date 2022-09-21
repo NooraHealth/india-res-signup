@@ -11,8 +11,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
-  get 'res/district_hospitals/whatsapp/signup', to: 'whatsapp#dh_signup'
+  get 'res/district_hospitals/whatsapp/signup', to: 'dh#exotel_wa_signup'
 
+  # this endpoint updates the condition area of a user based on parameters
   post 'res/district_hospitals/update_condition_area', to: 'whatsapp#update_condition_area'
 
 
@@ -33,6 +34,8 @@ Rails.application.routes.draw do
   get 'sdh/days_to_delivery_input', to: 'sdh#days_to_delivery_input'
   get 'sdh/confirm_whatsapp_number', to: 'sdh#confirm_whatsapp_number'
   get 'sdh/change_whatsapp_number', to: 'sdh#change_whatsapp_number'
+
+  # endpoint that plays the right outro message based on the user's modality selection
   get 'sdh/outro_message', to: 'sdh#outro_message'
 
 end
