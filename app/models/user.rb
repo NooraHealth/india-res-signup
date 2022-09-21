@@ -35,11 +35,7 @@ class User < ApplicationRecord
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
-    if super()
-      "0#{super()}"
-    else
-      self.mobile_number
-    end
+    super() || self.mobile_number
   end
 
   def international_whatsapp_number
