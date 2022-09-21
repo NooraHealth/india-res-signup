@@ -50,7 +50,7 @@ module Res
 
         # call operation to signup user to WA using TextIt APIs
         if self.res_user.signed_up_to_whatsapp
-          self.res_user.update(whatsapp_number: self.whatsapp_number)
+          self.res_user.update(whatsapp_mobile_number: self.whatsapp_number)
           op = Res::SubDistrictHospitals::WaSignup.(self.logger, self.exotel_params)
           if op.errors.present?
             self.errors = op.errors
