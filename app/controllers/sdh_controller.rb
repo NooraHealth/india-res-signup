@@ -1,5 +1,7 @@
 class SdhController < ApplicationController
 
+  attr_accessor :res_user
+
   def modality_selection
     logger = Logger.new("#{Rails.root}/log/sdh_modality_selection.log")
     logger.info("-------------------------------------")
@@ -70,9 +72,54 @@ class SdhController < ApplicationController
   end
 
 
+  def check_language_selection_complete
+    self.res_user = retrieve_user_from_params
+    if self.res_user&.program_id == NooraProgram.id_for(:sdh) && self.res_user.language_id.present?
+      render json: {select: 1}
+    else
+      render json: {select: 0}
+    end
+  end
+
+
+  def check_condition_area_selection_complete
+    self.res_user = retrieve_user_from_params
+    if self.res_user&.program_id == NooraProgram.id_for(:sdh) && self.res_user.condition_area_id.present?
+      render json: {select: 1}
+    else
+      render json: {select: 0}
+    end
+  end
+
+
+  def check_whatsapp_number_confirmation_complete
+    self.res_user = retrieve_user_from_params
+    if self.res_user&.program_id == NooraProgram.id_for(:sdh) && (self.res_user.whatsapp_number_confirmed && !self.res_user.signed_up_to_whatsapp)
+      render json: {select: 1}
+    else
+      render json: {select: 0}
+    end
+  end
+
+  def check_modality_selection_complete
+    self.res_user = retrieve_user_from_params
+    if self.res_user&.program_id == NooraProgram.id_for(:sdh) && (self.res_user.signed_up_to_ivr || self.res_user.signed_up_to_whatsapp)
+      render json: {select: 1}
+    else
+      render json: {select: 0}
+    end
+  end
+
+  
+
   private
 
   def sdh_params
     params.permit!
+  end
+
+  def retrieve_user_from_params
+    parsed_exotel_params = ExotelWebhook::ParseExotelParams.(sdh_params)
+    res_user = User.find_by(mobile_number: parsed_exotel_params[:user_mobile])
   end
 end

@@ -27,4 +27,5 @@ class NooraProgram < ApplicationRecord
       :mohalla_clinic
     ]
   end
+
 end

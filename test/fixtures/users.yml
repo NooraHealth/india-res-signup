@@ -2,26 +2,27 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
-#  name                   :string
-#  mobile_number          :string
-#  baby_date_of_birth     :datetime
-#  date_of_discharge      :datetime
-#  incoming_call_date     :datetime
-#  program_id             :integer
-#  condition_area_id      :integer
-#  language_preference_id :integer
-#  language_selected      :boolean          default(FALSE)
-#  signed_up_to_whatsapp  :boolean          default(FALSE)
-#  signed_up_to_ivr       :boolean          default(FALSE)
-#  textit_uuid            :string
-#  whatsapp_id            :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  hospital_id            :integer
-#  whatsapp_mobile_number :string
-#  state_id               :integer
-#  states_id              :bigint
+#  id                        :bigint           not null, primary key
+#  name                      :string
+#  mobile_number             :string
+#  baby_date_of_birth        :datetime
+#  date_of_discharge         :datetime
+#  incoming_call_date        :datetime
+#  program_id                :integer
+#  condition_area_id         :integer
+#  language_preference_id    :integer
+#  language_selected         :boolean          default(FALSE)
+#  signed_up_to_whatsapp     :boolean          default(FALSE)
+#  signed_up_to_ivr          :boolean          default(FALSE)
+#  textit_uuid               :string
+#  whatsapp_id               :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  hospital_id               :integer
+#  whatsapp_mobile_number    :string
+#  state_id                  :integer
+#  states_id                 :bigint
+#  whatsapp_number_confirmed :boolean          default(FALSE)
 #
 
 one:

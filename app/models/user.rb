@@ -2,26 +2,27 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
-#  name                   :string
-#  mobile_number          :string
-#  baby_date_of_birth     :datetime
-#  date_of_discharge      :datetime
-#  incoming_call_date     :datetime
-#  program_id             :integer
-#  condition_area_id      :integer
-#  language_preference_id :integer
-#  language_selected      :boolean          default(FALSE)
-#  signed_up_to_whatsapp  :boolean          default(FALSE)
-#  signed_up_to_ivr       :boolean          default(FALSE)
-#  textit_uuid            :string
-#  whatsapp_id            :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  hospital_id            :integer
-#  whatsapp_mobile_number :string
-#  state_id               :integer
-#  states_id              :bigint
+#  id                        :bigint           not null, primary key
+#  name                      :string
+#  mobile_number             :string
+#  baby_date_of_birth        :datetime
+#  date_of_discharge         :datetime
+#  incoming_call_date        :datetime
+#  program_id                :integer
+#  condition_area_id         :integer
+#  language_preference_id    :integer
+#  language_selected         :boolean          default(FALSE)
+#  signed_up_to_whatsapp     :boolean          default(FALSE)
+#  signed_up_to_ivr          :boolean          default(FALSE)
+#  textit_uuid               :string
+#  whatsapp_id               :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  hospital_id               :integer
+#  whatsapp_mobile_number    :string
+#  state_id                  :integer
+#  states_id                 :bigint
+#  whatsapp_number_confirmed :boolean          default(FALSE)
 #
 class User < ApplicationRecord
 
@@ -32,6 +33,9 @@ class User < ApplicationRecord
   belongs_to :language_preference, class_name: "Language"
   belongs_to :hospital, optional: true
   belongs_to :state, optional: true
+
+  has_many :user_signup_trackers
+  has_many :active_signups, -> {active_signups}, class_name: "UserSignupTracker"
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number

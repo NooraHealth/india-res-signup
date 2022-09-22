@@ -78,12 +78,10 @@ module Res
       # group ID that the user needs to be added to
       def create_user_with_relevant_group
         params = {id: self.res_user.id}
-        # Also add a mapping between user and textit groups so that we can keep track of it here
-        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
 
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        # below line interacts with the
+        # below line interacts with the API handler for TextIt and creates the user
         op = TextitRapidproApi::CreateUser.(params)
       end
 
@@ -91,10 +89,6 @@ module Res
       # If a user is already on TextIt, the user is added to an existing group which is identified
       # from the TextitGroup class
       def add_user_to_existing_group
-        # Also add a mapping between user and textit groups so that we can keep track of it here
-        # In this case, there will be a trail of all the textit groups that the user was a part of
-        # self.res_user.textit_group_exotel_user_mappings.update_all(active: false)
-        # self.res_user.textit_group_exotel_user_mappings.create(textit_group_id: textit_group&.id, active: true)
 
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id

@@ -30,6 +30,19 @@ module Res
           unless self.res_user.update(condition_area_id: self.condition_area_id)
             self.errors = self.res_user.errors.full_messages
           end
+
+          # To update the signup tracker, we will look for the existing active tracker.
+          # For that object, if condition_area_id is nil they are signing up for SDH again, so we can update the attribute
+          # If condition_area_id already exists, make that inactive and create a new user signup tracker
+          active_tracker = self.res_user.active_signups.where(noora_program_id: NooraProgram.id_for(:sdh)).first
+          if active_tracker.condition_area_id.present?
+            active_tracker.update(active: false)
+            new_tracker = active_tracker.dup
+            new_tracker.update(condition_area_id: self.condition_area_id, active: true)
+          else
+            active_tracker.update(condition_area_id: self.condition_area_id)
+          end
+
         end
 
         self

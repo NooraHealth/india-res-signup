@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_19_075554) do
+ActiveRecord::Schema.define(version: 2022_09_22_003856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,30 @@ ActiveRecord::Schema.define(version: 2022_09_19_075554) do
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
   end
 
+  create_table "user_program_trackers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "noora_program_id"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["noora_program_id"], name: "index_user_program_trackers_on_noora_program_id"
+    t.index ["user_id"], name: "index_user_program_trackers_on_user_id"
+  end
+
+  create_table "user_signup_trackers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "condition_area_id"
+    t.bigint "noora_program_id"
+    t.bigint "language_id"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
+    t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
+    t.index ["noora_program_id"], name: "index_user_signup_trackers_on_noora_program_id"
+    t.index ["user_id"], name: "index_user_signup_trackers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "mobile_number"
@@ -103,6 +127,7 @@ ActiveRecord::Schema.define(version: 2022_09_19_075554) do
     t.string "whatsapp_mobile_number"
     t.integer "state_id"
     t.bigint "states_id"
+    t.boolean "whatsapp_number_confirmed", default: false
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["program_id"], name: "index_users_on_program_id"
@@ -118,6 +143,12 @@ ActiveRecord::Schema.define(version: 2022_09_19_075554) do
   add_foreign_key "textit_groups", "condition_areas"
   add_foreign_key "textit_groups", "languages"
   add_foreign_key "textit_groups", "noora_programs", column: "program_id"
+  add_foreign_key "user_program_trackers", "noora_programs"
+  add_foreign_key "user_program_trackers", "users"
+  add_foreign_key "user_signup_trackers", "condition_areas"
+  add_foreign_key "user_signup_trackers", "languages"
+  add_foreign_key "user_signup_trackers", "noora_programs"
+  add_foreign_key "user_signup_trackers", "users"
   add_foreign_key "users", "condition_areas"
   add_foreign_key "users", "hospitals"
   add_foreign_key "users", "languages", column: "language_preference_id"

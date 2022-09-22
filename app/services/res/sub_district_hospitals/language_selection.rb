@@ -1,4 +1,7 @@
+# There are multiple steps in the way a user is onboarded onto the SDH platform.
 # This operation specifies the language of a user based on what they select in the IVR or WA message
+# If the user has signed up to any of our previous programs, their condition_area and language fields are reset to nil
+#
 
 module Res
   module SubDistrictHospitals
@@ -34,9 +37,25 @@ module Res
           unless self.res_user.save
             self.errors = self.res_user.errors.full_messages
           end
+
+          # also create an entry on the signup tracker which records details of a user's signup
+          self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:sdh),
+                                                   language_id: self.res_user.language_preference_id,
+                                                   active: true).save
           self.logger.info("User created in DB with ID: #{self.res_user.id}")
         else
-          self.res_user.update(language_preference_id: self.language_id)
+          self.res_user.update(language_preference_id: self.language_id,
+                               program_id: NooraProgram.id_for(:sdh))
+
+          # if the user is already part of another program, update that they have signed up for the SDH program
+          # If they are part of the SDH program already, ignore this
+          unless self.res_user.active_signups.where(noora_program_id: NooraProgram.id_for(:sdh)).present?
+            self.res_user.active_signups.update(active: false)
+            self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:sdh),
+                                                     language_id: self.res_user.language_preference_id,
+                                                     active: true).save
+          end
+
           self.logger.info("User found with mobile number: #{self.res_user.mobile_number}")
         end
 

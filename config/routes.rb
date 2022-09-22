@@ -30,12 +30,17 @@ Rails.application.routes.draw do
   # pin code input - endpoint that specifies the pin code of the user entered in either the IVR or chat
   get 'sdh/pin_code_input', to: 'sdh#pin_code_input'
 
-
   get 'sdh/days_to_delivery_input', to: 'sdh#days_to_delivery_input'
   get 'sdh/confirm_whatsapp_number', to: 'sdh#confirm_whatsapp_number'
   get 'sdh/change_whatsapp_number', to: 'sdh#change_whatsapp_number'
 
   # endpoint that plays the right outro message based on the user's modality selection
   get 'sdh/outro_message', to: 'sdh#outro_message'
+
+
+  get 'sdh/check_language_selection_completion', to: 'sdh#check_language_selection_complete'
+  get 'sdh/check_modality_selection_completion', to: 'sdh#check_modality_selection_complete'
+  get 'sdh/check_condition_area_selection_completion', to: 'sdh#check_condition_area_selection_complete'
+  get 'sdh/check_whatsapp_number_confirmation_completion', to: 'sdh#check_whatsapp_number_confirmation_complete'
 
 end
