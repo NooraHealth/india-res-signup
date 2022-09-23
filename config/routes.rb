@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get 'sdh/change_whatsapp_number', to: 'sdh#change_whatsapp_number'
 
   # endpoint that plays the right outro message based on the user's modality selection
-  get 'sdh/outro_message', to: 'sdh#outro_message'
+  get 'sdh/outro_selection', to: 'sdh#outro_message'
 
 
   get 'sdh/check_language_selection_completion', to: 'sdh#check_language_selection_complete'
