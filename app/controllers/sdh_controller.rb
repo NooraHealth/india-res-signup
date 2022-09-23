@@ -110,6 +110,17 @@ class SdhController < ApplicationController
     end
   end
 
+
+  def outro_message
+    user = retrieve_user_from_params
+    if user.signed_up_to_ivr && user.signed_up_to_whatsapp
+      render json: {select: 3}
+    elsif user.signed_up_to_ivr
+      render json: {select: 1}
+    elsif user.signed_up_to_whatsapp
+      render json: {select: 2}
+    end
+  end
   
 
   private

@@ -43,4 +43,10 @@ Rails.application.routes.draw do
   get 'sdh/check_condition_area_selection_completion', to: 'sdh#check_condition_area_selection_complete'
   get 'sdh/check_whatsapp_number_confirmation_completion', to: 'sdh#check_whatsapp_number_confirmation_complete'
 
+  # the below are APIs being used for orchestrating IVR audios on a weekly basis
+  get 'sdh/age_of_baby_in_weeks'
+  get 'sdh/day_of_week'
+
+
+
 end
