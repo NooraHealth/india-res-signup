@@ -28,4 +28,8 @@ class NooraProgram < ApplicationRecord
     ]
   end
 
+  def sdh?
+    self.program_id == NooraProgram.id_for(:sdh)
+  end
+
 end

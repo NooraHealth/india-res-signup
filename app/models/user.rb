@@ -52,4 +52,11 @@ class User < ApplicationRecord
     "+91#{number}"
   end
 
+  # this method checks if a user has fully signed up for the SDH program
+  def fully_signed_up_for_sdh?
+    self.program_id == NooraProgram.id_for(:sdh) &&
+      ((self.signed_up_to_whatsapp && self.whatsapp_number_confirmed) || self.signed_up_to_ivr) &&
+      self.condition_area_id.present?
+  end
+
 end
