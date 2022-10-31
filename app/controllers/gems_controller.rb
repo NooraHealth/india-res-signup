@@ -76,7 +76,7 @@ class GemsController < ApplicationController
   # 1 - user present and has signed up for the GEMS program
   # 0 - user not present, and is signing up for the first time
   def check_existing_user
-    parsed_params = ExotelWebhook::ParseExotelParams.(sdh_params)
+    parsed_params = ExotelWebhook::ParseExotelParams.(gems_params)
     user = User.find_by mobile_number: parsed_params[:user_mobile], program_id: NooraProgram.id_for(:gems)
     if user.present?
       render json: {select: 1}
