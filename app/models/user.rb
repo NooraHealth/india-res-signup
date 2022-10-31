@@ -64,7 +64,7 @@ class User < ApplicationRecord
   end
 
   def fully_signed_up_to_gems?
-    gems_user? and (user.signed_up_to_ivr || user.signed_up_to_whatsapp) and user.incoming_call_date.present?
+    gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
   end
 
 end
