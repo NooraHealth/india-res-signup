@@ -72,6 +72,26 @@ class GemsController < ApplicationController
   end
 
 
+  # checks if the user is part of the GEMS program
+  # 1 - user present and has signed up for the GEMS program
+  # 0 - user not present, and is signing up for the first time
+  def check_existing_user
+    parsed_params = ExotelWebhook::ParseExotelParams.(sdh_params)
+    user = User.find_by mobile_number: parsed_params[:user_mobile], program_id: NooraProgram.id_for(:gems)
+    if user.present?
+      render json: {select: 1}
+    else
+      render json: {select: 0}
+    end
+  end
+
+
+  # this method checks if the user has signed up fully or not for the GEMS program
+  def fully_signed_up?
+    # TODO
+  end
+
+
   private
 
   def gems_params

@@ -3,7 +3,7 @@ class SdhOrchestrationController < ApplicationController
 
   # checks if the user is part of the SDH program
   # 1 - user present and has signed up for the SDH program
-  # 2 - user not present or has not signed up fully for SDH
+  # 0 - user not present or has not signed up fully for SDH
   def check_existing_user
     parsed_params = ExotelWebhook::ParseExotelParams.(sdh_params)
     user = User.find_by mobile_number: parsed_params[:user_mobile]

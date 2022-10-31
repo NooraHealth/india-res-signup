@@ -22,6 +22,9 @@
 #                           gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#language_selection
 #                     gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#condition_area_selection
 #                              gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
+#                          gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
+#                      gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
+#                       gems_change_whatsapp_number GET  /gems/change_whatsapp_number(.:format)                                                   gems#change_whatsapp_number
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -68,6 +71,8 @@ Rails.application.routes.draw do
   get 'sdh/weeks_since_signup', to: 'sdh_orchestration#weeks_since_signup'
   get 'sdh/day_of_week', to: 'sdh_orchestration#day_of_week'
 
+  ####################################################### SDH Endpoints #######################################################
+
 
 
   ##################################################### GEMS Endpoints ########################################################
@@ -83,5 +88,13 @@ Rails.application.routes.draw do
   # endpoint that plays the right outro message based on the user's modality selection
   get 'gems/outro_selection', to: 'gems#outro_message'
 
+  # this endpoint checks if the user has signed up before to the GEMS program
+  get 'gems/check_existing_user', to: 'gems#check_existing_user'
+
+  # endpoint that confirms that a user's WA number is the same as their calling number
+  get 'gems/confirm_whatsapp_number', to: 'gems#confirm_whatsapp_number'
+
+  # endpoint to change a user's WA number when it's different from their calling number
+  get 'gems/change_whatsapp_number', to: 'gems#change_whatsapp_number'
 
 end
