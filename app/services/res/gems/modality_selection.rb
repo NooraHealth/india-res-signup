@@ -39,8 +39,8 @@ module Res
         end
 
         ############ TEMPORARY WORKAROUND FOR NOW ##############
-        # We're assuming the user calls from the same number as their WA number
-        self.res_user.update(whatsapp_number_confirmed: true)
+        # We're assuming the user calls from the same number as their WA number, and also that they will be part of the gems neutral program
+        self.res_user.update(whatsapp_number_confirmed: true, condition_area_id: ConditionArea.id_for(:gems_neutral))
         op = Res::Gems::WaSignup.(self.logger, self.exotel_params)
         if op.errors.present?
           self.errors = op.errors
