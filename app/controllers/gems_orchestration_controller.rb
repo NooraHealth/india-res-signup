@@ -8,6 +8,10 @@ class GemsOrchestrationController < ApplicationController
 
   private
 
+  def gems_params
+    params.permit!
+  end
+  
   def retrieve_user_from_params
     parsed_exotel_params = ExotelWebhook::ParseExotelParams.(gems_params)
     res_user = User.find_by(mobile_number: parsed_exotel_params[:user_mobile])
