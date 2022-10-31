@@ -25,6 +25,7 @@
 #                          gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
 #                      gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
 #                       gems_change_whatsapp_number GET  /gems/change_whatsapp_number(.:format)                                                   gems#change_whatsapp_number
+#                       gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -96,5 +97,8 @@ Rails.application.routes.draw do
 
   # endpoint to change a user's WA number when it's different from their calling number
   get 'gems/change_whatsapp_number', to: 'gems#change_whatsapp_number'
+
+  # endpoint to get the user's language preference from the backend
+  get 'gems/retrieve_user_language', to: 'gems_orchestration#retrieve_language'
 
 end

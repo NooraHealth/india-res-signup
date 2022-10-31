@@ -59,4 +59,12 @@ class User < ApplicationRecord
       self.condition_area_id.present?
   end
 
+  def gems_user?
+    self.program_id == NooraProgram.id_for(:gems)
+  end
+
+  def fully_signed_up_to_gems?
+    gems_user? and (user.signed_up_to_ivr || user.signed_up_to_whatsapp) and user.incoming_call_date.present?
+  end
+
 end
