@@ -20,7 +20,10 @@ class ConditionArea < ApplicationRecord
       :cardiology_pre_selection,
       :cardiology,
       :cardiology_pre_surgery,
-      :cardiology_post_surgery
+      :cardiology_post_surgery,
+      :gems_neutral,
+      :diabetes,
+      :hypertension
     ]
   end
 

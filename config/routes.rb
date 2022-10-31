@@ -15,8 +15,13 @@
 #           sdh_check_modality_selection_completion GET  /sdh/check_modality_selection_completion(.:format)                                       sdh#check_modality_selection_complete
 #     sdh_check_condition_area_selection_completion GET  /sdh/check_condition_area_selection_completion(.:format)                                 sdh#check_condition_area_selection_complete
 # sdh_check_whatsapp_number_confirmation_completion GET  /sdh/check_whatsapp_number_confirmation_completion(.:format)                             sdh#check_whatsapp_number_confirmation_complete
+#                           sdh_check_existing_user GET  /sdh/check_existing_user(.:format)                                                       sdh_orchestration#check_existing_user
 #                            sdh_weeks_since_signup GET  /sdh/weeks_since_signup(.:format)                                                        sdh_orchestration#weeks_since_signup
 #                                   sdh_day_of_week GET  /sdh/day_of_week(.:format)                                                               sdh_orchestration#day_of_week
+#                           gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#modality_selection
+#                           gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#language_selection
+#                     gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#condition_area_selection
+#                              gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -63,6 +68,20 @@ Rails.application.routes.draw do
   get 'sdh/weeks_since_signup', to: 'sdh_orchestration#weeks_since_signup'
   get 'sdh/day_of_week', to: 'sdh_orchestration#day_of_week'
 
+
+
+  ##################################################### GEMS Endpoints ########################################################
+  # modality selection - endpoint that specifies the modalities of the user's intervention
+  get 'gems/modality_selection', to: 'gems#modality_selection'
+
+  # language selection - endpoint that specifies the language selected by the user
+  get 'gems/language_selection', to: 'gems#language_selection'
+
+  # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
+  get 'gems/condition_area_selection', to: 'gems#condition_area_selection'
+
+  # endpoint that plays the right outro message based on the user's modality selection
+  get 'gems/outro_selection', to: 'gems#outro_message'
 
 
 end
