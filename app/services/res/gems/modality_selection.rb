@@ -38,6 +38,17 @@ module Res
           self.logger.info("User found with mobile number: #{self.res_user.mobile_number}")
         end
 
+        ############ TEMPORARY WORKAROUND FOR NOW ##############
+        # We're assuming the user calls from the same number as their WA number
+        self.res_user.update(whatsapp_number_confirmed: true)
+        op = Res::Gems::WaSignup.(self.logger, self.exotel_params)
+        if op.errors.present?
+          self.errors = op.errors
+          return self
+        end
+
+        #########################################################
+
         self
       end
     end
