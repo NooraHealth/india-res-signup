@@ -26,6 +26,7 @@
 #                      gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
 #                       gems_change_whatsapp_number GET  /gems/change_whatsapp_number(.:format)                                                   gems#change_whatsapp_number
 #                       gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
+#                   gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -77,6 +78,7 @@ Rails.application.routes.draw do
 
 
   ##################################################### GEMS Endpoints ########################################################
+  #############################################################################################################################
   # modality selection - endpoint that specifies the modalities of the user's intervention
   get 'gems/modality_selection', to: 'gems#modality_selection'
 
@@ -98,7 +100,10 @@ Rails.application.routes.draw do
   # endpoint to change a user's WA number when it's different from their calling number
   get 'gems/change_whatsapp_number', to: 'gems#change_whatsapp_number'
 
+  ###### ORCHESTRATION APIs ######
   # endpoint to get the user's language preference from the backend
   get 'gems/retrieve_user_language', to: 'gems_orchestration#retrieve_language'
+  get 'gems/retrieve_days_since_signup', to: 'gems_orchestration#number_of_days_since_signup'
+  
 
 end
