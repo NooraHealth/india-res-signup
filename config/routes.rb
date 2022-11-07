@@ -103,6 +103,9 @@ Rails.application.routes.draw do
   ###### ORCHESTRATION APIs ######
   # endpoint to get the user's language preference from the backend
   get 'gems/retrieve_user_language', to: 'gems_orchestration#retrieve_language'
+  # endpoint to get the user's condition area from the backend
+  get 'gems/retrieve_condition_area', to: 'gems_orchestration#retrieve_condition_area'
+  # endpoint to get the number of days since the user signed up for the program
   get 'gems/retrieve_days_since_signup', to: 'gems_orchestration#number_of_days_since_signup'
   
 

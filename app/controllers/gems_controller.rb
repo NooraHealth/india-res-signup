@@ -63,11 +63,16 @@ class GemsController < ApplicationController
 
 
   def outro_message
+    logger = Logger.new("#{Rails.root}/log/gems_outro_message.log")
+    logger.info("-------------------------------------")
+    logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params
     if user.signed_up_to_ivr
       render json: {select: 1}
+      logger.info("Option returned is: 1")
     elsif user.signed_up_to_whatsapp
       render json: {select: 2}
+      logger.info("Option returned is: 2")
     end
   end
 
@@ -76,11 +81,16 @@ class GemsController < ApplicationController
   # 1 - user present and has fully signed up for the GEMS program
   # 0 - user not present, and is signing up for the first time, or hasn't signed up completely
   def check_existing_user
+    logger = Logger.new("#{Rails.root}/log/gems_checking_existing_user.log")
+    logger.info("-------------------------------------")
+    logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params
     if user.present? && user.fully_signed_up_to_gems?
       render json: {select: 1}
+      logger.info("Option returned is: 1")
     else
       render json: {select: 0}
+      logger.info("Option returned is: 2")
     end
   end
 
