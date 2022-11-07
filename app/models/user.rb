@@ -37,6 +37,9 @@ class User < ApplicationRecord
   has_many :user_signup_trackers
   has_many :active_signups, -> {active_signups}, class_name: "UserSignupTracker"
 
+  has_many :user_condition_area_mappings
+  has_many :condition_areas, through: :user_condition_area_mappings
+
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
     super() || self.mobile_number
