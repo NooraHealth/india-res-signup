@@ -1,5 +1,6 @@
 class UpdateConditionAreasForAllUsers < ActiveRecord::Migration[5.2]
   def change
+    errors = []
     User.all.each do |user|
       condition_area = user.condition_area
       if condition_area.present?
