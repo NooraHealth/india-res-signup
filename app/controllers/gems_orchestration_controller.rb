@@ -13,9 +13,6 @@ class GemsOrchestrationController < ApplicationController
   # 4 - Both Diabetes and Hypertension
   def retrieve_condition_area
     user = retrieve_user_from_params
-    case user.condition_area_id
-
-    end
   end
 
   def number_of_days_since_signup
