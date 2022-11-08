@@ -34,7 +34,8 @@ class User < ApplicationRecord
   belongs_to :hospital, optional: true
   belongs_to :state, optional: true
 
-  has_many :user_signup_trackers
+  has_many :user_signup_trackers, dependent: :destroy
+
   has_many :active_signups, -> {active_signups}, class_name: "UserSignupTracker"
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
