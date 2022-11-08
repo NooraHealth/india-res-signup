@@ -40,11 +40,14 @@ module Res
 
         ############ TEMPORARY WORKAROUND FOR NOW ##############
         # We're assuming the user calls from the same number as their WA number, and also that they will be part of the gems neutral program
-        self.res_user.update(whatsapp_number_confirmed: true, condition_area_id: ConditionArea.id_for(:gems_neutral))
-        op = Res::Gems::WaSignup.(self.logger, self.exotel_params)
-        if op.errors.present?
-          self.errors = op.errors
-          return self
+        # So if the user has selected WA as one of the options, then add them to textit groups based on language preference
+        if self.res_user.signed_up_to_ivr
+          self.res_user.update(whatsapp_number_confirmed: true, condition_area_id: ConditionArea.id_for(:gems_neutral))
+          op = Res::Gems::WaSignup.(self.logger, self.exotel_params)
+          if op.errors.present?
+            self.errors = op.errors
+            return self
+          end
         end
 
         #########################################################
