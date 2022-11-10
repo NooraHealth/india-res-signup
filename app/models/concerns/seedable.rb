@@ -22,6 +22,14 @@ module Seedable
       find_by(name: name.to_s)&.id
     end
 
+    def ids_for(*names)
+      results = []
+      names.each do |name|
+        results << find_by(name: name.to_s)&.id
+      end
+      results.compact
+    end
+
     def seed_data
       values.each do |value|
         next if find_by(name: value).present?
