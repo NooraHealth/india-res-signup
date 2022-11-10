@@ -42,7 +42,8 @@ module Res
           self.logger.info("User created in DB with ID: #{self.res_user.id}")
         else
           self.res_user.update(language_preference_id: self.language_id,
-                               program_id: NooraProgram.id_for(:gems))
+                               program_id: NooraProgram.id_for(:gems),
+                               incoming_call_date: Time.now)
 
           # if the user is already part of another program, update that they have signed up for the GEMS program
           # If they are part of the GEMS program already, ignore this
