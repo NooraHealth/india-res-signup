@@ -31,8 +31,8 @@ module Res
         if self.res_user.blank?
           self.errors = "User not found in DB"
         else
-          unless self.res_user.update(signed_up_to_whatsapp: (modality == "whatsapp"),
-                                      signed_up_to_ivr: (modality == "ivr"))
+          unless self.res_user.update(signed_up_to_whatsapp: (self.res_user.signed_up_to_whatsapp || (modality == "whatsapp")),
+                                      signed_up_to_ivr: (self.res_user.signed_up_to_ivr || (modality == "ivr")))
             self.errors = self.res_user.errors.full_messages
           end
           self.logger.info("User found with mobile number: #{self.res_user.mobile_number}")
