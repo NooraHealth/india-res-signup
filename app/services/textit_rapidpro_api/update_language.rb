@@ -48,7 +48,8 @@ module TextitRapidproApi
     def body_params
       language_iso_code = self.user.reload.language_preference&.iso_code
       {
-        "language" => language_iso_code
+        "language" => language_iso_code,
+        "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
       }
     end
 
