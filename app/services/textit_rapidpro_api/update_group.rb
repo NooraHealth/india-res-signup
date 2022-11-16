@@ -1,3 +1,6 @@
+# This operation updates the group of a user and also resets the reference date
+# so that date-joined is also updated to the latest value in the database
+
 module TextitRapidproApi
   class UpdateGroup < TextitRapidproApi::Base
 
