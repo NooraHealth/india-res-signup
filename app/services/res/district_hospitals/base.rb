@@ -26,13 +26,18 @@ module Res
         end
       end
 
+
+      # this logic here makes sense because the details of which textit group
+      # the user belongs to is uniquely identified by the exophone number
       def retrieve_textit_group
         condition_area_id = self.exophone.condition_area_id
         program_id = self.exophone.program_id
         language_id = self.exophone.language_id
+        state_id = self.exophone.state_id # even if this field is nil, it works because the default value for this field is nil
         self.textit_group = TextitGroup.where(condition_area_id: condition_area_id,
                                               program_id: program_id,
-                                              language_id: language_id).first
+                                              language_id: language_id,
+                                              state_id: state_id).first
         if self.textit_group.blank?
           self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"
         end

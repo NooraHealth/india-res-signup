@@ -55,8 +55,8 @@ module Res
       end
 
       def retrieve_textit_group
-        condition_area_id = self.res_user.condition_area_id
         program_id = self.res_user.program_id
+        condition_area_id = self.res_user.retrieve_condition_area_id(program_id)
         language_id = self.res_user.language_preference_id
         self.textit_group = TextitGroup.where(condition_area_id: condition_area_id,
                                               program_id: program_id,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_21_185940) do
+ActiveRecord::Schema.define(version: 2022_11_21_203211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,11 @@ ActiveRecord::Schema.define(version: 2022_11_21_185940) do
     t.integer "program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "state_id"
     t.index ["condition_area_id"], name: "index_exophones_on_condition_area_id"
     t.index ["language_id"], name: "index_exophones_on_language_id"
     t.index ["program_id"], name: "index_exophones_on_program_id"
+    t.index ["state_id"], name: "index_exophones_on_state_id"
   end
 
   create_table "hospitals", force: :cascade do |t|
@@ -83,6 +85,17 @@ ActiveRecord::Schema.define(version: 2022_11_21_185940) do
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
     t.index ["state_id"], name: "index_textit_groups_on_state_id"
+  end
+
+  create_table "user_condition_area_mappings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "condition_area_id"
+    t.bigint "noora_program_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_area_id"], name: "index_user_condition_area_mappings_on_condition_area_id"
+    t.index ["noora_program_id"], name: "index_user_condition_area_mappings_on_noora_program_id"
+    t.index ["user_id"], name: "index_user_condition_area_mappings_on_user_id"
   end
 
   create_table "user_program_trackers", force: :cascade do |t|
@@ -145,6 +158,9 @@ ActiveRecord::Schema.define(version: 2022_11_21_185940) do
   add_foreign_key "textit_groups", "condition_areas"
   add_foreign_key "textit_groups", "languages"
   add_foreign_key "textit_groups", "noora_programs", column: "program_id"
+  add_foreign_key "user_condition_area_mappings", "condition_areas"
+  add_foreign_key "user_condition_area_mappings", "noora_programs"
+  add_foreign_key "user_condition_area_mappings", "users"
   add_foreign_key "user_program_trackers", "noora_programs"
   add_foreign_key "user_program_trackers", "users"
   add_foreign_key "user_signup_trackers", "condition_areas"

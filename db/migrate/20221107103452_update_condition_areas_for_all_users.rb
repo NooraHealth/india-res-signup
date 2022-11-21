@@ -4,7 +4,7 @@ class UpdateConditionAreasForAllUsers < ActiveRecord::Migration[5.2]
     User.all.each do |user|
       condition_area = user.condition_area
       if condition_area.present?
-        ucm = UserConditionAreaMapping.new(user_id: user.id, condition_area_id: condition_area.id)
+        ucm = UserConditionAreaMapping.new(user_id: user.id, condition_area_id: condition_area.id, noora_program_id: user.program_id)
         unless ucm.save
           errors << ucm.errors.full_messages
         end

@@ -9,6 +9,7 @@
 #  program_id        :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  state_id          :bigint
 #
 class Exophone < ApplicationRecord
 
@@ -17,5 +18,6 @@ class Exophone < ApplicationRecord
   belongs_to :language, optional: true
   belongs_to :condition_area, optional: true
   belongs_to :program, class_name: "NooraProgram", optional: true
+  belongs_to :state, optional: true
 
 end

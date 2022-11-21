@@ -34,7 +34,7 @@ module Res
             end
 
             # adding new condition area to user
-            # TODO
+            self.res_user.add_condition_area(program_id: NooraProgram.id_for(:mch))
           end
 
         end

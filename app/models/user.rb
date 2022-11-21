@@ -71,4 +71,32 @@ class User < ApplicationRecord
     gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
   end
 
+  # this method adds a user to a condition area
+  def add_condition_area(program_id, condition_area_id)
+    self.user_condition_area_mappings.build(condition_area_id: condition_area_id, program_id: program_id).save
+  end
+
+  # the below function takes the program as an argument and returns the 
+  # latest condition area in that program that the user belongs to
+  def retrieve_condition_area_id(program_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id).first&.condition_area_id
+  end
+
+  def retrieve_condition_area(program_id)
+    ConditionArea.find_by(id: self.retrieve_condition_area_id(program_id))
+  end
+
+  # for a given program, it updates the condition area of the user
+  # with the condition area passed in the argument
+  # USE WITH CAUTION
+  def update_condition_area(program_id, new_condition_area_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id).first&.update(condition_area_id: new_condition_area_id)
+  end
+
+  # the below method removed the condition area associated with a user
+  def remove_condition_area(program_id, condition_area_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id, condition_area_id: condition_area_id).first&.destroy
+  end
+
+
 end
