@@ -28,6 +28,8 @@
 #                       gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
 #                      gems_retrieve_condition_area GET  /gems/retrieve_condition_area(.:format)                                                  gems_orchestration#retrieve_condition_area
 #                   gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
+#                                  mch_hp_wa_signup GET  /mch/hp/wa_signup(.:format)                                                              dh#exotel_wa_signup
+#                     mch_hp_change_whatsapp_number GET  /mch/hp/change_whatsapp_number(.:format)                                                 dh#change_whatsapp_number
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -108,6 +110,16 @@ Rails.application.routes.draw do
   get 'gems/retrieve_condition_area', to: 'gems_orchestration#retrieve_condition_area'
   # endpoint to get the number of days since the user signed up for the program
   get 'gems/retrieve_days_since_signup', to: 'gems_orchestration#number_of_days_since_signup'
-  
+
+
+  #############################################################################################################################
+  ##################################################### GEMS Endpoints ########################################################
+
+
+  ##################################################### HP Endpoints ########################################################
+  #############################################################################################################################
+
+  get 'mch/hp/wa_signup', to: 'dh#exotel_wa_signup'
+  get 'mch/hp/change_whatsapp_number', to: 'dh#change_whatsapp_number'
 
 end
