@@ -27,6 +27,9 @@ class ConditionArea < ApplicationRecord
     ]
   end
 
+  has_many :user_condition_area_mappings
+  has_many :users, through: :user_condition_area_mappings
+
   # def self.retrieve_condition_area_from_number(number)
   #   ca = ConditionAreaNumberMapping.with_exotel_number(number).first
   #   return ca&.condition_area_id

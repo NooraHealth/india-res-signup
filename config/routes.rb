@@ -71,11 +71,15 @@ Rails.application.routes.draw do
   get 'sdh/check_condition_area_selection_completion', to: 'sdh#check_condition_area_selection_complete'
   get 'sdh/check_whatsapp_number_confirmation_completion', to: 'sdh#check_whatsapp_number_confirmation_complete'
 
+  ################### SDH Orchestration #####################
   # the below are APIs being used for orchestrating IVR audios on a weekly basis
   get 'sdh/check_existing_user', to: 'sdh_orchestration#check_existing_user'
   get 'sdh/weeks_since_signup', to: 'sdh_orchestration#weeks_since_signup'
   get 'sdh/day_of_week', to: 'sdh_orchestration#day_of_week'
 
+  ###########################################################
+
+  #############################################################################################################################
   ####################################################### SDH Endpoints #######################################################
 
 
