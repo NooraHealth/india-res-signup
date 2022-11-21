@@ -119,7 +119,7 @@ Rails.application.routes.draw do
   ##################################################### HP Endpoints ########################################################
   #############################################################################################################################
 
-  get 'mch/hp/wa_signup', to: 'dh#exotel_wa_signup'
-  get 'mch/hp/change_whatsapp_number', to: 'dh#change_whatsapp_number'
+  get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
+  get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_31_002950) do
+ActiveRecord::Schema.define(version: 2022_11_21_185940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,8 +79,10 @@ ActiveRecord::Schema.define(version: 2022_10_31_002950) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "language_id"
+    t.bigint "state_id"
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
+    t.index ["state_id"], name: "index_textit_groups_on_state_id"
   end
 
   create_table "user_program_trackers", force: :cascade do |t|
