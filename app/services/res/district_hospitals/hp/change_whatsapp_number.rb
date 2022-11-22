@@ -17,6 +17,9 @@ module Res
 
         def call
 
+          # parse exotel params to get a simple hash with details like
+          self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
+
           # extract the number entered by the user into a separate variable
           self.whatsapp_number = self.exotel_params["digits"].gsub("\"", "")
 

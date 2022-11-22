@@ -70,9 +70,13 @@ module Res
           incoming_call_date: DateTime.now,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
+
         unless self.res_user.save
           self.errors << self.res_user.errors.full_messages
+          return
         end
+
+        self.res_user.add_condition_area(self.exophone.program_id, self.exophone.condition_area_id)
       end
 
       # this function updates the user's preferences based on the signup instruction
@@ -83,7 +87,11 @@ module Res
           program_id: self.exophone.program_id
         )
           self.errors << self.res_user.errors.full_messages
+          return
         end
+
+        # also update the condition area of the user within the same program
+        self.res_user.update_condition_area(self.exophone.program_id, self.exophone.condition_area_id)
       end
 
       def add_user_to_existing_group
