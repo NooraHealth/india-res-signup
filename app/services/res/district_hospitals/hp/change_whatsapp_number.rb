@@ -33,7 +33,7 @@ module Res
           # update the user's WA number to the one entered through Exotel
           self.res_user.update(whatsapp_mobile_number: self.whatsapp_number)
 
-          op = Res::DistrictHospitals::WaSignup.(self.logger, self.exotel_params)
+          op = Res::DistrictHospitals::ExotelWaSignup.(self.logger, self.exotel_params)
           if op.errors.present?
             self.errors = op.errors
           end
