@@ -12,5 +12,10 @@
 class UserConditionAreaMapping < ApplicationRecord
   belongs_to :user
   belongs_to :condition_area
-  
+  belongs_to :noora_program
+
+
+  scope :with_program_id, -> (program_id) do
+    where(noora_program_id: program_id)
+  end
 end

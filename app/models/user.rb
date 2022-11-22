@@ -73,10 +73,14 @@ class User < ApplicationRecord
 
   # this method adds a user to a condition area
   def add_condition_area(program_id, condition_area_id)
-    self.user_condition_area_mappings.build(condition_area_id: condition_area_id, program_id: program_id).save
+    if self.user_condition_area_mappings.with_program_id(program_id).pluck(:condition_area_id).include?(condition_area_id)
+      # do nothing, because the user already belongs to that particular condition area
+    else
+      self.user_condition_area_mappings.build(condition_area_id: condition_area_id, program_id: program_id).save
+    end
   end
 
-  # the below function takes the program as an argument and returns the 
+  # the below functions takes the program as an argument and returns the
   # latest condition area in that program that the user belongs to
   def retrieve_condition_area_id(program_id)
     self.user_condition_area_mappings.where(noora_program_id: program_id).first&.condition_area_id

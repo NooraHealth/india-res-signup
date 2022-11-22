@@ -14,7 +14,7 @@ class DistrictHospitals::HpController < ApplicationController
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
-    logger.info("Successfully changed user's WA number")
+    logger.info("Successfully initialized user in DB")
   end
 
 

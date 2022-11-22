@@ -33,9 +33,10 @@ module Res
               self.errors << self.res_user.errors.full_messages
             end
 
-            # adding new condition area to user
-            self.res_user.add_condition_area(program_id: NooraProgram.id_for(:mch))
           end
+
+          # adding new condition area to user
+          self.res_user.add_condition_area(NooraProgram.id_for(:mch), ConditionArea.id_for(:pnc))
 
           self
         end
