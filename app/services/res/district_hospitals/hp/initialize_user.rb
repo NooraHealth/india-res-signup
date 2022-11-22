@@ -37,6 +37,7 @@ module Res
             self.res_user.add_condition_area(program_id: NooraProgram.id_for(:mch))
           end
 
+          self
         end
       end
     end
