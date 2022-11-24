@@ -25,7 +25,7 @@ module Res
         when "hypertension"
           self.condition_area_ids = [ConditionArea.id_for(self.exotel_params[:condition_area].to_s)]
         when "d_and_h"
-          self.condition_area_ids = [ConditionArea.ids_for(:diabetes, :hypertension)]
+          self.condition_area_ids = ConditionArea.ids_for(:diabetes, :hypertension)
         end
 
         self.logger.info("Condition area chosen by user: #{ConditionArea.where(id: self.condition_area_ids).pluck(:name).to_sentence}")
