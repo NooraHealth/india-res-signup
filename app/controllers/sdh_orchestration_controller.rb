@@ -34,7 +34,7 @@ class SdhOrchestrationController < ApplicationController
       render json: {select: 0}
     end
   end
-  
+
 
   def day_of_week
     logger = Logger.new("#{Rails.root}/log/sdh/day_of_week.log")
