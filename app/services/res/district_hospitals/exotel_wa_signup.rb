@@ -67,6 +67,7 @@ module Res
           language_preference_id: self.exophone.language_id,
           condition_area_id: self.exophone.condition_area_id,
           program_id: self.exophone.program_id,
+          state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
@@ -76,6 +77,7 @@ module Res
           return
         end
 
+        # add this user to the relevant condition area
         self.res_user.add_condition_area(self.exophone.program_id, self.exophone.condition_area_id)
       end
 
@@ -85,6 +87,7 @@ module Res
           language_preference_id: self.exophone.language_id,
           condition_area_id: self.exophone.condition_area_id,
           program_id: self.exophone.program_id,
+          state_id: self.exophone.state_id,
           incoming_call_date: Time.now
         )
           self.errors << self.res_user.errors.full_messages

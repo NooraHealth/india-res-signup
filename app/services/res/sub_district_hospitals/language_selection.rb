@@ -20,9 +20,11 @@ module Res
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
-        # extract the language preference of the user
+        # extract the language preference and state of the user
         self.language_id = Language.id_for(self.exotel_params[:language].to_s)
         self.logger.info("Language selected is: #{self.exotel_params[:language].to_s}")
+        self.exophone = Exophone.find_by(virtual_number: self.parsed_exotel_params[:exophone])
+        self.state_id = self.exophone.state_id
 
         # extract user from DB
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
@@ -32,7 +34,8 @@ module Res
           self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
                                    incoming_call_date: Time.now,
                                    program_id: NooraProgram.id_for(:sdh),
-                                   language_preference_id: self.language_id)
+                                   language_preference_id: self.language_id,
+                                   state_id: self.state_id)
           unless self.res_user.save
             self.errors = self.res_user.errors.full_messages
           end
