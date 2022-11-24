@@ -84,7 +84,8 @@ module Res
         unless self.res_user.update(
           language_preference_id: self.exophone.language_id,
           condition_area_id: self.exophone.condition_area_id,
-          program_id: self.exophone.program_id
+          program_id: self.exophone.program_id,
+          incoming_call_date: Time.now
         )
           self.errors << self.res_user.errors.full_messages
           return
@@ -104,6 +105,7 @@ module Res
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
+        params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::UpdateGroup.(params)
       end
 
@@ -115,6 +117,7 @@ module Res
         params = {id: self.res_user.id}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
+        params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::CreateUser.(params)
       end
 

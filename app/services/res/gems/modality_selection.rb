@@ -40,6 +40,8 @@ module Res
 
         ############ TEMPORARY WORKAROUND FOR NOW ##############
         self.res_user.update(whatsapp_number_confirmed: true, condition_area_id: ConditionArea.id_for(:gems_neutral))
+        # Add GEMS Neutral as a condition area for this user
+        self.res_user.add_condition_area(NooraProgram.id_for(:gems), ConditionArea.id_for(:gems_neutral))
         # We're assuming the user calls from the same number as their WA number, and also that they will be part of the gems neutral program
         # So if the user has selected WA as one of the options, then add them to textit groups based on language preference
         if self.res_user.signed_up_to_whatsapp

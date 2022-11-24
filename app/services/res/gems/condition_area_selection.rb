@@ -31,6 +31,9 @@ module Res
             self.errors = self.res_user.errors.full_messages
           end
 
+          # add user to the respective condition area
+          self.res_user.add_condition_area(NooraProgram.id_for(:gems), self.condition_area_id)
+
           # To update the signup tracker, we will look for the existing active tracker.
           # For that object, if condition_area_id is nil they are signing up for GEMS again (because we would have created the tracker on the language selection operation),
           # so we can update the attribute to the right condition area
