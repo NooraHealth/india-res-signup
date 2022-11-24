@@ -27,9 +27,11 @@ module Res
         if self.res_user.blank?
           self.errors = "User not found in DB"
         else
-          unless self.res_user.update(condition_area_id: self.condition_area_id)
-            self.errors = self.res_user.errors.full_messages
-          end
+          # unless self.res_user.update(condition_area_id: self.condition_area_id)
+          #   self.errors = self.res_user.errors.full_messages
+          # end
+
+          self.res_user.add_condition_area(NooraProgram.id_for(:sdh), self.condition_area_id)
 
           # To update the signup tracker, we will look for the existing active tracker.
           # For that object, if condition_area_id is nil they are signing up for SDH again, so we can update the attribute
