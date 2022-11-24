@@ -27,7 +27,8 @@ module Res
         when "d_and_h"
           self.condition_area_ids = [ConditionArea.ids_for(:diabetes, :hypertension)]
         end
-        self.logger.info("Condition area chosen by user: #{ConditionArea.find(self.condition_area_id).name}")
+
+        self.logger.info("Condition area chosen by user: #{ConditionArea.where(id: self.condition_area_ids).pluck(:name).to_sentence}")
 
         # check if the user already exists
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
