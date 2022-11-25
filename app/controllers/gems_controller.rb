@@ -3,7 +3,7 @@ class GemsController < ApplicationController
   attr_accessor :res_user
 
   def modality_selection
-    logger = Logger.new("#{Rails.root}/log/gems_modality_selection.log")
+    logger = Logger.new("#{Rails.root}/log/gems/modality_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ModalitySelection.(logger, gems_params)
@@ -15,7 +15,7 @@ class GemsController < ApplicationController
 
 
   def language_selection
-    logger = Logger.new("#{Rails.root}/log/gems_language_selection.log")
+    logger = Logger.new("#{Rails.root}/log/gems/language_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::LanguageSelection.(logger, gems_params)
@@ -27,7 +27,7 @@ class GemsController < ApplicationController
 
 
   def confirm_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/gems_whatsapp_number_confirmation.log")
+    logger = Logger.new("#{Rails.root}/log/gems/whatsapp_number_confirmation.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ConfirmWhatsappNumber.(logger, gems_params)
@@ -39,7 +39,7 @@ class GemsController < ApplicationController
 
 
   def change_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/gems_change_whatsapp_number.log")
+    logger = Logger.new("#{Rails.root}/log/gems/change_whatsapp_number.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ChangeWhatsappNumber.(logger, gems_params)
@@ -51,7 +51,7 @@ class GemsController < ApplicationController
 
 
   def condition_area_selection
-    logger = Logger.new("#{Rails.root}/log/gems_condition_area_selection.log")
+    logger = Logger.new("#{Rails.root}/log/gems/condition_area_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ConditionAreaSelection.(logger, gems_params)
@@ -63,7 +63,7 @@ class GemsController < ApplicationController
 
 
   def outro_message
-    logger = Logger.new("#{Rails.root}/log/gems_outro_message.log")
+    logger = Logger.new("#{Rails.root}/log/gems/outro_message.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params
@@ -81,7 +81,7 @@ class GemsController < ApplicationController
   # 1 - user present and has fully signed up for the GEMS program
   # 0 - user not present, and is signing up for the first time, or hasn't signed up completely
   def check_existing_user
-    logger = Logger.new("#{Rails.root}/log/gems_checking_existing_user.log")
+    logger = Logger.new("#{Rails.root}/log/gems/checking_existing_user.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params

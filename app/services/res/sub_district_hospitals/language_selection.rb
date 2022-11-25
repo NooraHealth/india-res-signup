@@ -38,6 +38,7 @@ module Res
                                    state_id: self.state_id)
           unless self.res_user.save
             self.errors = self.res_user.errors.full_messages
+            return
           end
 
           # also create an entry on the signup tracker which records details of a user's signup
@@ -63,6 +64,8 @@ module Res
 
         self
       end
+
+
     end
   end
 end
