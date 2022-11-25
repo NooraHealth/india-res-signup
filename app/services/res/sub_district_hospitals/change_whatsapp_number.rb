@@ -31,24 +31,23 @@ module Res
         # find the user first, throw error if not
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
         if self.res_user.blank?
-          self.errors = "User not found"
+          self.errors << "User not found"
           return self
         end
 
         # validate if all attributes are present for the user to be onboarded on WA
-
-        if self.res_user.condition_area_id.blank?
-          self.errors = "User has not chosen condition area"
+        if self.res_user.user_condition_area_mappings.where(noora_program_id: NooraProgram.id_for(:sdh)).empty?
+          self.errors << "User has not chosen condition area"
           return self
         end
 
         if self.res_user.program_id.blank?
-          self.errors = "User has is not part of any program"
+          self.errors << "User is not part of any program"
           return self
         end
 
         if self.res_user.language_preference_id.blank?
-          self.errors = "User has not chosen language preference"
+          self.errors << "User has not chosen language preference"
           return self
         end
 

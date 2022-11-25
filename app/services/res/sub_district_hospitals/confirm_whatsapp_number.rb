@@ -31,7 +31,7 @@ module Res
         end
 
         if self.res_user.program_id.blank?
-          self.errors << "User has is not part of any program"
+          self.errors << "User is not part of any program"
           return self
         end
 
