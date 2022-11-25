@@ -7,7 +7,7 @@ module Res
   module SubDistrictHospitals
     class LanguageSelection < Res::SubDistrictHospitals::Base
 
-      attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id, :exophone
+      attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id, :exophone, :state_id
 
       def initialize(logger, exotel_params)
         super(logger)
