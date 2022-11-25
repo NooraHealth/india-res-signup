@@ -55,6 +55,7 @@ module ExotelWebhook
       language_id = self.exotel_params.deep_find("language_id")
 
       call_to = self.exotel_params["CallTo"]
+      exophone = self.exotel_params["To"]
 
       # TODO - add more params as they become relevant
 
@@ -64,7 +65,7 @@ module ExotelWebhook
         current_time: current_time,
         language_id: language_id,
         call_to: call_to,
-        exophone: call_to
+        exophone: exophone
       }
     end
 
