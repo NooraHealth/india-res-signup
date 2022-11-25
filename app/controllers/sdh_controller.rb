@@ -3,7 +3,7 @@ class SdhController < ApplicationController
   attr_accessor :res_user
 
   def modality_selection
-    logger = Logger.new("#{Rails.root}/log/sdh_modality_selection.log")
+    logger = Logger.new("#{Rails.root}/log/sdh/modality_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
     op = Res::SubDistrictHospitals::ModalitySelection.(logger, sdh_params)
@@ -15,7 +15,7 @@ class SdhController < ApplicationController
 
 
   def language_selection
-    logger = Logger.new("#{Rails.root}/log/sdh_language_selection.log")
+    logger = Logger.new("#{Rails.root}/log/sdh/language_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
     op = Res::SubDistrictHospitals::LanguageSelection.(logger, sdh_params)
@@ -27,7 +27,7 @@ class SdhController < ApplicationController
 
 
   def confirm_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/sdh_whatsapp_number_confirmation.log")
+    logger = Logger.new("#{Rails.root}/log/sdh/whatsapp_number_confirmation.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
     op = Res::SubDistrictHospitals::ConfirmWhatsappNumber.(logger, sdh_params)
@@ -39,7 +39,7 @@ class SdhController < ApplicationController
 
 
   def change_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/sdh_change_whatsapp_number.log")
+    logger = Logger.new("#{Rails.root}/log/sdh/change_whatsapp_number.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
     op = Res::SubDistrictHospitals::ChangeWhatsappNumber.(logger, sdh_params)
@@ -51,7 +51,7 @@ class SdhController < ApplicationController
 
 
   def condition_area_selection
-    logger = Logger.new("#{Rails.root}/log/sdh_condition_area_selection.log")
+    logger = Logger.new("#{Rails.root}/log/sdh/condition_area_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
     op = Res::SubDistrictHospitals::ConditionAreaSelection.(logger, sdh_params)

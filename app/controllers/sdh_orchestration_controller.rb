@@ -1,15 +1,20 @@
 class SdhOrchestrationController < ApplicationController
 
-
   # checks if the user is part of the SDH program
   # 1 - user present and has signed up for the SDH program
   # 0 - user not present or has not signed up fully for SDH
   def check_existing_user
+    logger = Logger.new("#{Rails.root}/log/sdh/check_existing_user.log")
+    logger.info("-------------------------------------")
+    logger.info("Exotel parameters are: #{sdh_params}")
+
     parsed_params = ExotelWebhook::ParseExotelParams.(sdh_params)
     user = User.find_by mobile_number: parsed_params[:user_mobile]
     if user.present? and user.fully_signed_up_for_sdh?
       render json: {select: 1}
+      logger.info("User found and fully signed up with mobile number: #{user.mobile_number}")
     else
+      logger.info("User not found or not fully signed up with mobile number: #{sdh_params["CallFrom"]}")
       render json: {select: 0}
     end
   end
