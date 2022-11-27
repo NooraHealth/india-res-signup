@@ -70,7 +70,7 @@ module Res
         if number.length == 10
           "0#{number}"
         elsif number.length < 10
-          self.errors = "Number is not of sufficient length"
+          self.errors << "Number is not of sufficient length"
           return number
         end
       end
