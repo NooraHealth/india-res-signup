@@ -4,6 +4,8 @@ class GemsController < ApplicationController
 
   before_action :initiate_logger
 
+  skip_before_action :verify_authenticity_token
+
   def modality_selection
     op = Res::Gems::ModalitySelection.(logger, gems_params)
     if op.errors.present?
