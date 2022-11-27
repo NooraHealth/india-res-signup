@@ -28,7 +28,7 @@ module Res
         end
 
         # add user to the respective condition area
-        self.condition_area_ids.each do |ca_id|
+        condition_area_ids.each do |ca_id|
           self.res_user.add_condition_area(NooraProgram.id_for(:gems), ca_id)
         end
 
