@@ -95,7 +95,7 @@ Rails.application.routes.draw do
   get 'gems/language_selection', to: 'gems#language_selection'
 
   # condition area selection - endpoint that collects the condition area of the user through IVR options
-  get 'gems/condition_area_selection', to: 'gems#condition_area_selection'
+  get 'gems/condition_area_selection', to: 'gems#ivr_condition_area_selection'
 
   # this endpoint updates the condition area of the user based on their selection in the WA bot
   post 'gems/whatsapp_condition_area_selection', to: 'gems#whatsapp_condition_area_selection'
