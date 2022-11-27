@@ -1,11 +1,10 @@
 class GemsController < ApplicationController
 
-  attr_accessor :res_user
+  attr_accessor :res_user, :logger
+
+  before_action :initiate_logger
 
   def modality_selection
-    logger = Logger.new("#{Rails.root}/log/gems/modality_selection.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ModalitySelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
@@ -15,9 +14,6 @@ class GemsController < ApplicationController
 
 
   def language_selection
-    logger = Logger.new("#{Rails.root}/log/gems/language_selection.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::LanguageSelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
@@ -27,9 +23,6 @@ class GemsController < ApplicationController
 
 
   def confirm_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/gems/whatsapp_number_confirmation.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ConfirmWhatsappNumber.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
@@ -39,9 +32,6 @@ class GemsController < ApplicationController
 
 
   def change_whatsapp_number
-    logger = Logger.new("#{Rails.root}/log/gems/change_whatsapp_number.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     op = Res::Gems::ChangeWhatsappNumber.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
@@ -50,11 +40,9 @@ class GemsController < ApplicationController
   end
 
 
-  def condition_area_selection
-    logger = Logger.new("#{Rails.root}/log/gems/condition_area_selection.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
-    op = Res::Gems::ConditionAreaSelection.(logger, gems_params)
+  # when the user selects their condition area through an IVR Call
+  def ivr_condition_area_selection
+    op = Res::Gems::IvrConditionAreaSelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
@@ -62,10 +50,18 @@ class GemsController < ApplicationController
   end
 
 
+  # when the user selects their condition area through WA message
+  def whatsapp_condition_area_selection
+    op = Res::Gems::WhatsappConditionAreaSelection.(logger, gems_params)
+    if op.errors.present?
+      logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+    end
+    logger.info("Successfully selected user's condition area")
+  end
+
+
+
   def outro_message
-    logger = Logger.new("#{Rails.root}/log/gems/outro_message.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params
     if user.signed_up_to_ivr
       render json: {select: 1}
@@ -81,9 +77,6 @@ class GemsController < ApplicationController
   # 1 - user present and has fully signed up for the GEMS program
   # 0 - user not present, and is signing up for the first time, or hasn't signed up completely
   def check_existing_user
-    logger = Logger.new("#{Rails.root}/log/gems/checking_existing_user.log")
-    logger.info("-------------------------------------")
-    logger.info("Exotel parameters are: #{gems_params}")
     user = retrieve_user_from_params
     if user.present? && user.fully_signed_up_to_gems?
       render json: {select: 1}
@@ -104,6 +97,12 @@ class GemsController < ApplicationController
   def retrieve_user_from_params
     parsed_exotel_params = ExotelWebhook::ParseExotelParams.(gems_params)
     res_user = User.find_by(mobile_number: parsed_exotel_params[:user_mobile])
+  end
+
+  def initiate_logger
+    self.logger = Logger.new("#{Rails.root}/log/gems/#{action_name}.log")
+    self.logger.info("-------------------------------------")
+    logger.info("API parameters are: #{gems_params}")
   end
 
 end

@@ -21,6 +21,7 @@
 #                           gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#modality_selection
 #                           gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#language_selection
 #                     gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#condition_area_selection
+#            gems_whatsapp_condition_area_selection POST /gems/whatsapp_condition_area_selection(.:format)                                        gems#whatsapp_condition_area_selection
 #                              gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
 #                          gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
 #                      gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
@@ -93,8 +94,11 @@ Rails.application.routes.draw do
   # language selection - endpoint that specifies the language selected by the user
   get 'gems/language_selection', to: 'gems#language_selection'
 
-  # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
+  # condition area selection - endpoint that collects the condition area of the user through IVR options
   get 'gems/condition_area_selection', to: 'gems#condition_area_selection'
+
+  # this endpoint updates the condition area of the user based on their selection in the WA bot
+  post 'gems/whatsapp_condition_area_selection', to: 'gems#whatsapp_condition_area_selection'
 
   # endpoint that plays the right outro message based on the user's modality selection
   get 'gems/outro_selection', to: 'gems#outro_message'

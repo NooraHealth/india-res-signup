@@ -56,11 +56,15 @@ class User < ApplicationRecord
     "+91#{number}"
   end
 
+  def sdh_user?
+    self.program_id == NooraProgram.id_for(:sdh)
+  end
+
   # this method checks if a user has fully signed up for the SDH program
   def fully_signed_up_for_sdh?
     self.program_id == NooraProgram.id_for(:sdh) &&
       ((self.signed_up_to_whatsapp && self.whatsapp_number_confirmed) || self.signed_up_to_ivr) &&
-      self.condition_area_id.present?
+      self.user_condition_area_mappings.with_program_id(NooraProgram.id_for(:sdh)).present?
   end
 
   def gems_user?
@@ -71,23 +75,30 @@ class User < ApplicationRecord
     gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
   end
 
-  # this method adds a user to a condition area
+
+  ######################## CONDITION AREA RELATED METHODS #############################
+
+  # the below functions takes the program as an argument and returns the
+  # ID of the latest condition area in that program that the user belongs to
+  def retrieve_condition_area_id(program_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id).first&.condition_area_id
+  end
+
+
+  # the below functions takes the program as an argument and returns the
+  # latest condition area in that program that the user belongs to
+  def retrieve_condition_area(program_id)
+    ConditionArea.find_by(id: self.retrieve_condition_area_id(program_id))
+  end
+
+
+  # this method adds a user to a condition area, for a given program
   def add_condition_area(program_id, condition_area_id)
     if self.user_condition_area_mappings.with_program_id(program_id).pluck(:condition_area_id).include?(condition_area_id)
       # do nothing, because the user already belongs to that particular condition area
     else
       self.user_condition_area_mappings.build(condition_area_id: condition_area_id, noora_program_id: program_id).save
     end
-  end
-
-  # the below functions takes the program as an argument and returns the
-  # latest condition area in that program that the user belongs to
-  def retrieve_condition_area_id(program_id)
-    self.user_condition_area_mappings.where(noora_program_id: program_id).first&.condition_area_id
-  end
-
-  def retrieve_condition_area(program_id)
-    ConditionArea.find_by(id: self.retrieve_condition_area_id(program_id))
   end
 
   # for a given program, it updates the condition area of the user
@@ -101,6 +112,10 @@ class User < ApplicationRecord
   def remove_condition_area(program_id, condition_area_id)
     self.user_condition_area_mappings.where(noora_program_id: program_id, condition_area_id: condition_area_id).first&.destroy
   end
+
+  ######################## CONDITION AREA RELATED METHODS #############################
+
+
 
 
 end

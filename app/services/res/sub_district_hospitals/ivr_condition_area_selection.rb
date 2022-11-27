@@ -3,7 +3,7 @@
 
 module Res
   module SubDistrictHospitals
-    class ConditionAreaSelection < Res::SubDistrictHospitals::Base
+    class IvrConditionAreaSelection < Res::SubDistrictHospitals::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :condition_area_id
 

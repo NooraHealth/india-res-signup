@@ -3,7 +3,7 @@
 
 module Res
   module Gems
-    class ConditionAreaSelection < Res::Gems::Base
+    class IvrConditionAreaSelection < Res::Gems::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :condition_area_ids
 

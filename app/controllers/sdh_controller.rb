@@ -54,7 +54,7 @@ class SdhController < ApplicationController
     logger = Logger.new("#{Rails.root}/log/sdh/condition_area_selection.log")
     logger.info("-------------------------------------")
     logger.info("Exotel parameters are: #{sdh_params}")
-    op = Res::SubDistrictHospitals::ConditionAreaSelection.(logger, sdh_params)
+    op = Res::SubDistrictHospitals::IvrConditionAreaSelection.(logger, sdh_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
