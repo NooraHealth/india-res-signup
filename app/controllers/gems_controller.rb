@@ -85,7 +85,7 @@ class GemsController < ApplicationController
       logger.info("Option returned is: 1")
     else
       render json: {select: 0}
-      logger.info("Option returned is: 2")
+      logger.info("Option returned is: 0")
     end
   end
 

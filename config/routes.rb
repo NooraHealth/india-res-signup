@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   get 'sdh/language_selection', to: 'sdh#language_selection'
 
   # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
-  get 'sdh/condition_area_selection', to: 'sdh#condition_area_selection'
+  get 'sdh/condition_area_selection', to: 'sdh#ivr_condition_area_selection'
 
   # pin code input - endpoint that specifies the pin code of the user entered in either the IVR or chat
   get 'sdh/pin_code_input', to: 'sdh#pin_code_input'
