@@ -26,7 +26,7 @@
 #
 class User < ApplicationRecord
 
-  validates :mobile_number, presence: true
+  validates :mobile_number, presence: true, uniqueness: true
 
   belongs_to :program, class_name: "NooraProgram", optional: true
   belongs_to :condition_area, optional: true
