@@ -32,7 +32,7 @@ module Res
       def retrieve_textit_group
         condition_area_id = self.exophone.condition_area_id
         program_id = self.exophone.program_id
-        language_id = self.exophone.language_id
+        language_id = self.res_user.language_preference_id
         state_id = self.exophone.state_id # even if this field is nil, it works because the default value for this field is nil
         self.textit_group = TextitGroup.where(condition_area_id: condition_area_id,
                                               program_id: program_id,
@@ -41,6 +41,11 @@ module Res
         if self.textit_group.blank?
           self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"
         end
+      end
+
+      def check_user_on_textit
+        op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.logger)
+        op.user_found
       end
 
     end

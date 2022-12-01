@@ -88,7 +88,7 @@ module Res
           condition_area_id: self.exophone.condition_area_id,
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
-          incoming_call_date: Time.now
+          incoming_call_date: DateTime.now
         )
           self.errors << self.res_user.errors.full_messages
           return
@@ -124,10 +124,10 @@ module Res
         op = TextitRapidproApi::CreateUser.(params)
       end
 
-      def check_user_on_textit
-        op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.logger)
-        op.user_found
-      end
+      # def check_user_on_textit
+      #   op = TextitRapidproApi::CheckExistingUser.(id: self.res_user.id, logger: self.logger)
+      #   op.user_found
+      # end
 
     end
   end

@@ -103,9 +103,6 @@ Rails.application.routes.draw do
   # endpoint that plays the right outro message based on the user's modality selection
   get 'gems/outro_selection', to: 'gems#outro_message'
 
-  # this endpoint checks if the user has signed up before to the GEMS program
-  get 'gems/check_existing_user', to: 'gems#check_existing_user'
-
   # endpoint that confirms that a user's WA number is the same as their calling number
   get 'gems/confirm_whatsapp_number', to: 'gems#confirm_whatsapp_number'
 
@@ -119,6 +116,8 @@ Rails.application.routes.draw do
   get 'gems/retrieve_condition_area', to: 'gems_orchestration#retrieve_condition_area'
   # endpoint to get the number of days since the user signed up for the program
   get 'gems/retrieve_days_since_signup', to: 'gems_orchestration#number_of_days_since_signup'
+  # this endpoint checks if the user has signed up before to the GEMS program
+  get 'gems/check_existing_user', to: 'gems_orchestration#check_existing_user'
 
 
   #############################################################################################################################

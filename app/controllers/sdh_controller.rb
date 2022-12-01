@@ -1,6 +1,6 @@
 class SdhController < ApplicationController
 
-  attr_accessor :res_user
+  attr_accessor :res_user, :logger
 
   before_action :initiate_logger
 
