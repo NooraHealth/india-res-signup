@@ -42,9 +42,9 @@ class User < ApplicationRecord
   has_many :condition_areas, through: :user_condition_area_mappings
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
-  def whatsapp_mobile_number
-    super() || self.mobile_number
-  end
+  # def whatsapp_mobile_number
+  #   super() || self.mobile_number
+  # end
 
   def international_whatsapp_number
     number = self.whatsapp_mobile_number[1..self.whatsapp_mobile_number.length]
