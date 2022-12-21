@@ -7,7 +7,7 @@
 
 module Res
   module SubDistrictHospitals
-    class PinCodeInput < Res::SubDistrictHospitals::Base
+    class IvrPinCodeInput < Res::SubDistrictHospitals::Base
 
       attr_accessor :params
 

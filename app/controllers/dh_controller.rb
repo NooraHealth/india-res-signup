@@ -14,7 +14,7 @@ class DhController < ApplicationController
   end
 
 
-  # CURRENTLY NO USE CASE FOR BELOW ACTION
+  # CURRENTLY NO USE CASE FOR BELOW ACTION in DH
   # def change_whatsapp_number
   #   op = Res::SubDistrictHospitals::ChangeWhatsappNumber.(logger, sdh_params)
   #   if op.errors.present?

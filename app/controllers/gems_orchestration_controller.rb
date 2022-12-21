@@ -16,13 +16,26 @@ class GemsOrchestrationController < ApplicationController
   # 2 - Hypertension
   # 3 - Diabetes
   # 4 - Both Diabetes and Hypertension
-  # TODO - needs to be implemented
   def retrieve_condition_area
     user = retrieve_user_from_exotel_params
+    condition_areas = user.condition_areas
+    if condition_areas.pluck(:id).include?(ConditionArea.id_for(:diabetes))
+      if condition_areas.pluck(:id).include?(ConditionArea.id_for(:hypertension))
+        return_value = 4
+      else
+        return_value = 3
+      end
+    elsif condition_areas.include?(ConditionArea.id_for(:hypertension))
+      return_value = 2
+    else
+      return_value = 1
+    end
+    render json: {select: return_value}
   end
 
 
-
+  # this action returns the number of days from the date the user called
+  # i.e. incoming_call_date
   def number_of_days_since_signup
     user = retrieve_user_from_exotel_params
     no_of_days = (Date.today - user.incoming_call_date.to_date).to_i
@@ -40,6 +53,11 @@ class GemsOrchestrationController < ApplicationController
       logger.info("Option returned is: 1")
     else
       render json: {select: 0}
+      # also trigger operation to create the user in the DB
+      op = Res::Gems::InitializeUser.(gems_params)
+      if op.errors.present?
+        logger.info("Initializing user for GEMS flow failed because: #{op.errors.to_sentence}")
+      end
       logger.info("Option returned is: 0")
     end
   end

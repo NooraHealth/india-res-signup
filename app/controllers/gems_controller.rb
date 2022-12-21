@@ -62,6 +62,15 @@ class GemsController < ApplicationController
   end
 
 
+  def unsubscribe_ivr
+    op = Res::Gems::UnsubscribeIvr.(logger, gems_params)
+    if op.errors.present?
+      logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+    end
+    logger.info("Successfully selected unsubscribed from IVR services")
+  end
+
+
   private
 
   def gems_params

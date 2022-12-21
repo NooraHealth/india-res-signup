@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_21_203211) do
+ActiveRecord::Schema.define(version: 2022_12_16_130926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(version: 2022_11_21_203211) do
     t.integer "state_id"
     t.bigint "states_id"
     t.boolean "whatsapp_number_confirmed", default: false
+    t.datetime "ivr_unsubscribe_date"
+    t.datetime "whatsapp_unsubscribe_date"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["program_id"], name: "index_users_on_program_id"
