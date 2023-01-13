@@ -15,8 +15,8 @@ class SdhController < ApplicationController
   end
 
 
-  def language_selection
-    op = Res::SubDistrictHospitals::LanguageSelection.(logger, sdh_params)
+  def ivr_language_selection
+    op = Res::SubDistrictHospitals::IvrLanguageSelection.(logger, sdh_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end

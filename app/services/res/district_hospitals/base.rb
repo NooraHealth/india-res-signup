@@ -29,6 +29,8 @@ module Res
 
       # this logic here makes sense because the details of which textit group
       # the user belongs to is uniquely identified by the exophone number
+      # This is, of course, an assumption and doesn't necessarily hold for
+      # the SDH and GEMS Signup workflows
       def retrieve_textit_group
         condition_area_id = self.exophone.condition_area_id
         program_id = self.exophone.program_id

@@ -1,5 +1,4 @@
 # The first step of onboarding a user onto the GEMS program: language selection
-#
 
 module Res
   module Gems

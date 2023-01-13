@@ -24,6 +24,7 @@ module DistrictHospitals
       op = Res::DistrictHospitals::ExotelWaSignup.(logger, hp_dh_params)
       if op.errors.present?
         logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+        return
       end
       logger.info("Successfully signed up user to WhatsApp")
     end

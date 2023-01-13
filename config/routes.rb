@@ -54,7 +54,8 @@ Rails.application.routes.draw do
   get 'sdh/modality_selection', to: 'sdh#modality_selection'
 
   # language selection - endpoint that specifies the language selected by the user
-  get 'sdh/language_selection', to: 'sdh#language_selection'
+  # TODO - change this endpoint in all flows
+  get 'sdh/language_selection', to: 'sdh#ivr_language_selection'
 
   # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
   get 'sdh/condition_area_selection', to: 'sdh#ivr_condition_area_selection'
@@ -138,10 +139,13 @@ Rails.application.routes.draw do
 
 
   ##################################################### HP Endpoints ########################################################
-  #############################################################################################################################
+  ###########################################################################################################################
 
   get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
   get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
   get 'mch/hp/initialize_user', to: 'district_hospitals/hp#initialize_user'
+
+  ###########################################################################################################################
+  ##################################################### HP Endpoints ########################################################
 
 end
