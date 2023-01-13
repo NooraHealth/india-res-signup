@@ -54,7 +54,7 @@ class GemsOrchestrationController < ApplicationController
     else
       render json: {select: 0}
       # also trigger operation to create the user in the DB
-      op = Res::Gems::InitializeUser.(gems_params)
+      op = Res::Gems::InitializeUser.(self.logger, gems_params)
       if op.errors.present?
         logger.info("Initializing user for GEMS flow failed because: #{op.errors.to_sentence}")
       end

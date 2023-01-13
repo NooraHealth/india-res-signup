@@ -51,10 +51,10 @@ Rails.application.routes.draw do
 
   ####################################################### SDH Endpoints #######################################################
   # modality selection - endpoint that specifies the modalities of the user's intervention
-  get 'sdh/modality_selection', to: 'sdh#modality_selection'
+  get 'sdh/modality_selection', to: 'sdh#ivr_modality_selection'
 
   # language selection - endpoint that specifies the language selected by the user
-  # TODO - change this endpoint in all flows
+  # TODO - change this endpoint in all flows to reflect the mode in which language is changing
   get 'sdh/language_selection', to: 'sdh#ivr_language_selection'
 
   # condition area selection - endpoint that specifies the condition area of the user. ANC or PNC
@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get 'sdh/check_condition_area_selection_completion', to: 'sdh#check_condition_area_selection_complete'
   get 'sdh/check_whatsapp_number_confirmation_completion', to: 'sdh#check_whatsapp_number_confirmation_complete'
 
+
   ################### SDH Orchestration #####################
   # the below are APIs being used for orchestrating IVR audios on a weekly basis
   get 'sdh/check_existing_user', to: 'sdh_orchestration#check_existing_user'
@@ -95,10 +96,12 @@ Rails.application.routes.draw do
   ##################################################### GEMS Endpoints ########################################################
   #############################################################################################################################
   # modality selection - endpoint that specifies the modalities of the user's intervention
-  get 'gems/modality_selection', to: 'gems#modality_selection'
+  # This endpoint is for modality selection through IVR
+  get 'gems/modality_selection', to: 'gems#ivr_modality_selection'
 
   # language selection - endpoint that specifies the language selected by the user
-  get 'gems/language_selection', to: 'gems#language_selection'
+  # This is the endpoint for language selection via IVR
+  get 'gems/language_selection', to: 'gems#ivr_language_selection'
 
   # condition area selection - endpoint that collects the condition area of the user through IVR options
   get 'gems/condition_area_selection', to: 'gems#ivr_condition_area_selection'

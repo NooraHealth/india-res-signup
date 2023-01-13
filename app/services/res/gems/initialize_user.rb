@@ -20,11 +20,16 @@ module Res
 
         # since the user doesn't exist at all, create the user with the bare minimum that we know about
         # the user - which is the state and the program details
-        self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
-                                 program_id: NooraProgram.id_for(:gems),
-                                 state_id: State.id_for("Punjab"))
-        unless res_user.save
-          self.errors << self.res_user.errors.full_messages
+        # if the user already exists, then don't do anything
+        self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
+
+        if self.res_user.blank?
+          self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
+                                   program_id: NooraProgram.id_for(:gems),
+                                   state_id: State.id_for("Punjab"))
+          unless res_user.save
+            self.errors << self.res_user.errors.full_messages
+          end
         end
 
         self

@@ -5,7 +5,7 @@
 
 module Res
   module Gems
-    class ModalitySelection < Res::Gems::Base
+    class IvrModalitySelection < Res::Gems::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :modality
 

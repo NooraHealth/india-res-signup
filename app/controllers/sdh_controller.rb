@@ -6,8 +6,8 @@ class SdhController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  def modality_selection
-    op = Res::SubDistrictHospitals::ModalitySelection.(logger, sdh_params)
+  def ivr_modality_selection
+    op = Res::SubDistrictHospitals::IvrModalitySelection.(logger, sdh_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
@@ -68,6 +68,18 @@ class SdhController < ApplicationController
 
   end
 
+  # this action returns the right modality of the user based on their selection in the previous menus
+  def outro_message
+    user = retrieve_user_from_params
+    if user.signed_up_to_ivr && user.signed_up_to_whatsapp
+      render json: {select: 3}
+    elsif user.signed_up_to_ivr
+      render json: {select: 1}
+    elsif user.signed_up_to_whatsapp
+      render json: {select: 2}
+    end
+  end
+
 
   def check_language_selection_complete
     self.res_user = retrieve_user_from_params
@@ -106,19 +118,6 @@ class SdhController < ApplicationController
       render json: {select: 1}
     else
       render json: {select: 0}
-    end
-  end
-
-
-  # this action returns the right modality of the user based on their selection in the previous menus
-  def outro_message
-    user = retrieve_user_from_params
-    if user.signed_up_to_ivr && user.signed_up_to_whatsapp
-      render json: {select: 3}
-    elsif user.signed_up_to_ivr
-      render json: {select: 1}
-    elsif user.signed_up_to_whatsapp
-      render json: {select: 2}
     end
   end
 

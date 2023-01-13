@@ -6,8 +6,8 @@ class GemsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  def modality_selection
-    op = Res::Gems::ModalitySelection.(logger, gems_params)
+  def ivr_modality_selection
+    op = Res::Gems::IvrModalitySelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
@@ -15,12 +15,12 @@ class GemsController < ApplicationController
   end
 
 
-  def language_selection
-    op = Res::Gems::LanguageSelection.(logger, gems_params)
+  def ivr_language_selection
+    op = Res::Gems::IvrLanguageSelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
     end
-    logger.info("Successfully selected user's language")
+    logger.info("Successfully updated user's language")
   end
 
 

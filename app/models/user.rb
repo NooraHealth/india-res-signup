@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   belongs_to :program, class_name: "NooraProgram", optional: true
   belongs_to :condition_area, optional: true
-  belongs_to :language_preference, class_name: "Language"
+  belongs_to :language_preference, class_name: "Language", optional: true
   belongs_to :hospital, optional: true
   belongs_to :state, optional: true
 

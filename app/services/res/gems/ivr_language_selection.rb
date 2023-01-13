@@ -2,7 +2,7 @@
 
 module Res
   module Gems
-    class LanguageSelection < Res::Gems::Base
+    class IvrLanguageSelection < Res::Gems::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id,
                     :exophone, :state_id
