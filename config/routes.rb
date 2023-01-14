@@ -130,7 +130,7 @@ Rails.application.routes.draw do
   # endpoint to get the number of days since the user signed up for the program
   get 'gems/retrieve_days_since_signup', to: 'gems_orchestration#number_of_days_since_signup'
   # this endpoint checks if the user has signed up before to the GEMS program
-  get 'gems/check_existing_user', to: 'gems_orchestration#check_existing_user'
+  get 'gems/check_existing_user', to: 'gems#check_existing_user'
 
 
   #############################################################################################################################
