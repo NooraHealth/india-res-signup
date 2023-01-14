@@ -1,4 +1,6 @@
 # The first step of onboarding a user onto the GEMS program: language selection
+# This operation also acts as the default entry point for all users in SDH, where
+# the patient's number is stored and processed later in case they did not sign up completely
 
 module Res
   module Gems

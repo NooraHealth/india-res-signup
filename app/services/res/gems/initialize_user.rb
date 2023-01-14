@@ -2,7 +2,10 @@
 # So irrespective of the user selecting any option within the IVR, the user is
 # added to our DB so that we can follow up with them even if they didn't fully sign up
 
-
+####################################################################################
+######################## NOT BEING USED CURRENTLY ##################################
+####################################################################################
+#
 module Res
   module Gems
     class InitializeUser < Res::Gems::Base
@@ -29,6 +32,7 @@ module Res
                                    state_id: State.id_for("Punjab"))
           unless res_user.save
             self.errors << self.res_user.errors.full_messages
+            return self
           end
         end
 

@@ -80,6 +80,9 @@ class User < ApplicationRecord
 
   ######################## CONDITION AREA RELATED METHODS #############################
 
+  # TODO - add an active lag to the user-condition-area mapping table to keep track of which intervention
+  # the user is currently a part of. This will, by default, be the one that they signed up last
+  
   # the below functions takes the program as an argument and returns the
   # ID of the latest condition area in that program that the user belongs to
   def retrieve_condition_area_id(program_id)
