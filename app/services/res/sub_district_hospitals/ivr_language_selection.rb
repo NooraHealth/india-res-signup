@@ -1,11 +1,13 @@
-# There are multiple steps in the way a user is onboarded onto the SDH platform.
+# There are multiple steps in the way a user is onboarded onto the SDH program.
 # This operation specifies the language of a user based on what they select in the IVR or WA message
 # If the user has signed up to any of our previous programs, their condition_area and language fields are reset to nil
-#
+
+# Currently this also serves as the initialization of user onto the SDH program
+# In both states the default language is predetermined as Hindi or Kannada
 
 module Res
   module SubDistrictHospitals
-    class LanguageSelection < Res::SubDistrictHospitals::Base
+    class IvrLanguageSelection < Res::SubDistrictHospitals::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id, :exophone, :state_id
 

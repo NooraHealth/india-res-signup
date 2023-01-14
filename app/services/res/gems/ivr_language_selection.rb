@@ -1,9 +1,10 @@
 # The first step of onboarding a user onto the GEMS program: language selection
-#
+# This operation also acts as the default entry point for all users in SDH, where
+# the patient's number is stored and processed later in case they did not sign up completely
 
 module Res
   module Gems
-    class LanguageSelection < Res::Gems::Base
+    class IvrLanguageSelection < Res::Gems::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :language_id,
                     :exophone, :state_id

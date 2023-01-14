@@ -1,8 +1,9 @@
 # this operation understands the modalities the user wants to opt in for and updates the User model accordingly
+# this particular operation is for modality selection through IVR
 
 module Res
   module SubDistrictHospitals
-    class ModalitySelection < Res::SubDistrictHospitals::Base
+    class IvrModalitySelection < Res::SubDistrictHospitals::Base
 
       attr_accessor :exotel_params, :parsed_exotel_params, :res_user, :modality
 

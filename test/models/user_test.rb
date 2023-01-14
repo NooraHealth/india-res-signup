@@ -23,6 +23,8 @@
 #  state_id                  :integer
 #  states_id                 :bigint
 #  whatsapp_number_confirmed :boolean          default(FALSE)
+#  ivr_unsubscribe_date      :datetime
+#  whatsapp_unsubscribe_date :datetime
 #
 require 'test_helper'
 

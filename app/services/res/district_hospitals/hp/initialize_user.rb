@@ -31,9 +31,21 @@ module Res
                                      signed_up_to_whatsapp: true)
             unless self.res_user.save
               self.errors << self.res_user.errors.full_messages
+              return self
             end
+          else # i.e. the user already exists and is calling again for signing up with the HP service, so in this case
+            # update the state and language preferences of the user accordingly.
+            self.res_user.update(language_preference_id: Language.id_for(:hindi),
+                                 program_id: NooraProgram.id_for(:mch),
+                                 state_id: State.id_for("Himachal Pradesh"),
+                                 signed_up_to_whatsapp: true)
 
           end
+
+          # also create an entry on the signup tracker which records details of a user's signup
+          self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:mch),
+                                                   language_id: self.res_user.language_preference_id,
+                                                   active: true).save
 
           # adding new condition area to user
           self.res_user.add_condition_area(NooraProgram.id_for(:mch), ConditionArea.id_for(:pnc))
