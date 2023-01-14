@@ -23,7 +23,7 @@ module Res
         # retrieve user from the database
         retrieve_user
         if self.res_user.blank?
-          self.errors = "User not found in DB"
+          self.errors << "User not found in DB"
           return self
         end
 

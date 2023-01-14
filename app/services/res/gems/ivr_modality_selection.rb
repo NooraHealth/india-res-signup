@@ -29,7 +29,8 @@ module Res
 
         # if user doesn't exist, create them
         if self.res_user.blank?
-          self.errors = "User not found in DB"
+          self.errors << "User not found in DB"
+          return self
         else
           unless self.res_user.update(signed_up_to_whatsapp: (self.res_user.signed_up_to_whatsapp || (modality == "whatsapp")),
                                       signed_up_to_ivr: (self.res_user.signed_up_to_ivr || (modality == "ivr")))
@@ -47,7 +48,7 @@ module Res
         if self.res_user.signed_up_to_whatsapp
           op = Res::Gems::WaSignup.(self.logger, self.exotel_params)
           if op.errors.present?
-            self.errors = op.errors
+            self.errors += op.errors
             return self
           end
         end
