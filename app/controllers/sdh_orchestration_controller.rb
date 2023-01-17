@@ -47,7 +47,7 @@ class SdhOrchestrationController < ApplicationController
   end
 
   def retrieve_user_from_exotel_params
-    parsed_exotel_params = ExotelWebhook::ParseExotelParams.(gems_params)
+    parsed_exotel_params = ExotelWebhook::ParseExotelParams.(sdh_params)
     res_user = User.find_by(mobile_number: parsed_exotel_params[:user_mobile])
   end
 
