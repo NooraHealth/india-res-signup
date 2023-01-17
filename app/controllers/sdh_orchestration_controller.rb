@@ -2,6 +2,8 @@ class SdhOrchestrationController < ApplicationController
 
   attr_accessor :logger
 
+  before_action :initiate_logger
+
   # checks if the user is part of the SDH program
   # 1 - user present and has signed up for the SDH program
   # 0 - user not present or has not signed up fully for SDH
