@@ -98,16 +98,6 @@ ActiveRecord::Schema.define(version: 2022_12_16_130926) do
     t.index ["user_id"], name: "index_user_condition_area_mappings_on_user_id"
   end
 
-  create_table "user_program_trackers", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "noora_program_id"
-    t.boolean "active", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["noora_program_id"], name: "index_user_program_trackers_on_noora_program_id"
-    t.index ["user_id"], name: "index_user_program_trackers_on_user_id"
-  end
-
   create_table "user_signup_trackers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "condition_area_id"
@@ -163,8 +153,6 @@ ActiveRecord::Schema.define(version: 2022_12_16_130926) do
   add_foreign_key "user_condition_area_mappings", "condition_areas"
   add_foreign_key "user_condition_area_mappings", "noora_programs"
   add_foreign_key "user_condition_area_mappings", "users"
-  add_foreign_key "user_program_trackers", "noora_programs"
-  add_foreign_key "user_program_trackers", "users"
   add_foreign_key "user_signup_trackers", "condition_areas"
   add_foreign_key "user_signup_trackers", "languages"
   add_foreign_key "user_signup_trackers", "noora_programs"
