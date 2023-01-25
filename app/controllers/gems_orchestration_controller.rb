@@ -7,7 +7,18 @@ class GemsOrchestrationController < ApplicationController
   # this action retrieves the language preference of the user if they are a part of the GEMS program
   def retrieve_language
     user = retrieve_user_from_exotel_params
-    render json: {select: user&.language_preference_id}
+
+    if user.nil?
+      return render json: { error: "User doesn't exist", code: "NO_USER" }, status: 404
+    end
+
+    lang = user&.language_preference
+
+    if lang.nil?
+      render json: { error: "Lang on user not set", code: "NO_USER_LANG" }, status: 404
+    else
+      render json: { select: lang.id, lang_code: lang.iso_code }
+    end
   end
 
 
