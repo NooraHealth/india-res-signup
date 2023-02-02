@@ -40,7 +40,7 @@ module DistrictHospitals
 
 
     def baby_age_in_weeks
-      user = retrieve_user_from_exotel_params
+      user = retrieve_user_from_params
       if user.present?
         age = ((Date.today - user.baby_date_of_birth&.to_date).to_i) rescue 1
         weeks = (age.to_f / 7 + 0.1).ceil
