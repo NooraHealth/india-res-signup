@@ -25,6 +25,9 @@
 #  whatsapp_number_confirmed :boolean          default(FALSE)
 #  ivr_unsubscribe_date      :datetime
 #  whatsapp_unsubscribe_date :datetime
+#  last_menstrual_period     :datetime
+#  expected_date_of_delivery :datetime
+#  onboarding_method_id      :bigint
 #
 class User < ApplicationRecord
 
@@ -35,6 +38,7 @@ class User < ApplicationRecord
   belongs_to :language_preference, class_name: "Language", optional: true
   belongs_to :hospital, optional: true
   belongs_to :state, optional: true
+  belongs_to :onboarding_method, optional: true
 
   has_many :user_signup_trackers, dependent: :destroy
 
@@ -42,6 +46,9 @@ class User < ApplicationRecord
 
   has_many :user_condition_area_mappings, dependent: :destroy
   has_many :condition_areas, through: :user_condition_area_mappings
+
+
+  has_one :rch_profile
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number

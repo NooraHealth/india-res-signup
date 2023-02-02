@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_02_083918) do
+ActiveRecord::Schema.define(version: 2023_02_02_112214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,12 @@ ActiveRecord::Schema.define(version: 2023_02_02_083918) do
   end
 
   create_table "noora_programs", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "onboarding_methods", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -174,8 +180,12 @@ ActiveRecord::Schema.define(version: 2023_02_02_083918) do
     t.boolean "whatsapp_number_confirmed", default: false
     t.datetime "ivr_unsubscribe_date"
     t.datetime "whatsapp_unsubscribe_date"
+    t.datetime "last_menstrual_period"
+    t.datetime "expected_date_of_delivery"
+    t.bigint "onboarding_method_id"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
+    t.index ["onboarding_method_id"], name: "index_users_on_onboarding_method_id"
     t.index ["program_id"], name: "index_users_on_program_id"
     t.index ["states_id"], name: "index_users_on_states_id"
   end
@@ -204,5 +214,6 @@ ActiveRecord::Schema.define(version: 2023_02_02_083918) do
   add_foreign_key "users", "hospitals"
   add_foreign_key "users", "languages", column: "language_preference_id"
   add_foreign_key "users", "noora_programs", column: "program_id"
+  add_foreign_key "users", "onboarding_methods"
   add_foreign_key "users", "states"
 end

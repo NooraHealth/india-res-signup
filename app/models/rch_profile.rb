@@ -23,4 +23,6 @@
 #
 class RchProfile < ApplicationRecord
   belongs_to :user
+
+  validates :rch_id, uniqueness: true
 end

@@ -38,6 +38,8 @@
 #           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
 #                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
+#                          rch_rch_external_onboard POST /rch/rch_external_onboard(.:format)                                                      rch_portal/onboarding#external
+#                          rch_turn_language_change PUT  /rch/turn_language_change(.:format)                                                      rch_portal/onboarding#update_language
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -169,6 +171,18 @@ Rails.application.routes.draw do
 
   ###########################################################################################################################
   ##################################################### UNICEF SNCU Endpoints ########################################################
+
+
+
+  ##################################################### RCH Endpoints ################################################################
+  ###########################################################################################################################
+
+  post 'rch/rch_external_onboard', to: 'rch_portal/onboarding#external'
+  put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
+  # TODO - add all the rest of the RCH endpoints
+
+  ###########################################################################################################################
+  ##################################################### RCH Endpoints ################################################################
 
 
 end
