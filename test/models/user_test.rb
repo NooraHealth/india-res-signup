@@ -25,6 +25,9 @@
 #  whatsapp_number_confirmed :boolean          default(FALSE)
 #  ivr_unsubscribe_date      :datetime
 #  whatsapp_unsubscribe_date :datetime
+#  last_menstrual_period     :datetime
+#  expected_date_of_delivery :datetime
+#  onboarding_method_id      :bigint
 #
 require 'test_helper'
 

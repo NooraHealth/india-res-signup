@@ -37,18 +37,8 @@ module ExotelWebhook
 
       direction = self.exotel_params.deep_find("Direction")
 
-      # based on the direction, determine the user's mobile number
-      # in case its incoming, we can use CallFrom,
-      # in case its outgoing, we can use CallTo
-      case direction
-      when "incoming"
-        user_mobile = self.exotel_params.deep_find("CallFrom")
-      when "outgoing", "outbound-dial"
-        user_mobile = self.exotel_params.deep_find("CallFrom")
-        # falling back to incoming as the default
-      else
-        user_mobile = self.exotel_params.deep_find("CallFrom")
-      end
+      # the user's mobile number is always going to be the CallFrom attribute
+      user_mobile = self.exotel_params.deep_find("CallFrom")
 
       current_time = self.exotel_params.deep_find("CurrentTime")
 

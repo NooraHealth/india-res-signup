@@ -20,7 +20,7 @@ module Res
         # parse exotel params to get a simple hash with details like
         self.parsed_exotel_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
-        # extract the language preference and state of the user
+        # extract the language preference and state of the user from params
         self.language_id = Language.id_for(self.exotel_params[:language].to_s)
         self.logger.info("Language selected is: #{self.exotel_params[:language].to_s}")
         self.exophone = Exophone.find_by(virtual_number: self.parsed_exotel_params[:exophone])
