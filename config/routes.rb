@@ -3,8 +3,8 @@
 #                                            Prefix Verb URI Pattern                                                                              Controller#Action
 #            res_district_hospitals_whatsapp_signup GET  /res/district_hospitals/whatsapp/signup(.:format)                                        dh#exotel_wa_signup
 #      res_district_hospitals_update_condition_area POST /res/district_hospitals/update_condition_area(.:format)                                  whatsapp#update_condition_area
-#                            sdh_modality_selection GET  /sdh/modality_selection(.:format)                                                        sdh#modality_selection
-#                            sdh_language_selection GET  /sdh/language_selection(.:format)                                                        sdh#language_selection
+#                            sdh_modality_selection GET  /sdh/modality_selection(.:format)                                                        sdh#ivr_modality_selection
+#                            sdh_language_selection GET  /sdh/language_selection(.:format)                                                        sdh#ivr_language_selection
 #                      sdh_condition_area_selection GET  /sdh/condition_area_selection(.:format)                                                  sdh#ivr_condition_area_selection
 #                                sdh_pin_code_input GET  /sdh/pin_code_input(.:format)                                                            sdh#pin_code_input
 #                        sdh_days_to_delivery_input GET  /sdh/days_to_delivery_input(.:format)                                                    sdh#days_to_delivery_input
@@ -18,8 +18,8 @@
 #                           sdh_check_existing_user GET  /sdh/check_existing_user(.:format)                                                       sdh_orchestration#check_existing_user
 #                            sdh_weeks_since_signup GET  /sdh/weeks_since_signup(.:format)                                                        sdh_orchestration#weeks_since_signup
 #                                   sdh_day_of_week GET  /sdh/day_of_week(.:format)                                                               sdh_orchestration#day_of_week
-#                           gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#modality_selection
-#                           gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#language_selection
+#                           gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#ivr_modality_selection
+#                           gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#ivr_language_selection
 #                     gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#ivr_condition_area_selection
 #            gems_whatsapp_condition_area_selection POST /gems/whatsapp_condition_area_selection(.:format)                                        gems#whatsapp_condition_area_selection
 #                              gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
@@ -30,10 +30,14 @@
 #                       gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
 #                      gems_retrieve_condition_area GET  /gems/retrieve_condition_area(.:format)                                                  gems_orchestration#retrieve_condition_area
 #                   gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
-#                          gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems_orchestration#check_existing_user
+#                          gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
 #                                  mch_hp_wa_signup GET  /mch/hp/wa_signup(.:format)                                                              district_hospitals/hp#wa_signup
 #                     mch_hp_change_whatsapp_number GET  /mch/hp/change_whatsapp_number(.:format)                                                 district_hospitals/hp#change_whatsapp_number
 #                            mch_hp_initialize_user GET  /mch/hp/initialize_user(.:format)                                                        district_hospitals/hp#initialize_user
+#               unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
+#           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
+#                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
+#                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -142,13 +146,29 @@ Rails.application.routes.draw do
 
 
   ##################################################### HP Endpoints ########################################################
-  ###########################################################################################################################
+  ##############################################################################################################
 
   get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
   get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
   get 'mch/hp/initialize_user', to: 'district_hospitals/hp#initialize_user'
 
-  ###########################################################################################################################
+  ##############################################################################################################
   ##################################################### HP Endpoints ########################################################
+
+
+
+
+
+  ##################################################### UNICEF SNCU Endpoints ########################################################
+  ###########################################################################################################################
+
+  get 'unicef_sncu/get_language_preference', to: 'district_hospitals/unicef_sncu_orchestration#retrieve_language_preference'
+  get 'unicef_sncu/update_language_preferences', to: 'district_hospitals/unicef_sncu_orchestration#update_language_preference'
+  get 'unicef_sncu/baby_age_in_weeks', to: 'district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks'
+  get 'unicef_sncu/day_of_week', to: 'district_hospitals/unicef_sncu_orchestration#day_of_week'
+
+  ###########################################################################################################################
+  ##################################################### UNICEF SNCU Endpoints ########################################################
+
 
 end
