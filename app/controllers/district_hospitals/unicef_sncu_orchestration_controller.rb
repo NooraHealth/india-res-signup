@@ -3,16 +3,24 @@
 # 2. Language preference of the user
 # 3. checking if the user is an existing one or not
 # ... and so on
+
 module DistrictHospitals
   class UnicefSncuOrchestrationController < ApplicationController
 
-    before_action :initiate_logger
+    attr_accessor :parsed_exotel_params
 
+    before_action :initiate_logger
 
     def retrieve_language_preference
       user = retrieve_user_from_params
       logger.info("Returned language preference: #{Language.find_by(id: user.language_preference_id)}")
-      render json: { select: user.language_preference_id }
+      if user.present? && user.language_selected and user.language_preference_id.present?
+        logger.info("User found and has selected language with ID: #{user.language_preference_id}")
+        render json: { select: user.language_preference_id }
+      else
+        logger.info("User not found or has not selected language")
+        render json: {select: 0}
+      end
     end
 
 
@@ -54,7 +62,10 @@ module DistrictHospitals
 
 
     def update_language_preference
-
+      user = retrieve_user_from_params
+      language_id = params[:language_id]
+      user&.update(language_preference_id: language_id)
+      render json: {}
     end
 
 
