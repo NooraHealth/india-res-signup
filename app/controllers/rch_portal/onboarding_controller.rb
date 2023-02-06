@@ -1,6 +1,7 @@
-module Rch
+module RchPortal
   class OnboardingController < ApplicationController
 
+    skip_forgery_protection
 
     # this method of onboarding will be used by any external party that wants to add
     # records to our RCH database. The format of this endpoint will be fixed and authenticated
