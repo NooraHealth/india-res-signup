@@ -28,6 +28,7 @@
 #  last_menstrual_period     :datetime
 #  expected_date_of_delivery :datetime
 #  onboarding_method_id      :bigint
+#  whatsapp_onboarding_date  :datetime
 #
 class User < ApplicationRecord
 
@@ -84,6 +85,10 @@ class User < ApplicationRecord
     gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
   end
 
+  def rch_id
+    self.rch_profile&.rch_id
+  end
+
 
   ######################## CONDITION AREA RELATED METHODS #############################
 
@@ -126,8 +131,6 @@ class User < ApplicationRecord
   end
 
   ######################## CONDITION AREA RELATED METHODS #############################
-
-
 
 
 end

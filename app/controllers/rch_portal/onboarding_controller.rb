@@ -3,9 +3,22 @@ module RchPortal
 
     skip_forgery_protection
 
-    # this method of onboarding will be used by any external party that wants to add
-    # records to our RCH database. The format of this endpoint will be fixed and authenticated
-    def external
+    before_action :initiate_logger
+
+    # TODO - implement token based authentication
+    # before_action :authorize_token
+
+    # endpoint for importing records onto our list of RCH records
+    def import
+      op = RchPortal::Import.(import_params)
+      @result = op.result
+      # TODO - render results object in json
+    end
+
+    # this action onboards a single user onto the RCH Program
+    # by taking their details in a standardized format and saving it
+    # onto the database
+    def create
 
     end
 
@@ -34,6 +47,16 @@ module RchPortal
     def parsed_turn_params
       params.permit!
       parsed_params = TurnWebhook::ParseTurnParams.(params)
+    end
+
+    def import_params
+      params.permit!
+    end
+
+    def initiate_logger
+      self.logger = Logger.new("#{Rails.root}/log/rch/#{action_name}.log")
+      self.logger.info("-------------------------------------")
+      logger.info("API parameters are: #{params}")
     end
 
   end

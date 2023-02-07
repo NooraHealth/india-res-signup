@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_02_112214) do
+ActiveRecord::Schema.define(version: 2023_02_07_175630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 2023_02_02_112214) do
     t.datetime "last_menstrual_period"
     t.datetime "expected_date_of_delivery"
     t.bigint "onboarding_method_id"
+    t.datetime "whatsapp_onboarding_date"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["onboarding_method_id"], name: "index_users_on_onboarding_method_id"
