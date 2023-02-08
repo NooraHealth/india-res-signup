@@ -69,16 +69,15 @@ module TextitRapidproApi
 
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
-        self.logger&.info("SUCCESSFUL updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number}")
-        self.user.update(signed_up_to_whatsapp: true)
+        self.logger&.info("SUCCESSFUL updation of custom fields} for user with number #{self.user.mobile_number}")
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
-        self.logger&.info("FAILED updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
-        self.errors << "FAILED updation of group on TEXTIT for user with number #{self.user.mobile_number} with reason: #{parsed_response}"
+        self.logger&.info("FAILED updation of custom fields for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
+        self.errors << "FAILED updation of custom fields for user with number #{self.user.mobile_number} with reason: #{parsed_response}"
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
-        self.logger&.info("ERROR while updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
-        self.errors << "ERROR while updation of group for user with number #{self.user.mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
+        self.logger&.info("ERROR while updation of custom fields for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
+        self.errors << "ERROR while updation of custom fields for user with number #{self.user.mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
       end
     end
 

@@ -1,4 +1,4 @@
-# calls the RapidPro API to create a user with the specified grooup ID
+# calls the RapidPro API to create a user with the specified group ID
 
 module TextitRapidproApi
 
