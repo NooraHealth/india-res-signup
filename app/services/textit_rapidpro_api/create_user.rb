@@ -45,7 +45,6 @@ module TextitRapidproApi
       language_iso_code = self.user.language_preference&.iso_code
       group_id = self.user_params[:textit_group_id]
       {
-        "uuid" => self.user.textit_uuid,
         "groups" => [group_id],
         "language" => language_iso_code,
         "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
@@ -61,6 +60,10 @@ module TextitRapidproApi
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
         self.logger&.info("SUCCESSFUL creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number}")
+        # update the UUID of the user as well
+        parsed_response = JSON.parse(self.response.body)
+        uuid = parsed_response["uuid"]
+        self.user.update(textit_uuid: uuid)
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response}")

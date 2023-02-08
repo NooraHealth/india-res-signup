@@ -23,21 +23,40 @@ module RchPortal
 
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:signup_time] = rch_user.incoming_call_date
+      params[:signup_time] = DateTime.now
+
       # below line interacts with the API handler for TextIt and creates the user
       op = TextitRapidproApi::CreateUser.(params)
+
+      # once the user is added, update their custom fields
+      cf_params = {id: rch_user.id}
+      cf_params[:fields] = {
+        "expected-date-of-delivery" => self.rch_user.expected_date_of_delivery
+      }
+
+      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
     end
 
 
     # If a user is already on TextIt, the user is added to an existing group which is identified
-    # from the TextitGroup class
+    # from the TextitGroup class.
+    # THIS SHOULD HAPPEN ONLY RARELY, because if we find that the user is already on TextIt or in our DB,
+    # we should typically skip them
     def add_user_to_existing_group(rch_user, textit_group)
 
       params = {id: rch_user.id, uuid: rch_user.textit_uuid}
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:signup_time] = rch_user.incoming_call_date
+      params[:signup_time] = DateTime.now
       op = TextitRapidproApi::UpdateGroup.(params)
+
+      # once the user is added, update their custom fields
+      cf_params = {id: rch_user.id}
+      cf_params[:fields] = {
+        "expected-date-of-delivery" => self.rch_user.expected_date_of_delivery
+      }
+
+      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
     end
 
   end

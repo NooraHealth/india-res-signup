@@ -1,10 +1,17 @@
-# This operation updates the group of a user and also resets the reference date
-# so that date-joined is also updated to the latest value in the database
+# This operation accepts a hash map of custom fields that belong to a user in Textit and
+# updates them using their contacts updation API
+# The hash map should be passed as an object within params called "fields"
+# eg. params = {
+#               fields: {
+#                        "date-joined": "12-02-2023",
+#                        "expected_date_of_delivery": "12-08-2023"
+#                       }
+#              }
 
 module TextitRapidproApi
-  class UpdateGroup < TextitRapidproApi::Base
+  class UpdateCustomFields < TextitRapidproApi::Base
 
-    attr_accessor :textit_user, :textit_group, :user_params, :logger, :user
+    attr_accessor :textit_user, :textit_group, :user_params, :logger, :user, :custom_fields
 
     def initialize(user_params)
       self.user_params = user_params
@@ -13,6 +20,8 @@ module TextitRapidproApi
     end
 
     def call
+      # null conditions
+
       setup_connection
 
       retrieve_user_from_db
@@ -21,17 +30,13 @@ module TextitRapidproApi
         return self
       end
 
-      if self.user.textit_uuid.blank?
-        # first check on the Textit database if the user exists. The below operation also updates the user's textit_uuid in the database
-        op = TextitRapidproApi::CheckExistingUser.(id: self.user.id)
-
-        if self.user.reload.textit_uuid.blank?
-          self.errors << "User does not exist in TextIt"
-          return self
-        end
+      retrieve_custom_fields_hash
+      if self.custom_fields.empty?
+        self.errors << "Custom fields has is empty"
+        return self
       end
 
-      update_group
+      update_custom_fields
       self
     end
 
@@ -50,21 +55,16 @@ module TextitRapidproApi
     end
 
     def body_params
-      # TODO - ideally only the group attributes must be getting updated
-
-      language_iso_code = self.user.reload.language_preference&.iso_code
-      group_id = self.user_params[:textit_group_id]
       {
-        "groups" => [group_id],
-        "language" => language_iso_code,
-        "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
-        "fields" => {
-          "date_joined" => (user_params[:signup_time] || DateTime.now)
-        }
+        "fields" => self.custom_fields
       }
     end
 
-    def update_group
+    def retrieve_custom_fields_hash
+      self.custom_fields = self.user_params[:fields]
+    end
+
+    def update_custom_fields
       execute_api_call
 
       if self.response.status == 200 || self.response.status == 201
@@ -81,5 +81,6 @@ module TextitRapidproApi
         self.errors << "ERROR while updation of group for user with number #{self.user.mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}"
       end
     end
+
   end
 end

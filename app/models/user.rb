@@ -49,7 +49,7 @@ class User < ApplicationRecord
   has_many :condition_areas, through: :user_condition_area_mappings
 
 
-  has_one :rch_profile
+  has_one :rch_profile, dependent: :destroy
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number

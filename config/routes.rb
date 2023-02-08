@@ -177,8 +177,11 @@ Rails.application.routes.draw do
   ##################################################### RCH Endpoints ################################################################
   ###########################################################################################################################
 
-  post 'rch/rch_external_onboard', to: 'rch_portal/onboarding#external'
+  post 'rch/create_user', to: 'rch_portal/onboarding#create'
+  post 'rch/import', to: 'rch_portal/onboarding#import'
+  post 'rch/link_based_signup', to: 'rch_portal/onboarding#link_based_signup'
   put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
+  get 'rch/ivr_signup', to: 'rch_portal/onboarding#ivr'
   # TODO - add all the rest of the RCH endpoints
 
   ###########################################################################################################################
