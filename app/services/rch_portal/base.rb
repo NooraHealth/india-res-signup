@@ -1,5 +1,5 @@
 module RchPortal
-  class Base
+  class Base < ApplicationService
 
   end
 end
