@@ -31,7 +31,7 @@ module RchPortal
       # once the user is added, update their custom fields
       cf_params = {id: rch_user.id}
       cf_params[:fields] = {
-        "expected-date-of-delivery" => self.rch_user.expected_date_of_delivery
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
       }
 
       op = TextitRapidproApi::UpdateCustomFields.(cf_params)
@@ -53,7 +53,7 @@ module RchPortal
       # once the user is added, update their custom fields
       cf_params = {id: rch_user.id}
       cf_params[:fields] = {
-        "expected-date-of-delivery" => self.rch_user.expected_date_of_delivery
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
       }
 
       op = TextitRapidproApi::UpdateCustomFields.(cf_params)
