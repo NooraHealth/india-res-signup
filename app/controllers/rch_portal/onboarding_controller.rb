@@ -24,9 +24,9 @@ module RchPortal
 
 
     # this is an endpoint that will be used to update a user's language through WA
-    # # TODO - Abhishek will implement this
     def update_language
-
+      ::RchPortal::UpdateLanguage.(params)
+      render json: { status: "success" }
     end
 
     private
