@@ -45,6 +45,7 @@ module RchPortal
     def ivr
       op = RchPortal::IvrSignup.(logger, exotel_params)
       if op.errors.present?
+        logger.warn("IVR Signup failed with the errors: #{op.errors.to_sentence}")
         render json: {errors: op.errors}
       else
         render json: {}
