@@ -1,6 +1,10 @@
 # this class will add a user onto TextIt using a webhook from Exotel. The number (exophone) from which
 # the call is going out will tell us the condition area, program and state details that we are looking for
 # The user essentially picks a language at this step and we will be using that as consent + language selection
+# Params are basically same as Exotel's WA params along with one parameter that signifies language:
+# pan - Punjabi
+# hin - Hindi
+# tel - Telugu
 
 module RchPortal
   class IvrSignup < RchPortal::Base
@@ -18,9 +22,10 @@ module RchPortal
       # first parse exotel parameters
       self.parsed_params = ExotelWebhook::ParseExotelParams.(self.exotel_params)
 
+      # extract language details from params
       self.language_preference = Language.find_by(iso_code: self.exotel_params[:language])
       if self.language_preference.blank?
-        self.errors << "Language not found for user with mobile number: #{self.parsed_params[:user_mobile]}"
+        self.errors << "Language not found for call from mobile number: #{self.parsed_params[:user_mobile]}"
         return self
       end
 
@@ -28,12 +33,12 @@ module RchPortal
       # find the exophone from which the call is coming in, so that we can figure out the condition areas, program etc.
       self.exophone  = Exophone.find_by(virtual_number: self.parsed_params[:exophone])
       if self.exophone.blank?
-        self.errors << "No exophone found for this call from number: #{self.parsed_params[:exophone]}"
+        self.errors << "No exophone found for call from number: #{self.parsed_params[:exophone]}"
         return self
       end
 
       # the user has to be an existing one, because we are only looking at users who are already
-      # onboarded onto our backend as part of the RCH program
+      # added to our backend as part of the RCH program
       self.rch_user = User.find_by mobile_number: self.parsed_params[:user_mobile]
       if self.rch_user.blank?
         # i.e. this is a user randomly calling our number even though we haven't received their data through RCH
@@ -41,15 +46,21 @@ module RchPortal
         return self
       end
 
+      # if the user is not part of the RCH program, then also raise an error message and log it
+      if self.rch_user.program_id != NooraProgram.id_for(:rch)
+        self.errors << "User with mobile number #{self.rch_user.mobile_number} is not part of the RCH program"
+        return self
+      end
+
       # update the user's language preference to the appropriate one chosen by the user
       self.rch_user.update(language_preference_id: self.language_preference.id)
 
-      self.textit_group = TextitGroup.find_by(condition_area_id: self.rch_user.condition_areas.first.id,
+      self.textit_group = TextitGroup.find_by(condition_area_id: self.rch_user.user_condition_area_mappings.with_program_id(self.rch_user.program_id).first&.condition_area_id,
                                               program_id: self.exophone.program_id,
                                               state_id: self.exophone.state_id)
 
       if self.textit_group.blank?
-        self.errors << "TextIt group not found for call of user #{self.rch_user.mobile_number} from #{self.exophone.virtual_number}"
+        self.errors << "TextIt group not found for call of user with number #{self.rch_user.mobile_number} from exophone #{self.exophone.virtual_number}"
         return self
       end
 
@@ -59,6 +70,16 @@ module RchPortal
       else
         create_user_with_relevant_group(self.rch_user, self.textit_group)
       end
+
+      # once the user is added, update their custom fields using TextIt APIs
+      # i.e. the expected date of delivery, as well as the onboarding method
+      cf_params = {id: rch_user.id}
+      cf_params[:fields] = {
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery,
+        "onboarding_method" => "ivr"
+      }
+
+      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
 
       self.rch_user.update(signed_up_to_whatsapp: true)
 

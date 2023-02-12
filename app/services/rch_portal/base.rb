@@ -27,14 +27,6 @@ module RchPortal
 
       # below line interacts with the API handler for TextIt and creates the user
       op = TextitRapidproApi::CreateUser.(params)
-
-      # once the user is added, update their custom fields
-      cf_params = {id: rch_user.id}
-      cf_params[:fields] = {
-        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
-      }
-
-      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
     end
 
 
@@ -49,14 +41,6 @@ module RchPortal
       params[:logger] = self.logger
       params[:signup_time] = DateTime.now
       op = TextitRapidproApi::UpdateGroup.(params)
-
-      # once the user is added, update their custom fields
-      cf_params = {id: rch_user.id}
-      cf_params[:fields] = {
-        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
-      }
-
-      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
     end
 
   end

@@ -11,7 +11,7 @@
 module TextitRapidproApi
   class UpdateCustomFields < TextitRapidproApi::Base
 
-    attr_accessor :textit_user, :textit_group, :user_params, :logger, :user, :custom_fields
+    attr_accessor :textit_group, :user_params, :logger, :user, :custom_fields
 
     def initialize(user_params)
       self.user_params = user_params
@@ -32,7 +32,7 @@ module TextitRapidproApi
 
       retrieve_custom_fields_hash
       if self.custom_fields.empty?
-        self.errors << "Custom fields has is empty"
+        self.errors << "Custom fields hash is empty"
         return self
       end
 
