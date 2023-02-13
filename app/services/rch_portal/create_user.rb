@@ -32,6 +32,13 @@ module RchPortal
 
       state_id = self.rch_params[:state_id] || State.id_for(self.rch_params[:state_name])
 
+      # check if expected date of delivery is present
+      edd = self.rch_params[:expected_date_of_delivery]
+      if edd.blank?
+        self.errors << "Expected date of delivery cannot be empty"
+        return self
+      end
+
       # if the user is not found yet, create the user
       self.rch_user = User.new(mobile_number: "0#{self.rch_params[:mobile_number]}",
                       program_id: NooraProgram.id_for(:rch),
