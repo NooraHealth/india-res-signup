@@ -42,7 +42,7 @@ module RchPortal
 
       # unless user record gets saved, do not proceed
       unless self.rch_user.save
-        self.errors << "User could not be created because: #{user.errors.full_messages.to_sentence}"
+        self.errors << "User could not be created because: #{self.rch_user.errors.full_messages.to_sentence}"
         return self
       end
 

@@ -20,6 +20,8 @@
 #  user_id             :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  asha_name           :string
+#  case_no             :integer
 #
 
 one:
