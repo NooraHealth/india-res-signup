@@ -66,7 +66,7 @@ module RchPortal
                                            mother_age: self.rch_params[:mother_age],
                                            anm_name: self.rch_params[:anm_name],
                                            anm_contact: self.rch_params[:anm_contact],
-                                           # asha_name: self.rch_params[:asha_name],
+                                           asha_name: self.rch_params[:asha_name],
                                            asha_contact: self.rch_params[:asha_contact],
                                            registration_date: self.rch_params[:registration_date],
                                            high_risk_details: self.rch_params[:high_risk_details]
