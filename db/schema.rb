@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_12_134648) do
+ActiveRecord::Schema.define(version: 2023_02_13_094744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 2023_02_12_134648) do
     t.integer "mother_age"
     t.text "anm_name"
     t.string "anm_contact"
-    t.text "asha_contact"
     t.string "asha_mobile"
     t.datetime "registration_date"
     t.text "high_risk_details"
