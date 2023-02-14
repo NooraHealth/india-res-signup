@@ -6,10 +6,11 @@
 # - state name
 # - state id
 # - condition area
-# - program
+# - program name
+# This operation also accepts the onboarding method which can be SMS or QR Code for now
 
 module RchPortal
-  class SmsSignup < RchPortal::Base
+  class LinkBasedSignup < RchPortal::Base
 
     attr_accessor :turn_params, :rch_user
 
@@ -27,29 +28,33 @@ module RchPortal
       # if the user does not exist, return an error for now because we are only interested in users
       # who are already added in our backend
       if self.rch_user.blank?
-        self.errors << "User not found in database"
+        self.errors << "User with number #{self.turn_params[:mobile_number]} not found in database"
         return self
       end
 
       # if the user is already onboarded onto WA, ignore the request to onboard them again
       if self.rch_user.signed_up_to_whatsapp
-        self.errors << "User is already signed up to WhatsApp"
+        self.errors << "User with number #{self.turn_params[:mobile_number]} is already signed up to WhatsApp"
         return self
       end
+
+      # Update the onboarding method for this user
+      onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
+      self.rch_user.update(onboarding_method_id: onboarding_method_id)
 
       # first extract the relevant params to be used for determining user's campaign
       language_id = Language.with_code(self.turn_params[:language_code])&.id
       condition_area_id = ConditionArea.id_for(self.turn_params[:condition_area])
       state_id = State.id_for(self.turn_params[:state_name])
-      program_id = State.id_for(self.turn_params[:program_id])
+      program_id = NooraProgram.id_for(self.turn_params[:program_name])
 
+      # update the user's language preference to the one reflected in the API
+      self.rch_user.update(language_preference_id: language_id)
 
       # find the textit group associated with the above characteristics
-      textit_group = TextitGroup.find_by(language_id: language_id,
-                                         condition_area_id: condition_area_id,
+      textit_group = TextitGroup.find_by(condition_area_id: condition_area_id,
                                          state_id: state_id,
                                          program_id: program_id)
-
 
       # if there's non textit group, add an error to the log file
       if textit_group.blank?
@@ -62,7 +67,7 @@ module RchPortal
       # If the user is already on textit, don't do anything. Because this user is already onboarded onto
       # some other program
       if check_user_on_textit(self.rch_user)
-        self.errors << "User is already present on TextIt, and is part of these groups: []"
+        self.errors << "User with number #{self.turn_params[:mobile_number]} is already present on TextIt, and is part of these groups: []"
         return self
       else
         result = create_user_with_relevant_group(self.rch_user, textit_group)
@@ -70,8 +75,19 @@ module RchPortal
           self.errors += result.errors
           return self
         end
-        self.rch_user.update(signed_up_to_whatsapp: true) # indicating that the user has successfully signed up to WhatsApp
       end
+
+      # once the user is added, update their custom fields using TextIt APIs
+      # i.e. the expected date of delivery, as well as the onboarding method
+      cf_params = {id: self.rch_user.id}
+      cf_params[:fields] = {
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery,
+        "onboarding_method" => "sms"
+      }
+
+      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
+
+      self.rch_user.update(signed_up_to_whatsapp: true) # indicating that the user has successfully signed up to WhatsApp
 
       self
     end

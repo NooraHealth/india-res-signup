@@ -35,7 +35,13 @@ module RchPortal
     # The link essentially sends users a custom message that triggers a stack on Turn, which will specify
     # the condition area, language and state of the user to onboard them onto the right campaign
     def link_based_signup
-
+      op = RchPortal::LinkBasedSignup.(logger, turn_params)
+      if op.errors.present?
+        logger.warn("Link based signup failed with errors: #{op.errors.to_sentence}")
+        render json: {success:false, errors: op.errors}
+      else
+        render json: {success: true}
+      end
     end
 
 
@@ -61,9 +67,8 @@ module RchPortal
 
     private
 
-    def parsed_turn_params
+    def turn_params
       params.permit!
-      parsed_params = TurnWebhook::ParseTurnParams.(params)
     end
 
     def exotel_params
