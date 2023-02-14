@@ -23,7 +23,7 @@ module RchPortal
         return self
       end
 
-      # next, look for the user by RCH ID
+      # next, look for the user by RCH ID, if user already exists throw error
       profile = RchProfile.find_by(rch_id: self.rch_params[:rch_id])
       if profile&.user&.present?
         self.errors << "User with RCH ID: #{self.rch_params[:rch_id]} already exists."
@@ -39,12 +39,17 @@ module RchPortal
         return self
       end
 
+      # extract onboarding method from API params
+      onboarding_method = self.rch_params[:onboarding_method]&.downcase
+      onboarding_method_id = OnboardingMethod.id_for(onboarding_method)
+
       # if the user is not found yet, create the user
       self.rch_user = User.new(mobile_number: "0#{self.rch_params[:mobile_number]}",
                       program_id: NooraProgram.id_for(:rch),
                       state_id: state_id,
                       last_menstrual_period: self.rch_params[:last_menstrual_period],
-                      expected_date_of_delivery: self.rch_params[:expected_date_of_delivery]
+                      expected_date_of_delivery: self.rch_params[:expected_date_of_delivery],
+                      onboarding_method_id: onboarding_method_id
                      )
 
       # unless user record gets saved, do not proceed

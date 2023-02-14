@@ -1,5 +1,9 @@
 # this operation checks if a particular user is already present at
 # TextIt's end, and if they are, which groups they're a part of
+# The expected parameters are:
+# {
+#   id: <DB ID of the user>
+# }
 
 module TextitRapidproApi
   class CheckExistingUser < TextitRapidproApi::Base
