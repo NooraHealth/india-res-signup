@@ -67,14 +67,14 @@ module RchPortal
       # If the user is already on textit, don't do anything. Because this user is already onboarded onto
       # some other program
       if check_user_on_textit(self.rch_user)
-        self.errors << "User with number #{self.turn_params[:mobile_number]} is already present on TextIt, and is part of these groups: []"
-        return self
+        result = add_user_to_existing_group(self.rch_user, textit_group)
       else
         result = create_user_with_relevant_group(self.rch_user, textit_group)
-        if result.errors.present?
-          self.errors += result.errors
-          return self
-        end
+      end
+
+      if result.errors.present?
+        self.errors += result.errors
+        return self
       end
 
       # once the user is added, update their custom fields using TextIt APIs
