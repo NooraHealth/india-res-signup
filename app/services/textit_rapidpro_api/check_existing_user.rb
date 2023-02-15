@@ -47,9 +47,10 @@ module TextitRapidproApi
     end
 
     def body_params
-      number = "tel:+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      # number = "tel:+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      whatsapp_number = "whatsapp:91#{self.user.whatsapp_mobile_number[1..self.user.whatsapp_mobile_number.length]}"
       {
-        urn: number
+        urn: whatsapp_number
       }
     end
 
