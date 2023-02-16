@@ -18,12 +18,15 @@ module RchPortal
 
     # this method creates a user on TextIt with a given mobile number, language preference and
     # group ID that the user needs to be added to
-    def create_user_with_relevant_group(rch_user, textit_group)
+    def create_user_with_relevant_group(rch_user, textit_group, fields)
       params = {id: rch_user.id}
 
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:signup_time] = DateTime.now
+      params[:fields] = {
+        "date_joined" => DateTime.now,
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
+      }
 
       # below line interacts with the API handler for TextIt and creates the user
       op = TextitRapidproApi::CreateUser.(params)
@@ -34,12 +37,16 @@ module RchPortal
     # from the TextitGroup class.
     # THIS SHOULD HAPPEN ONLY RARELY, because if we find that the user is already on TextIt or in our DB,
     # we should typically skip them
-    def add_user_to_existing_group(rch_user, textit_group)
+    def add_user_to_existing_group(rch_user, textit_group, fields)
 
       params = {id: rch_user.id, uuid: rch_user.textit_uuid}
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:signup_time] = DateTime.now
+      params[:fields] = {
+        "date_joined" => DateTime.now,
+        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
+      }
+
       op = TextitRapidproApi::UpdateGroup.(params)
     end
 

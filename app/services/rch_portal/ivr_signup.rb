@@ -64,22 +64,19 @@ module RchPortal
         return self
       end
 
-      # if user already exists on TextIt, then change their group
-      if check_user_on_textit(self.rch_user)
-        add_user_to_existing_group(self.rch_user, self.textit_group)
-      else
-        create_user_with_relevant_group(self.rch_user, self.textit_group)
-      end
-
-      # once the user is added, update their custom fields using TextIt APIs
-      # i.e. the expected date of delivery, as well as the onboarding method
-      cf_params = {id: rch_user.id}
+      # add the custom fields as a hash so that it can be added to a user's profile
+      cf_params = {id: self.rch_user.id}
       cf_params[:fields] = {
         "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery,
         "onboarding_method" => "ivr"
       }
 
-      op = TextitRapidproApi::UpdateCustomFields.(cf_params)
+      # if user already exists on TextIt, then change their group
+      if check_user_on_textit(self.rch_user)
+        add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
+      else
+        create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+      end
 
       self.rch_user.update(signed_up_to_whatsapp: true)
 
