@@ -19,7 +19,7 @@ module RchPortal
       # First check by phone number
       self.rch_user = User.find_by(mobile_number: self.rch_params[:mobile_number])
       if self.rch_user.present?
-        self.errors << "User with mobile number #{self.rch_params[:mobile_number]}"
+        self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id}"
         return self
       end
 
@@ -30,7 +30,11 @@ module RchPortal
         return self
       end
 
-      state_id = self.rch_params[:state_id] || State.id_for(self.rch_params[:state_name])
+      state_id = State.id_for(self.rch_params[:state_name])
+      if state_id.blank?
+        self.errors << "State cannot be blank"
+        return
+      end
 
       # check if expected date of delivery is present
       edd = self.rch_params[:expected_date_of_delivery]
