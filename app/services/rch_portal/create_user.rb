@@ -17,7 +17,7 @@ module RchPortal
 
       # check if the user already exists in the database
       # First check by phone number
-      self.rch_user = User.find_by(mobile_number: self.rch_params[:mobile_number])
+      self.rch_user = User.find_by(mobile_number: "0#{self.rch_params[:mobile_number]}")
       if self.rch_user.present?
         self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id}"
         return self
