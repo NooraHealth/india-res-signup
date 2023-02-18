@@ -69,6 +69,7 @@ module Res
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
 
@@ -88,7 +89,8 @@ module Res
           condition_area_id: self.exophone.condition_area_id,
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
-          incoming_call_date: DateTime.now
+          incoming_call_date: DateTime.now,
+          signed_up_to_whatsapp: true
         )
           self.errors << self.res_user.errors.full_messages
           return
