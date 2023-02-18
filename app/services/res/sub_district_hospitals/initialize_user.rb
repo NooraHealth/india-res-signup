@@ -2,6 +2,8 @@
 # So irrespective of the user selecting any option within the IVR, the user is
 # added to our DB so that we can follow up with them even if they didn't fully sign up
 
+########### NOT BEING USED AT THE MOMENT ##############
+
 module Res
   module SubDistrictHospitals
     class InitializeUser < Res::SubDistrictHospitals::Base

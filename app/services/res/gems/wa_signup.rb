@@ -1,6 +1,6 @@
 # this class will sign the user up to WA using TextIt API Handlers
 # Typically, in the GEMS project, at this time the user has given consent and has chosen their language of preference
-# Once the condition area has been chosen, this operation will add the user to each respective campaign on TextItg
+# Once the modality has been chosen, this operation will add the user to each respective campaign on TextIt
 
 module Res
   module Gems

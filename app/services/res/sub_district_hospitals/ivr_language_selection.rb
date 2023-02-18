@@ -34,7 +34,7 @@ module Res
         # if user doesn't exist, create them
         if self.res_user.blank?
           self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
-                                   incoming_call_date: Time.now,
+                                   incoming_call_date: DateTime.now,
                                    program_id: NooraProgram.id_for(:sdh),
                                    language_preference_id: self.language_id,
                                    state_id: self.state_id)
@@ -50,7 +50,8 @@ module Res
           self.logger.info("User created in DB with ID: #{self.res_user.id}")
         else
           self.res_user.update(language_preference_id: self.language_id,
-                               program_id: NooraProgram.id_for(:sdh))
+                               program_id: NooraProgram.id_for(:sdh),
+                               incoming_call_date: DateTime.now)
 
           # if the user is already part of another program, update that they have signed up for the SDH program
           # If they are part of the SDH program already, ignore this

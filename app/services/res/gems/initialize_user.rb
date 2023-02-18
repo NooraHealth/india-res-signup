@@ -29,7 +29,8 @@ module Res
         if self.res_user.blank?
           self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
                                    program_id: NooraProgram.id_for(:gems),
-                                   state_id: State.id_for("Punjab"))
+                                   state_id: State.id_for("Punjab"),
+                                   incoming_call_date: DateTime.now)
           unless res_user.save
             self.errors << self.res_user.errors.full_messages
             return self
