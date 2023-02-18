@@ -19,7 +19,7 @@ module RchPortal
       # First check by phone number
       self.rch_user = User.find_by(mobile_number: "0#{self.rch_params[:mobile_number]}")
       if self.rch_user.present?
-        self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id}"
+        self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id} as part of #{self.rch_user&.program&.name}"
         return self
       end
 

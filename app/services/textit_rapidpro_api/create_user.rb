@@ -49,7 +49,7 @@ module TextitRapidproApi
         "groups" => [group_id],
         "language" => language_iso_code,
         "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
-        "fields" => fields
+        "fields" => custom_fields
       }
     end
 

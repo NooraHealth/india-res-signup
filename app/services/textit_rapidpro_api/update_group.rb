@@ -54,13 +54,12 @@ module TextitRapidproApi
 
       language_iso_code = self.user.reload.language_preference&.iso_code
       group_id = self.user_params[:textit_group_id]
+      custom_fields = self.user_params[:fields]
       {
         "groups" => [group_id],
         "language" => language_iso_code,
         "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
-        "fields" => {
-          "date_joined" => (user_params[:signup_time] || DateTime.now)
-        }
+        "fields" => custom_fields
       }
     end
 
