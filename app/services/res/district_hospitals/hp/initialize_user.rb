@@ -28,6 +28,7 @@ module Res
                                      language_preference_id: Language.id_for(:hindi),
                                      program_id: NooraProgram.id_for(:mch),
                                      state_id: State.id_for("Himachal Pradesh"),
+                                     incoming_call_date: DateTime.now,
                                      signed_up_to_whatsapp: true)
             unless self.res_user.save
               self.errors << self.res_user.errors.full_messages
@@ -38,6 +39,7 @@ module Res
             self.res_user.update(language_preference_id: Language.id_for(:hindi),
                                  program_id: NooraProgram.id_for(:mch),
                                  state_id: State.id_for("Himachal Pradesh"),
+                                 incoming_call_date: DateTime.now,
                                  signed_up_to_whatsapp: true)
 
           end
