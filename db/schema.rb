@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_02_112214) do
+ActiveRecord::Schema.define(version: 2023_02_15_130023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,13 +81,14 @@ ActiveRecord::Schema.define(version: 2023_02_02_112214) do
     t.integer "mother_age"
     t.text "anm_name"
     t.string "anm_contact"
-    t.text "asha_contact"
-    t.string "asha_mobile"
+    t.string "asha_contact"
     t.datetime "registration_date"
     t.text "high_risk_details"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "asha_name"
+    t.integer "case_no"
     t.index ["user_id"], name: "index_rch_profiles_on_user_id"
   end
 
@@ -183,6 +184,8 @@ ActiveRecord::Schema.define(version: 2023_02_02_112214) do
     t.datetime "last_menstrual_period"
     t.datetime "expected_date_of_delivery"
     t.bigint "onboarding_method_id"
+    t.datetime "whatsapp_onboarding_date"
+    t.integer "onboarding_attempts", default: 0
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["onboarding_method_id"], name: "index_users_on_onboarding_method_id"

@@ -108,7 +108,11 @@ module Res
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.incoming_call_date
+        }
+
+        # params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::UpdateGroup.(params)
       end
 
@@ -120,7 +124,11 @@ module Res
         params = {id: self.res_user.id}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.incoming_call_date
+        }
+
+        # params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::CreateUser.(params)
       end
 

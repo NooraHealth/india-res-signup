@@ -38,8 +38,11 @@
 #           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
 #                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
-#                          rch_rch_external_onboard POST /rch/rch_external_onboard(.:format)                                                      rch_portal/onboarding#external
+#                                   rch_create_user POST /rch/create_user(.:format)                                                               rch_portal/onboarding#create
+#                                        rch_import POST /rch/import(.:format)                                                                    rch_portal/onboarding#import
+#                             rch_link_based_signup POST /rch/link_based_signup(.:format)                                                         rch_portal/onboarding#link_based_signup
 #                          rch_turn_language_change PUT  /rch/turn_language_change(.:format)                                                      rch_portal/onboarding#update_language
+#                                    rch_ivr_signup GET  /rch/ivr_signup(.:format)                                                                rch_portal/onboarding#ivr
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -173,12 +176,14 @@ Rails.application.routes.draw do
   ##################################################### UNICEF SNCU Endpoints ########################################################
 
 
-
   ##################################################### RCH Endpoints ################################################################
   ###########################################################################################################################
 
-  post 'rch/rch_external_onboard', to: 'rch_portal/onboarding#external'
+  post 'rch/create_user', to: 'rch_portal/onboarding#create'
+  post 'rch/import', to: 'rch_portal/onboarding#import'
+  post 'rch/link_based_signup', to: 'rch_portal/onboarding#link_based_signup'
   put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
+  get 'rch/ivr_signup', to: 'rch_portal/onboarding#ivr'
   # TODO - add all the rest of the RCH endpoints
 
   ###########################################################################################################################

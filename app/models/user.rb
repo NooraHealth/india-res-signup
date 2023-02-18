@@ -28,6 +28,7 @@
 #  last_menstrual_period     :datetime
 #  expected_date_of_delivery :datetime
 #  onboarding_method_id      :bigint
+#  whatsapp_onboarding_date  :datetime
 #
 class User < ApplicationRecord
 
@@ -48,7 +49,7 @@ class User < ApplicationRecord
   has_many :condition_areas, through: :user_condition_area_mappings
 
 
-  has_one :rch_profile
+  has_one :rch_profile, dependent: :destroy
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
@@ -82,6 +83,10 @@ class User < ApplicationRecord
 
   def fully_signed_up_to_gems?
     gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
+  end
+
+  def rch_id
+    self.rch_profile&.rch_id
   end
 
 
@@ -126,8 +131,6 @@ class User < ApplicationRecord
   end
 
   ######################## CONDITION AREA RELATED METHODS #############################
-
-
 
 
 end

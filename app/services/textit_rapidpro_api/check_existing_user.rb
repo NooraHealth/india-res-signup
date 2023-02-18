@@ -1,5 +1,9 @@
 # this operation checks if a particular user is already present at
 # TextIt's end, and if they are, which groups they're a part of
+# The expected parameters are:
+# {
+#   id: <DB ID of the user>
+# }
 
 module TextitRapidproApi
   class CheckExistingUser < TextitRapidproApi::Base
@@ -43,9 +47,10 @@ module TextitRapidproApi
     end
 
     def body_params
-      number = "tel:+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      # number = "tel:+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      whatsapp_number = "whatsapp:91#{self.user.whatsapp_mobile_number[1..self.user.whatsapp_mobile_number.length]}"
       {
-        urn: number
+        urn: whatsapp_number
       }
     end
 

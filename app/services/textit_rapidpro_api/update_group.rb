@@ -50,6 +50,8 @@ module TextitRapidproApi
     end
 
     def body_params
+      # TODO - ideally only the group attributes must be getting updated
+
       language_iso_code = self.user.reload.language_preference&.iso_code
       group_id = self.user_params[:textit_group_id]
       {

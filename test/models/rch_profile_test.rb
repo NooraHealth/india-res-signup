@@ -13,13 +13,14 @@
 #  mother_age          :integer
 #  anm_name            :text
 #  anm_contact         :string
-#  asha_contact        :text
 #  asha_mobile         :string
 #  registration_date   :datetime
 #  high_risk_details   :text
 #  user_id             :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  asha_name           :string
+#  case_no             :integer
 #
 require 'test_helper'
 
