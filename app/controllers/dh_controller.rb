@@ -9,6 +9,7 @@ class DhController < ApplicationController
     if op.errors.present?
       logger.info("Operation returned error: #{op.errors.to_sentence}")
       render json: {success: false, errors: op.errors.to_sentence}
+      return
     end
     # for now return 200 no matter what
     render 'exotel_wa_signup'
