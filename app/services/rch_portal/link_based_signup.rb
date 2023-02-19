@@ -80,6 +80,7 @@ module RchPortal
         result = create_user_with_relevant_group(self.rch_user, textit_group, cf_params)
       end
 
+      # if there is an issue signing up the user onto, WA don't update the flag for that user
       if result.errors.present?
         self.errors += result.errors
         return self

@@ -74,9 +74,15 @@ module RchPortal
 
       # if user already exists on TextIt, then change their group
       if check_user_on_textit(self.rch_user)
-        add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
+        result = add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
       else
-        create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+        result = create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+      end
+
+      # if there is an issue signing up the user onto, WA don't update the flag for that user
+      if result.errors.present?
+        self.errors += result.errors
+        return self
       end
 
       self.rch_user.update(signed_up_to_whatsapp: true)

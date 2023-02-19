@@ -78,7 +78,7 @@ module TextitRapidproApi
         # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
         rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
         rate_limiting_logger.warn("#{user.international_whatsapp_number}")
-        self.errors << "API Request throttled. User #{user.international_whatsapp_number} will be parked for later"
+        self.errors << "API Request throttled. User #{user.international_whatsapp_number} from program #{user.program&.name} will be parked for later"
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
         self.logger&.info("ERROR while updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
