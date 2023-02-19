@@ -33,9 +33,15 @@ module RchPortal
         return self
       end
 
-      # if the user is already onboarded onto WA, ignore the request to onboard them again
-      if self.rch_user.signed_up_to_whatsapp
-        self.errors << "User with number #{self.turn_params[:mobile_number]} is already signed up to WhatsApp"
+      # # if the user is already onboarded onto WA and is part of the RCH program, ignore the request to onboard them again
+      # if self.rch_user.signed_up_to_whatsapp && self.rch_user.program_id == NooraProgram.id_for(:rch)
+      #   self.errors << "User with number #{self.turn_params[:mobile_number]} is already signed up to WhatsApp"
+      #   return self
+      # end
+
+      # if the user is not part of the RCH program, then also raise an error message and log it
+      if self.rch_user.program_id != NooraProgram.id_for(:rch)
+        self.errors << "User with mobile number #{self.rch_user.mobile_number} is not part of the RCH program"
         return self
       end
 
