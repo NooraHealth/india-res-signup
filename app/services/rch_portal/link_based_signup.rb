@@ -1,4 +1,4 @@
-# this class will add the user onto WA using a joining link sent via SMS
+# this class will add the user onto WA using a joining link sent via a link
 # This operation will essentially identify the state, language and condition area for a user
 # based on what is sent in params, and add user to the respective campaign on TextIt
 # Expected Params:
@@ -7,6 +7,7 @@
 # - state id
 # - condition area
 # - program name
+# - onboarding_method
 # This operation also accepts the onboarding method which can be SMS or QR Code for now
 
 module RchPortal
@@ -38,7 +39,7 @@ module RchPortal
         return self
       end
 
-      # Update the onboarding method for this user
+      # Update the onboarding method for this user based on where the link is coming from
       onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
       self.rch_user.update(onboarding_method_id: onboarding_method_id)
 
@@ -65,6 +66,7 @@ module RchPortal
       # add the custom fields as a hash so that it can be added to a user's profile
       cf_params = {id: self.rch_user.id}
       cf_params[:fields] = {
+        "date_joined" => DateTime.now,
         "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery,
         "onboarding_method" => self.rch_user.onboarding_method&.name
       }

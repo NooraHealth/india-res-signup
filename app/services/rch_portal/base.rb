@@ -23,10 +23,7 @@ module RchPortal
 
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:fields] = {
-        "date_joined" => DateTime.now,
-        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
-      }
+      params[:fields] = fields
 
       # below line interacts with the API handler for TextIt and creates the user
       op = TextitRapidproApi::CreateUser.(params)
@@ -42,10 +39,7 @@ module RchPortal
       params = {id: rch_user.id, uuid: rch_user.textit_uuid}
       params[:textit_group_id] = textit_group&.textit_id
       params[:logger] = self.logger
-      params[:fields] = {
-        "date_joined" => DateTime.now,
-        "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery
-      }
+      params[:fields] = fields
 
       op = TextitRapidproApi::UpdateGroup.(params)
     end
