@@ -64,8 +64,7 @@ module RchPortal
       end
 
       # add the custom fields as a hash so that it can be added to a user's profile
-      cf_params = {id: self.rch_user.id}
-      cf_params[:fields] = {
+      cf_params = {
         "date_joined" => DateTime.now,
         "expected_date_of_delivery" => self.rch_user.expected_date_of_delivery,
         "onboarding_method" => self.rch_user.onboarding_method&.name
