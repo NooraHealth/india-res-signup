@@ -61,6 +61,10 @@ module TextitRapidproApi
     def parse_response
       if self.response.status == 200 || self.response.status == 201
         self.parsed_response = JSON.parse(self.response.body) rescue {}
+      elsif self.response.status == 429
+        # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
+        rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
+        rate_limiting_logger.warn("#{user.international_whatsapp_number}")
       else
         self.parsed_response = {}
         self.errors << "API request returned error: #{self.response.status}"

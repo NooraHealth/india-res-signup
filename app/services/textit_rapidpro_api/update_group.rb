@@ -74,6 +74,10 @@ module TextitRapidproApi
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
         self.errors << "FAILED updation of group on TEXTIT for user with number #{self.user.mobile_number} with reason: #{parsed_response}"
+      elsif self.response.status == 429
+        # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
+        rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
+        rate_limiting_logger.warn("#{user.international_whatsapp_number}")
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
         self.logger&.info("ERROR while updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")

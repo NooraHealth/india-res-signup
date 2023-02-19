@@ -67,6 +67,10 @@ module TextitRapidproApi
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response}")
         self.errors << "FAILED creation of User on TEXTIT with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response}"
+      elsif self.response.status == 429
+        # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
+        rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
+        rate_limiting_logger.warn("#{user.international_whatsapp_number}")
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
         self.logger&.info("ERROR on API request to TEXTIT for user with number #{self.user.whatsapp_mobile_number} with reason: #{parsed_response} and HTTP status: #{self.response.status}")
