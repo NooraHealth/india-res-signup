@@ -77,7 +77,7 @@ module TextitRapidproApi
       elsif self.response.status == 429
         # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
         rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
-        rate_limiting_logger.warn("#{user.international_whatsapp_number}")
+        rate_limiting_logger.warn("#{user.international_whatsapp_number} -- from program #{user.program&.name}")
         self.errors << "API Request throttled. User #{user.international_whatsapp_number} from program #{user.program&.name} will be parked for later"
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
