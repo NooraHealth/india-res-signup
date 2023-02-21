@@ -74,12 +74,13 @@ module TextitRapidproApi
 
     def check_for_existing_user
       number = "+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      whatsapp_number = "91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
       contacts = self.parse_response["results"]
       if contacts.present?
         # we know that the user already exists
         urns = contacts.first["urns"]
         uuid = contacts.first["uuid"]
-        if urns.include?("tel:#{number}") || urns.include?("whatsapp:#{number}")
+        if urns.include?("tel:#{number}") || urns.include?("whatsapp:#{whatsapp_number}")
         # if urns.first == "tel:#{number}" || urns.last ==
           # log that the user was found
           logger&.info("Found URNs: #{urns}")
