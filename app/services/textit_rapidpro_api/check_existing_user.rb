@@ -79,7 +79,7 @@ module TextitRapidproApi
         # we know that the user already exists
         urns = contacts.first["urns"]
         uuid = contacts.first["uuid"]
-        if urns.include?("tel:#{number}")
+        if urns.include?("tel:#{number}") || urns.include?("whatsapp:#{number}")
         # if urns.first == "tel:#{number}" || urns.last ==
           # log that the user was found
           logger&.info("Found URNs: #{urns}")
