@@ -74,7 +74,7 @@ module TextitRapidproApi
 
     def check_for_existing_user
       number = "+91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
-      whatsapp_number = "91#{self.user.mobile_number[1..self.user.mobile_number.length]}"
+      whatsapp_number = "91#{self.user.whatsapp_mobile_number[1..self.user.whatsapp_mobile_number.length]}"
       contacts = self.parse_response["results"]
       if contacts.present?
         # we know that the user already exists
