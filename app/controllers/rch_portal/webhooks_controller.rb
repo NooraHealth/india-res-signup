@@ -22,9 +22,28 @@ module RchPortal
       render json: {success: true}
     end
 
+    # this endpoint accepts the webhook given to Exotel APIs and updates the onboarding attempts of the user by 1
+    # The format of the params is as follows:
+    #
+    def update_onboarding_attempts
+      number = exotel_webhook_params[:to]
+      user = User.find_by mobile_number: number
+      if user.blank?
+        self.logger.warn("User not found with mobile number: #{mobile_number}")
+        render json: {success: false}
+        return
+      end
+      user.update(onboarding_attempts: (user.onboarding_attempts + 1))
+      self.logger.info("Successfully updated onboarding attempts for user: #{number}")
+      render json: {success: true}
+    end
 
 
     private
+
+    def exotel_webhook_params
+      params.permit!
+    end
 
     def wa_acknowledgement_params
       params.permit!
