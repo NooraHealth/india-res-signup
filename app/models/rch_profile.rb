@@ -13,7 +13,7 @@
 #  mother_age          :integer
 #  anm_name            :text
 #  anm_contact         :string
-#  asha_mobile         :string
+#  asha_contact        :string
 #  registration_date   :datetime
 #  high_risk_details   :text
 #  user_id             :bigint

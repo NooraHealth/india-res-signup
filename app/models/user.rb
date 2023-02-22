@@ -29,6 +29,7 @@
 #  expected_date_of_delivery :datetime
 #  onboarding_method_id      :bigint
 #  whatsapp_onboarding_date  :datetime
+#  onboarding_attempts       :integer          default(0)
 #
 class User < ApplicationRecord
 
