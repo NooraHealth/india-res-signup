@@ -26,15 +26,16 @@ module RchPortal
     # The format of the params is as follows:
     #
     def update_onboarding_attempts
-      number = exotel_webhook_params[:to]
-      user = User.find_by mobile_number: number
+      mobile_number = exotel_webhook_params[:from]
+      mobile_number = mobile_number[2..(mobile_number.length)]
+      user = User.find_by mobile_number: mobile_number
       if user.blank?
         self.logger.warn("User not found with mobile number: #{mobile_number}")
         render json: {success: false}
         return
       end
       user.update(onboarding_attempts: (user.onboarding_attempts + 1))
-      self.logger.info("Successfully updated onboarding attempts for user: #{number}")
+      self.logger.info("Successfully updated onboarding attempts for user: #{mobile_number}")
       render json: {success: true}
     end
 
