@@ -27,8 +27,8 @@ module RchPortal
     #
     def update_onboarding_attempts
       mobile_number = exotel_webhook_params[:from]
-      mobile_number = mobile_number[2..(mobile_number.length)]
-      user = User.find_by mobile_number: mobile_number
+      mobile_number = mobile_number[3..(mobile_number.length)]
+      user = User.find_by mobile_number: "0#{mobile_number}"
       if user.blank?
         self.logger.warn("User not found with mobile number: #{mobile_number}")
         render json: {success: false}
