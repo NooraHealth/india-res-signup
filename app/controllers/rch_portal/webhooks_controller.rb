@@ -11,20 +11,21 @@ module RchPortal
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
     def acknowledge_wa_signup
       urns = wa_acknowledgement_params["urns"]
-      urns.each do |urn|
-        if urn.include?("whatsapp")
-          mobile_number = urn[2..urn.length]
-        else
-          mobile_number = ""
-        end
+      uuid = wa_acknowledgement_params["uuid"]
+      urn = urns.select { |urn| urn.include? "whatsapp" }
+      if urn.first.blank?
+        self.logger.warn("URN not found in params")
+        render json: {success: false}
+        return
       end
+      mobile_number = urn.first.gsub("whatsapp:91", "")
       user = User.find_by mobile_number: "0#{mobile_number}"
       if user.blank?
         self.logger.warn("User not found with mobile number: #{mobile_number}")
         render json: {success: false}
         return
       end
-      user.update(signed_up_to_whatsapp: true)
+      user.update(signed_up_to_whatsapp: true, textit_uuid: uuid)
       self.logger.info("Successfully updated user #{mobile_number} as signed up to WA")
       render json: {success: true}
     end
