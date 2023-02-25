@@ -11,10 +11,12 @@ module RchPortal
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
     def acknowledge_wa_signup
       urns = wa_acknowledgement_params["urns"].first
-      if urns.contains?("tel")
-        mobile_number = urns[3..urns.length]
-      elsif urns.contains?("whatsapp")
-        mobile_number = urns[2..urns.length]
+      urns.each do |urn|
+        if urn.contains?("whatsapp")
+          mobile_number = urns[2..urns.length]
+        else
+          mobile_number = ""
+        end
       end
       user = User.find_by mobile_number: "0#{mobile_number}"
       if user.blank?
@@ -26,6 +28,7 @@ module RchPortal
       self.logger.info("Successfully updated user #{mobile_number} as signed up to WA")
       render json: {success: true}
     end
+
 
     # this endpoint accepts the webhook given to Exotel APIs and updates the onboarding attempts of the user by 1
     # The format of the params is as follows:
