@@ -12,7 +12,7 @@ module RchPortal
     def acknowledge_wa_signup
       urns = wa_acknowledgement_params["urns"]
       urns.each do |urn|
-        if urn.contains?("whatsapp")
+        if urn.include?("whatsapp")
           mobile_number = urn[2..urn.length]
         else
           mobile_number = ""
