@@ -10,7 +10,12 @@ module RchPortal
 
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
     def acknowledge_wa_signup
-      mobile_number = wa_acknowledgement_params[:mobile_number]
+      urns = wa_acknowledgement_params["urns"].first
+      if urns.contains?("tel")
+        mobile_number = urns[3..urns.length]
+      elsif urns.contains?("whatsapp")
+        mobile_number = urns[2..urns.length]
+      end
       user = User.find_by mobile_number: "0#{mobile_number}"
       if user.blank?
         self.logger.warn("User not found with mobile number: #{mobile_number}")
