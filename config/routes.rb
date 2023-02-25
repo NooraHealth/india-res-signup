@@ -44,6 +44,7 @@
 #                          rch_turn_language_change PUT  /rch/turn_language_change(.:format)                                                      rch_portal/onboarding#update_language
 #                                    rch_ivr_signup GET  /rch/ivr_signup(.:format)                                                                rch_portal/onboarding#ivr
 #                         rch_acknowledge_wa_signup PUT  /rch/acknowledge_wa_signup(.:format)                                                     rch_portal/webhooks#acknowledge_wa_signup
+#                    rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_onboarding_attempts
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -186,6 +187,7 @@ Rails.application.routes.draw do
   put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
   get 'rch/ivr_signup', to: 'rch_portal/onboarding#ivr'
   put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
+  post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_onboarding_attempts'
 
   ###########################################################################################################################
   ##################################################### RCH Endpoints ################################################################
