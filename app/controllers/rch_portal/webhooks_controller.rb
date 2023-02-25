@@ -10,10 +10,10 @@ module RchPortal
 
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
     def acknowledge_wa_signup
-      urns = wa_acknowledgement_params["urns"].first
+      urns = wa_acknowledgement_params["urns"]
       urns.each do |urn|
         if urn.contains?("whatsapp")
-          mobile_number = urns[2..urns.length]
+          mobile_number = urn[2..urn.length]
         else
           mobile_number = ""
         end
