@@ -90,7 +90,7 @@ module RchPortal
         return self
       end
 
-      self.rch_user.update(signed_up_to_whatsapp: true)
+      self.rch_user.update(signed_up_to_whatsapp: true, whatsapp_onboarding_date: DateTime.now)
 
       self
     end

@@ -58,6 +58,7 @@ module Res
           if op.errors.present?
             self.errors = op.errors
           end
+          self.res_user.update(whatsapp_number_confirmed: true, whatsapp_onboarding_date: DateTime.now)
         end
 
         self

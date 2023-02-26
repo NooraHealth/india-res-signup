@@ -3,7 +3,7 @@
 # If the user has signed up to any of our previous programs, their condition_area and language fields are reset to nil
 
 # Currently this also serves as the initialization of user onto the SDH program
-# In both states the default language is predetermined as Hindi or Kannada
+# In both states the default language is predetermined as Hindi or Kannada respectively. Kannada in KA, and Hindi in MP
 
 module Res
   module SubDistrictHospitals
