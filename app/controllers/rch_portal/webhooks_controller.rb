@@ -35,7 +35,7 @@ module RchPortal
     # The format of the params is as follows:
     #
     def update_onboarding_attempts
-      mobile_number = exotel_webhook_params[:from]
+      mobile_number = exotel_webhook_params[:from] || exotel_webhook_params[:number]
       mobile_number = mobile_number[3..(mobile_number.length)]
       user = User.find_by mobile_number: "0#{mobile_number}"
       if user.blank?
