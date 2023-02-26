@@ -69,6 +69,7 @@ module Res
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
+          whatsapp_onboarding_date: DateTime.now,
           signed_up_to_whatsapp: true,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
@@ -90,6 +91,7 @@ module Res
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
+          whatsapp_onboarding_date: DateTime.now,
           signed_up_to_whatsapp: true
         )
           self.errors << self.res_user.errors.full_messages
@@ -111,7 +113,7 @@ module Res
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
         params[:fields] = {
-          "date_joined" => self.res_user.incoming_call_date
+          "date_joined" => self.res_user.whatsapp_onboarding_date
         }
 
         # params[:signup_time] = self.res_user.incoming_call_date
@@ -127,7 +129,7 @@ module Res
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
         params[:fields] = {
-          "date_joined" => self.res_user.incoming_call_date
+          "date_joined" => self.res_user.whatsapp_onboarding_date
         }
 
         # params[:signup_time] = self.res_user.incoming_call_date

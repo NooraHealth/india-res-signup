@@ -91,7 +91,7 @@ module RchPortal
         return self
       end
 
-      self.rch_user.update(signed_up_to_whatsapp: true) # indicating that the user has successfully signed up to WhatsApp
+      self.rch_user.update(signed_up_to_whatsapp: true, whatsapp_onboarding_date: DateTime.now) # indicating that the user has successfully signed up to WhatsApp
 
       self
     end
