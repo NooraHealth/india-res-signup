@@ -115,7 +115,7 @@ class User < ApplicationRecord
     if self.user_condition_area_mappings.with_program_id(program_id).pluck(:condition_area_id).include?(condition_area_id)
       # do nothing, because the user already belongs to that particular condition area
     else
-      self.user_condition_area_mappings.build(condition_area_id: condition_area_id, noora_program_id: program_id).save
+      return self.user_condition_area_mappings.build(condition_area_id: condition_area_id, noora_program_id: program_id).save
     end
   end
 
