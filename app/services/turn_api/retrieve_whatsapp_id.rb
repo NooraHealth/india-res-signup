@@ -38,9 +38,7 @@ module TurnApi
       if self.response.status == 200
         self.parsed_response = JSON.parse(self.response.body)
         contacts = self.parsed_response["contacts"]
-        debugger
         contacts.each do |contact|
-          debugger
           if contact["status"] == "valid"
             wa_id = contact["wa_id"]
             number = "0#{contact["input"][3..(contact["input"].length)]}"
