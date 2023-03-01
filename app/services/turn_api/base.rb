@@ -1,7 +1,12 @@
 module TurnApi
   class Base < ApplicationService
 
-    attr_accessor :errors, :logger
+    attr_accessor :errors, :logger, :parsed_response, :connection, :token, :response
+
+    def initialize(logger)
+      self.logger = logger
+      self.errors = []
+    end
 
     protected
 
@@ -44,20 +49,23 @@ module TurnApi
           req.url action_path
           req.body = body_params.to_json
           req["Authorization"] = "Bearer #{self.token}"
-          req["Accept"] = "application/vnd.v1+json"
+          req["Accept"] = "application/json"
+          req["Content-Type"] = "application/json"
         end
       when :get
         self.response = self.connection.get do |req|
           req.url action_path
           req.params = body_params
           req["Authorization"] = "Bearer #{self.token}"
+          req["Content-Type"] = "application/json"
         end
       else
         self.response = self.connection.post do |req|
           req.url action_path.to_json
           req.body = body_params.to_json
           req["Authorization"] = "Bearer #{self.token}"
-          req["Accept"] = "application/vnd.v1+json"
+          req["Accept"] = "application/+json"
+          req["Content-Type"] = "application/json"
         end
       end
       puts "Response status: #{self.response.status}"

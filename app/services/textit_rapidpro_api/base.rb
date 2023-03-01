@@ -4,7 +4,7 @@
 module TextitRapidproApi
   class Base < ApplicationService
 
-    attr_accessor :url, :request, :response, :connection, :token, :errors
+    attr_accessor :url, :request, :response, :connection, :token, :errors, :logger
 
     protected
 
