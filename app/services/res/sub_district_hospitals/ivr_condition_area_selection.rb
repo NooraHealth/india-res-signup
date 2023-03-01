@@ -25,13 +25,17 @@ module Res
         # check if the user already exists
         self.res_user = User.find_by mobile_number: self.parsed_exotel_params[:user_mobile]
         if self.res_user.blank?
-          self.errors = "User not found in DB"
+          self.errors << "User not found in DB"
+          return self
         else
           # unless self.res_user.update(condition_area_id: self.condition_area_id)
           #   self.errors = self.res_user.errors.full_messages
           # end
 
-          self.res_user.add_condition_area(NooraProgram.id_for(:sdh), self.condition_area_id)
+          unless self.res_user.add_condition_area(NooraProgram.id_for(:sdh), self.condition_area_id)
+            self.errors << "Could not add user to condition area #{ConditionArea.find_by(id: self.condition_area_id)}"
+            return self
+          end
 
           # To update the signup tracker, we will look for the existing active tracker.
           # For that object, if condition_area_id is nil they are signing up for SDH again, so we can update the attribute

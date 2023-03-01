@@ -2,10 +2,7 @@
 # So irrespective of the user selecting any option within the IVR, the user is
 # added to our DB so that we can follow up with them even if they didn't fully sign up
 
-####################################################################################
-######################## NOT BEING USED CURRENTLY ##################################
-####################################################################################
-#
+# this operation is called from the check_existing_user endpoint where if the user doesn't exist they are created through this operation
 module Res
   module Gems
     class InitializeUser < Res::Gems::Base
@@ -35,6 +32,10 @@ module Res
             self.errors << self.res_user.errors.full_messages
             return self
           end
+        elsif self.res_user.present?
+          self.res_user.update(program_id: NooraProgram.id_for(:gems),
+                               state_id: State.id_for("Punjab"),
+                               incoming_call_date: DateTime.now)
         end
 
         self

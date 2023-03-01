@@ -21,6 +21,7 @@
 #  updated_at          :datetime         not null
 #  asha_name           :string
 #  case_no             :integer
+#  high_risk_pregnancy :boolean          default(FALSE)
 #
 class RchProfile < ApplicationRecord
   belongs_to :user

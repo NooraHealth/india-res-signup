@@ -23,7 +23,7 @@ module Res
         # find user in the DB, return error otherwise
         self.res_user = User.find_by textit_uuid: self.params["contact"]["uuid"]
         if self.res_user.blank?
-          self.errors << "User not found with Whatsapp Mobile Number: #{self.params[:whatsapp_mobile]}"
+          self.errors << "User not found with Textit UUID: #{self.params["contact"]["uuid"]}"
           return self
         end
 
