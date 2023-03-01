@@ -4,10 +4,12 @@
 # and then sent in bulk to the contacts API to check if a user is available on WA or not
 # Accepts a maximum of 100 users at once - if the number of users is more it returns an error
 
+# the object returned has an array of numbers with their respective whatsapp IDs in a collection called `contacts`
+
 module TurnApi
   class RetrieveWhatsappId < TurnApi::Base
 
-    attr_accessor :users, :contacts_list
+    attr_accessor :users, :contacts_list, :contacts
 
     def initialize(logger, params)
       super(logger)
@@ -28,7 +30,7 @@ module TurnApi
       # validate if the size of the array is more than 100
 
       if self.users.count > 500
-        self.errors << "Number of users to check is more than 500"
+        self.errors << "Number of users to check is more than 100"
         return self
       end
 
@@ -44,13 +46,13 @@ module TurnApi
       # if there is a WhatsApp ID then update the user's whatsapp_id column with this information
       if self.response.status == 200
         self.parsed_response = JSON.parse(self.response.body)
-        contacts = self.parsed_response["contacts"]
-        contacts.each do |contact|
+        self.contacts = self.parsed_response["contacts"]
+        self.contacts.each do |contact|
           if contact["status"] == "valid"
             wa_id = contact["wa_id"]
             number = "0#{contact["input"][3..(contact["input"].length)]}"
             user = User.find_by mobile_number: number
-            user&.update(whatsapp_id: wa_id)
+            user&.update(whatsapp_id: wa_id) if user&.whatsapp_id.blank?
           end
         end
       else
