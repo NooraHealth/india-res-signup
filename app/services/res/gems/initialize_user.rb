@@ -32,10 +32,10 @@ module Res
             self.errors << self.res_user.errors.full_messages
             return self
           end
-        elsif self.res_user.present?
-          self.res_user.update(program_id: NooraProgram.id_for(:gems),
-                               state_id: State.id_for("Punjab"),
-                               incoming_call_date: DateTime.now)
+        # elsif self.res_user.present?
+        #   self.res_user.update(program_id: NooraProgram.id_for(:gems),
+        #                        state_id: State.id_for("Punjab"),
+        #                        incoming_call_date: DateTime.now)
         end
 
         self
