@@ -304,6 +304,7 @@ DEPENDENCIES
   prose
   puma (~> 3.11)
   rails (~> 5.2.8)
+  rake
   roo (~> 2.8.0)
   sass-rails (~> 5.0)
   selenium-webdriver

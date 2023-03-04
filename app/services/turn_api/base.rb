@@ -64,7 +64,7 @@ module TurnApi
           req.url action_path.to_json
           req.body = body_params.to_json
           req["Authorization"] = "Bearer #{self.token}"
-          req["Accept"] = "application/+json"
+          req["Accept"] = "application/json"
           req["Content-Type"] = "application/json"
         end
       end

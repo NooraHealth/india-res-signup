@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
   has_one :rch_profile, dependent: :destroy
 
-  after_save :update_whatsapp_id
+  # after_save :update_whatsapp_id TODO - better way to do this
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
@@ -138,10 +138,10 @@ class User < ApplicationRecord
 
   private
 
-  def update_whatsapp_id
-    if self.signed_up_to_whatsapp && self.whatsapp_id.blank?
-      op = TurnApi::UpdateWhatsappId.perform_async(self.id)
-    end
-  end
+  # def update_whatsapp_id
+  #   if self.signed_up_to_whatsapp && self.whatsapp_id.blank?
+  #     op = TurnApi::UpdateWhatsappId.perform_async(self.id)
+  #   end
+  # end
 
 end
