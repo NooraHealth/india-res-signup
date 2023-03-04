@@ -21,9 +21,16 @@ module TurnApi
       # first setup connection and initialize network call variables
       setup_connection
 
+      # if the list of users is empty, return with an error
+      if self.users.count == 0
+        self.errors << "No users to check for"
+        return self
+      end
+
       # validate if the size of the array is more than 100
+
       if self.users.count > 500
-        self.errors << "Number of users to check is more than 100"
+        self.errors << "Number of users to check is more than 500"
         return self
       end
 
