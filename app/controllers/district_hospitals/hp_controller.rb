@@ -15,6 +15,7 @@ module DistrictHospitals
       op = Res::DistrictHospitals::Hp::InitializeUser.(logger, hp_dh_params)
       if op.errors.present?
         logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+        return
       end
       logger.info("Successfully initialized user in DB")
     end
@@ -34,6 +35,7 @@ module DistrictHospitals
       op = Res::DistrictHospitals::Hp::ChangeWhatsappNumber.(logger, hp_dh_params)
       if op.errors.present?
         logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+        return
       end
       logger.info("Successfully changed user's WA number and signed them up")
     end

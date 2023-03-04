@@ -53,6 +53,7 @@ module Res
           add_user_to_existing_group
         else
           # create user with the relevant group
+          # TODO - add a condition here incorporating the method that we decide on ultimately
           create_user_with_relevant_group
         end
 
