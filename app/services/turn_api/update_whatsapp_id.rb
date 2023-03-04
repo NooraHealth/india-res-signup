@@ -1,4 +1,8 @@
 # this operation accepts a single ID or a list of IDs and updates the WhatsApp ID of that particular user in our database
+############################################################################
+# ################### NOT BEING USED CURRENTLY #############################
+# ############################################################################
+
 
 module TurnApi
   class UpdateWhatsappId < ApplicationService
