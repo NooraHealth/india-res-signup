@@ -30,7 +30,7 @@ module TurnApi
       # validate if the size of the array is more than 100
 
       if self.users.count > 500
-        self.errors << "Number of users to check is more than 100"
+        self.errors << "Number of users to check is more than 500"
         return self
       end
 
