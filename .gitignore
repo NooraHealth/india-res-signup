@@ -29,6 +29,7 @@
 .idea/
 config/textit_config.yml
 config/turn_api_config.yml
+scripts
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
