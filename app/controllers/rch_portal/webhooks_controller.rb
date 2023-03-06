@@ -1,3 +1,6 @@
+# this is a common controller for users across different states as of now because the actions
+# here are agnostic to state. When they do diverge, we can define them within individual states
+
 module RchPortal
   class WebhooksController < ApplicationController
 
