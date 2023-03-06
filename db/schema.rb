@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_27_170800) do
+ActiveRecord::Schema.define(version: 2023_03_06_163037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,13 @@ ActiveRecord::Schema.define(version: 2023_02_27_170800) do
 
   create_table "onboarding_methods", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "qr_codes", force: :cascade do |t|
+    t.string "name"
+    t.string "link_encoded"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -153,9 +160,17 @@ ActiveRecord::Schema.define(version: 2023_02_27_170800) do
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "state_id"
+    t.string "call_sid"
+    t.string "exophone"
+    t.bigint "onboarding_method_id"
+    t.boolean "completed"
+    t.string "sms_id"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
     t.index ["noora_program_id"], name: "index_user_signup_trackers_on_noora_program_id"
+    t.index ["onboarding_method_id"], name: "index_user_signup_trackers_on_onboarding_method_id"
+    t.index ["state_id"], name: "index_user_signup_trackers_on_state_id"
     t.index ["user_id"], name: "index_user_signup_trackers_on_user_id"
   end
 

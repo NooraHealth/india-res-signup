@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: qr_codes
+#
+#  id           :bigint           not null, primary key
+#  name         :string
+#  link_encoded :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+one:
+  name: MyString
+  link_encoded: MyString
+
+two:
+  name: MyString
+  link_encoded: MyString
