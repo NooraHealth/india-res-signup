@@ -163,6 +163,17 @@ Rails.application.routes.draw do
   ##################################################### HP Endpoints ########################################################
 
 
+  ##################################################### Haryana Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ivr_initialize_user'
+  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ivr_select_condition_area'
+  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#qr_signup'
+
+  ##############################################################################################################
+  ##################################################### Haryana Endpoints ########################################################
+
+
 
 
 

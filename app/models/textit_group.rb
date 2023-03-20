@@ -22,5 +22,6 @@ class TextitGroup < ApplicationRecord
   belongs_to :program, class_name: "NooraProgram", optional: true
   belongs_to :language, optional: true
   belongs_to :state, optional: true
+  belongs_to :onboarding_method, optional: true
 
 end
