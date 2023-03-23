@@ -6,7 +6,7 @@ module Res
     class IvrConditionAreaSelection < Res::Onboarding::Base
 
       attr_accessor :ivr_params, :parsed_exotel_params, :exophone, :res_user,
-                    :condition_area_id
+                    :condition_area_id, :textit_group
 
       def initialize(logger, ivr_params)
         super(logger)
@@ -80,7 +80,9 @@ module Res
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
         params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date
+          "date_joined" => self.res_user.whatsapp_onboarding_date,
+          "onboarding_method" => "ivr",
+          "qr_code_id" => ""
         }
 
         op = TextitRapidproApi::UpdateGroup.(params)

@@ -15,7 +15,7 @@ class QrCode < ApplicationRecord
   belongs_to :state
   belongs_to :noora_program
 
-  def id_from_text_identifier(text_identifier)
+  def self.id_from_text_identifier(text_identifier)
     QrCode.find_by(text_identifier: text_identifier)&.id
   end
 end

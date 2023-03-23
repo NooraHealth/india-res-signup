@@ -7,7 +7,8 @@ module Res
   module Onboarding
     class IvrInitialize < Res::Onboarding::Base
 
-      attr_accessor :ivr_params, :parsed_exotel_params, :exophone, :res_user
+      attr_accessor :ivr_params, :parsed_exotel_params, :exophone, :res_user,
+                    :textit_group
 
       def initialize(logger, ivr_params)
         super(logger)
@@ -32,6 +33,7 @@ module Res
         # If they have, i.e. the user already exists, then create a signup tracker
         # with the relevant details of the mode of signup
         retrieve_user_from_ivr_params(self.parsed_exotel_params[:user_mobile])
+
         if self.res_user.present?
           # if the user already exists in the database, first check if they are already
           # onboarded with the same program, state and call
@@ -117,6 +119,7 @@ module Res
           self.errors << tracker.errors.full_messages
           return false
         end
+        true
       end
 
       def retrieve_textit_group
@@ -136,10 +139,16 @@ module Res
         params[:logger] = self.logger
         # below line interacts with the API handler for TextIt and creates the user
         params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date
+          "date_joined" => self.res_user.whatsapp_onboarding_date,
+          "onboarding_method" => "ivr",
+          "qr_code_id" => ""
         }
 
         op = TextitRapidproApi::CreateUser.(params)
+        if op.errors.present?
+          return false
+        end
+        true
       end
 
 
@@ -150,12 +159,17 @@ module Res
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
         params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date
+          "date_joined" => self.res_user.whatsapp_onboarding_date,
+          "onboarding_method" => "ivr",
+          "qr_code_id" => ""
         }
 
         op = TextitRapidproApi::UpdateGroup.(params)
+        if op.errors.present?
+          return false
+        end
+        true
       end
-
     end
   end
 end
