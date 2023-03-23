@@ -15,6 +15,8 @@ class QrCode < ApplicationRecord
   belongs_to :state
   belongs_to :noora_program
 
+  validates :text_identifier, uniqueness: true
+
   def self.id_from_text_identifier(text_identifier)
     QrCode.find_by(text_identifier: text_identifier)&.id
   end
