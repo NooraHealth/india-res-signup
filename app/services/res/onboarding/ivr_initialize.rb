@@ -93,16 +93,20 @@ module Res
           self.errors << self.res_user.errors.full_messages
           return false
         end
+        true
       end
 
       def update_res_user
-        self.res_user.update(
+        unless self.res_user.update(
           language_preference_id: self.exophone.language_id,
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           whatsapp_onboarding_date: DateTime.now,
           incoming_call_date: DateTime.now # TODO - think about this
         )
+          return false
+        end
+        true
       end
 
       def add_signup_tracker

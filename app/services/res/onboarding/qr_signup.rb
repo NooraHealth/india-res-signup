@@ -26,7 +26,7 @@ module Res
         self.state_id = State.id_for(self.qr_code_params[:state_name])
         self.qr_code_id = QrCode.id_from_text_identifier(self.qr_code_params[:qr_identifier])
         self.qr_code = QrCode.find_by(id: self.qr_code_id)
-        self.language_id = Language.with_code(self.qr_code_params[:language_code])
+        self.language_id = Language.with_code(self.qr_code_params[:language_code])&.id
 
         # first make sure all compulsory attributes are present
         if self.program_id.blank?
