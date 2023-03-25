@@ -2,7 +2,7 @@
 lock "~> 3.17.1"
 
 set :application, "ind-res-signup"
-set :repo_url, "git@github.com:NooraHealth/res-signup-service.git"
+set :repo_url, "git@github.com:NooraHealth/ind-res-signup.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

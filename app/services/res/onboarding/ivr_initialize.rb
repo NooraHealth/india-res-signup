@@ -44,12 +44,9 @@ module Res
           else
             # i.e. the user is calling after signing up for another program in another state
             # In this case, update the user's attributes to the one specified by this exophone
-            update_res_user
-          end
-
-          # log the signup attempt and move on
-          unless add_signup_tracker
-            return self
+            unless update_res_user
+              return self
+            end
           end
         else
           # i.e the user is calling for the first time. Pretty straightforward, just create the user
@@ -57,11 +54,11 @@ module Res
           unless create_res_user
             return self
           end
+        end
 
-          # add signup tracker for the user for this particular condition area
-          unless add_signup_tracker
-            return self
-          end
+        # now add a signup tracker that logs this particular signup event
+        unless add_signup_tracker
+          return self
         end
 
         retrieve_textit_group
@@ -104,6 +101,7 @@ module Res
           whatsapp_onboarding_date: DateTime.now,
           incoming_call_date: DateTime.now # TODO - think about this
         )
+          self.errors << self.res_user.errors.full_messages
           return false
         end
         true

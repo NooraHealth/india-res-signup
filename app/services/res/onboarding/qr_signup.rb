@@ -57,16 +57,26 @@ module Res
           # this is a case of the user already being part of a certain program
           # If the user is part of the same program and state, then just add an
           # entry in the signup tracker and move on
-          # TODO - distinguish between signups across programs and states
-          add_signup_tracker
-          # if the user is already part of the same program and state, we don't need
-          # to do anything. If not, we have to add them to the new textit group
-          # # TODO - determine if the user needs to be updated here. Or if just recording the attempt is enough
-          # return self
+          if self.res_user.program_id == self.exophone.program_id &&
+            self.res_user.state_id == self.exophone.state_id
+            # do nothing, basically
+          else
+            # i.e. the user is calling after signing up for another program in another state
+            # In this case, update the user's attributes to the one specified by this exophone
+            unless update_res_user
+              return self
+            end
+          end
         else
           # i.e. the user doesn't already exist in the database
-          create_res_user
-          add_signup_tracker
+          unless create_res_user
+            return self
+          end
+        end
+
+        # now add a signup tracker that logs this particular signup event
+        unless add_signup_tracker
+          return self
         end
 
         # retrieve the relevant textit group
@@ -99,16 +109,21 @@ module Res
           self.errors << self.res_user.errors.full_messages
           return false
         end
+        true
       end
 
 
       def update_res_user
-        self.res_user.update(
+        unless self.res_user.update(
           language_preference_id: self.language_id,
           program_id: self.program_id,
           state_id: self.state_id,
           whatsapp_onboarding_date: DateTime.now
         )
+          self.errors << self.res_user.errors.full_messages
+          return false
+        end
+        true
       end
 
 
@@ -126,6 +141,7 @@ module Res
           self.errors << tracker.errors.full_messages
           return false
         end
+        true
       end
 
 
