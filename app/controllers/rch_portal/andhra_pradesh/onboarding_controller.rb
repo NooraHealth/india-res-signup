@@ -1,5 +1,5 @@
 module RchPortal
-  module Punjab
+  module AndhraPradesh
     class OnboardingController < ApplicationController
 
       attr_accessor :logger
@@ -85,7 +85,7 @@ module RchPortal
       end
 
       def initiate_logger
-        self.logger = Logger.new("#{Rails.root}/log/rch/punjab/#{action_name}.log")
+        self.logger = Logger.new("#{Rails.root}/log/rch/andhra_pradesh/#{action_name}.log")
         self.logger.info("-------------------------------------")
         logger.info("API parameters are: #{params}")
       end

@@ -207,6 +207,13 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
 
+    namespace :andhra_pradesh do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+    end
+
 
     namespace :andhra_pradesh do
 
