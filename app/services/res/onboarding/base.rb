@@ -24,7 +24,7 @@ module Res
         ""
       end
 
-      def qr_code_id
+      def qr_code_identifier
         ""
       end
 
@@ -49,7 +49,7 @@ module Res
         params[:fields] = {
           "date_joined" => self.res_user.whatsapp_onboarding_date,
           "onboarding_method" => onboarding_method,
-          "qr_code_id" => qr_code_id
+          "qr_code_id" => qr_code_identifier
         }
 
         op = TextitRapidproApi::CreateUser.(params)
@@ -69,7 +69,7 @@ module Res
         params[:fields] = {
           "date_joined" => self.res_user.whatsapp_onboarding_date,
           "onboarding_method" => onboarding_method,
-          "qr_code_id" => qr_code_id
+          "qr_code_id" => qr_code_identifier
         }
 
         op = TextitRapidproApi::UpdateGroup.(params)

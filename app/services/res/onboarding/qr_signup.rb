@@ -13,7 +13,7 @@ module Res
     class QrSignup < Res::Onboarding::Base
 
       attr_accessor :qr_code, :qr_code_params, :program_id, :state_id, :qr_code_id, :language_id,
-                    :qr_code, :res_user, :textit_group
+                    :res_user, :textit_group
 
       def initialize(logger, qr_code_params)
         super(logger)
@@ -25,7 +25,7 @@ module Res
         self.program_id = NooraProgram.id_for(self.qr_code_params[:program_name])
         self.state_id = State.id_for(self.qr_code_params[:state_name])
         self.qr_code_id = QrCode.id_from_text_identifier(self.qr_code_params[:qr_identifier])
-        self.qr_code = QrCode.find_by(id: self.qr_code_id)
+        self.qr_code = QrCode.find_by(id: qr_code_id)
         self.language_id = Language.with_code(self.qr_code_params[:language_code])&.id
 
         # first make sure all compulsory attributes are present
@@ -39,7 +39,7 @@ module Res
           return self
         end
 
-        if self.qr_code_id.blank?
+        if self.qr_code.blank?
           self.errors << "Qr Code identifier is blank or invalid"
           return self
         end
@@ -57,8 +57,8 @@ module Res
           # this is a case of the user already being part of a certain program
           # If the user is part of the same program and state, then just add an
           # entry in the signup tracker and move on
-          if self.res_user.program_id == self.exophone.program_id &&
-            self.res_user.state_id == self.exophone.state_id
+          if self.res_user.program_id == self.qr_code.noora_program_id &&
+            self.res_user.state_id == self.qr_code.state_id
             # do nothing, basically
           else
             # i.e. the user is calling after signing up for another program in another state
@@ -99,8 +99,8 @@ module Res
         "qr_code"
       end
 
-      def qr_code_id
-        self.qr_code&.name
+      def qr_code_identifier
+        self.qr_code&.text_identifier
       end
 
 
