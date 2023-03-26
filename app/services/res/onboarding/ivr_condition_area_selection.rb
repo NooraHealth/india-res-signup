@@ -49,6 +49,9 @@ module Res
 
         add_user_to_existing_group
 
+        # update the signup tracker for the user
+        update_signup_tracker
+
         self
       end
 
