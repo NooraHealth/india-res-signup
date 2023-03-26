@@ -52,7 +52,6 @@ module Res
 
         # also retrieve onboarding method
         self.onboarding_method_id = OnboardingMethod.id_for(self.update_params[:onboarding_method])
-        self.language_id = Language.with_code(self.update_params[:language_code])
 
         # retrieve the user from the database. Ideally the user should exist at this point in time
         # If they don't throw an error and exit
@@ -76,7 +75,6 @@ module Res
       def update_signup_tracker
         tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
                                                            state_id: self.res_user.state_id,
-                                                           language_id: self.language_id,
                                                            onboarding_method_id: self.onboarding_method_id,
                                                            completed: false).first
 
