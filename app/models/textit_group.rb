@@ -2,16 +2,17 @@
 #
 # Table name: textit_groups
 #
-#  id                :bigint           not null, primary key
-#  name              :string
-#  program_id        :integer
-#  textit_id         :string
-#  condition_area_id :integer
-#  exotel_number     :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  language_id       :integer
-#  state_id          :bigint
+#  id                   :bigint           not null, primary key
+#  name                 :string
+#  program_id           :integer
+#  textit_id            :string
+#  condition_area_id    :integer
+#  exotel_number        :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  language_id          :integer
+#  state_id             :bigint
+#  onboarding_method_id :bigint
 #
 class TextitGroup < ApplicationRecord
 
@@ -22,5 +23,6 @@ class TextitGroup < ApplicationRecord
   belongs_to :program, class_name: "NooraProgram", optional: true
   belongs_to :language, optional: true
   belongs_to :state, optional: true
+  belongs_to :onboarding_method, optional: true
 
 end

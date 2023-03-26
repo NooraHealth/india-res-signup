@@ -30,6 +30,7 @@
 #  onboarding_method_id      :bigint
 #  whatsapp_onboarding_date  :datetime
 #  onboarding_attempts       :integer          default(0)
+#  qr_scan_date              :datetime
 #
 
 one:
