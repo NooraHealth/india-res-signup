@@ -70,7 +70,12 @@ module Res
                                                            onboarding_method_id: self.onboarding_method_id,
                                                            completed: false).first
 
-        unless tracker&.update(completed: true, condition_area_id: self.condition_area_id, completed_at: DateTime.now)
+        if tracker.blank?
+          self.errors << "Tracker not found for user with mobile: #{self.res_user.mobile_number}"
+          return self
+        end
+
+        unless tracker.update(completed: true, condition_area_id: self.condition_area_id, completed_at: DateTime.now)
           self.errors << tracker.errors.full_messages
           return false
         end
