@@ -54,16 +54,27 @@ module Res
         # add condition area mapping to the user
         self.res_user.add_condition_area(self.res_user.program_id, self.condition_area_id)
 
-        # find the signup tracker associated with this user and update completed to true
+        # update the signup tracker
+        update_signup_tracker
+
+
+        self
+      end
+
+      private
+
+      def update_signup_tracker
         tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
                                                            state_id: self.res_user.state_id,
                                                            language_id: self.language_id,
                                                            onboarding_method_id: self.onboarding_method_id,
                                                            completed: false).first
 
-        tracker&.update(completed: true, condition_area_id: self.condition_area_id)
-
-        self
+        unless tracker&.update(completed: true, condition_area_id: self.condition_area_id, completed_at: DateTime.now)
+          self.errors << tracker.errors.full_messages
+          return false
+        end
+        true
       end
 
 

@@ -64,7 +64,7 @@ module Res
 
       def update_signup_tracker
         tracker = self.res_user.user_signup_trackers.find_by(call_sid: self.parsed_exotel_params[:call_sid])
-        tracker&.update(condition_area_id: self.condition_area_id, completed: true)
+        tracker&.update(condition_area_id: self.condition_area_id, completed: true, completed_at: DateTime.now)
       end
 
 

@@ -17,6 +17,7 @@
 #  sms_id               :string
 #  qr_code_id           :bigint
 #  exophone_id          :bigint
+#  completed_at         :datetime
 #
 class UserSignupTracker < ApplicationRecord
   belongs_to :user
