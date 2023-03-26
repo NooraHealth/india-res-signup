@@ -38,6 +38,16 @@ module DistrictHospitals
       end
     end
 
+    def acknowledge_condition_area
+      op = Res::Onboarding::AcknowledgeConditionAreaChange.(self.logger, params.permit!)
+      if op.errors.present?
+        logger.warn("Updating condition area failed with the following errors: #{op.errors.to_sentence}")
+        render json: {success: false, errors: op.errors}
+      else
+        render json: {success: true}
+      end
+    end
+
     private
 
     def exotel_params

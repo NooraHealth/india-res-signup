@@ -145,7 +145,7 @@ module Res
           onboarding_method_id: OnboardingMethod.id_for(:qr_code),
           state_id: self.state_id,
           qr_code_id: self.qr_code_id,
-          completed: true
+          completed: false
         )
 
         unless tracker.save

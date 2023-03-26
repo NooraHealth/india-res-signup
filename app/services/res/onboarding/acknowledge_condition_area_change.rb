@@ -6,7 +6,7 @@
 # {
 #   "mobile_number": "",
 #   "condition_area": "",
-#   "program": "",
+#   "program_name": "",
 #   "onboarding_method": "",
 #   "language_code": ""
 # }
@@ -33,7 +33,7 @@ module Res
         end
 
         # now retrieve the program_id from params
-        self.program_id = NooraProgram.id_for(self.update_params[:program])
+        self.program_id = NooraProgram.id_for(self.update_params[:program_name])
         if self.program_id.blank?
           self.errors << "Program not found for user with mobile #{self.update_params[:mobile_number]}"
           return self
@@ -56,11 +56,12 @@ module Res
 
         # find the signup tracker associated with this user and update completed to true
         tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
-                                                 state_id: self.res_user.state_id,
-                                                 language_id: self.language_id,
-                                                 onboarding_method_id: self.onboarding_method_id,
-                                                 completed: false).first
-        tracker&.update(completed: true)
+                                                           state_id: self.res_user.state_id,
+                                                           language_id: self.language_id,
+                                                           onboarding_method_id: self.onboarding_method_id,
+                                                           completed: false).first
+
+        tracker&.update(completed: true, condition_area_id: self.condition_area_id)
 
         self
       end
