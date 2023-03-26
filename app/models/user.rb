@@ -140,7 +140,7 @@ class User < ApplicationRecord
   # of RES. For now, this means that the user has selected their language and condition area
   def fully_onboarded_to_res?(program_id)
     self.language_id.present? &&
-    self.user_condition_area_mappings.where(noora_program_id: program_id, active: true).present? &&
+    self.user_condition_area_mappings.where(noora_program_id: program_id).present? &&
     self.signed_up_to_whatsapp
   end
 
