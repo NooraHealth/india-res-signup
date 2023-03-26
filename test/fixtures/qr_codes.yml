@@ -2,17 +2,26 @@
 #
 # Table name: qr_codes
 #
-#  id           :bigint           not null, primary key
-#  name         :string
-#  link_encoded :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id               :bigint           not null, primary key
+#  name             :string
+#  link_encoded     :string
+#  state_id         :bigint
+#  noora_program_id :bigint
+#  text_identifier  :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 
 one:
   name: MyString
   link_encoded: MyString
+  state: one
+  noora_program: one
+  text_identifier: MyString
 
 two:
   name: MyString
   link_encoded: MyString
+  state: two
+  noora_program: two
+  text_identifier: MyString

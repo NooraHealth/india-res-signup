@@ -34,6 +34,10 @@
 #                                  mch_hp_wa_signup GET  /mch/hp/wa_signup(.:format)                                                              district_hospitals/hp#wa_signup
 #                     mch_hp_change_whatsapp_number GET  /mch/hp/change_whatsapp_number(.:format)                                                 district_hospitals/hp#change_whatsapp_number
 #                            mch_hp_initialize_user GET  /mch/hp/initialize_user(.:format)                                                        district_hospitals/hp#initialize_user
+#                   res_haryana_ivr_initialize_user GET  /res/haryana/ivr_initialize_user(.:format)                                               district_hospitals/haryana#ivr_initialize_user
+#             res_haryana_ivr_select_condition_area GET  /res/haryana/ivr_select_condition_area(.:format)                                         district_hospitals/haryana#ivr_select_condition_area
+#                             res_haryana_qr_signup POST /res/haryana/qr_signup(.:format)                                                         district_hospitals/haryana#qr_signup
+#  res_haryana_acknowledge_condition_area_selection PUT  /res/haryana/acknowledge_condition_area_selection(.:format)                              district_hospitals/haryana#acknowledge_condition_area
 #               unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
 #           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
@@ -161,6 +165,19 @@ Rails.application.routes.draw do
   ##############################################################################################################
   ##################################################### HP Endpoints ########################################################
 
+
+
+
+  ##################################################### Haryana Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ivr_initialize_user'
+  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ivr_select_condition_area'
+  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#qr_signup'
+  put 'res/haryana/acknowledge_condition_area_selection', to: 'district_hospitals/haryana#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Haryana Endpoints ########################################################
 
 
 

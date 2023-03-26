@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_06_163037) do
+ActiveRecord::Schema.define(version: 2023_03_26_200646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,8 +73,13 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
   create_table "qr_codes", force: :cascade do |t|
     t.string "name"
     t.string "link_encoded"
+    t.bigint "state_id"
+    t.bigint "noora_program_id"
+    t.string "text_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["noora_program_id"], name: "index_qr_codes_on_noora_program_id"
+    t.index ["state_id"], name: "index_qr_codes_on_state_id"
   end
 
   create_table "rch_profiles", force: :cascade do |t|
@@ -126,7 +131,9 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
     t.datetime "updated_at", null: false
     t.integer "language_id"
     t.bigint "state_id"
+    t.bigint "onboarding_method_id"
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
+    t.index ["onboarding_method_id"], name: "index_textit_groups_on_onboarding_method_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
     t.index ["state_id"], name: "index_textit_groups_on_state_id"
   end
@@ -137,6 +144,7 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
     t.bigint "noora_program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["condition_area_id"], name: "index_user_condition_area_mappings_on_condition_area_id"
     t.index ["noora_program_id"], name: "index_user_condition_area_mappings_on_noora_program_id"
     t.index ["user_id"], name: "index_user_condition_area_mappings_on_user_id"
@@ -162,14 +170,18 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
     t.datetime "updated_at", null: false
     t.bigint "state_id"
     t.string "call_sid"
-    t.string "exophone"
     t.bigint "onboarding_method_id"
     t.boolean "completed"
     t.string "sms_id"
+    t.bigint "qr_code_id"
+    t.bigint "exophone_id"
+    t.datetime "completed_at"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
+    t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
     t.index ["noora_program_id"], name: "index_user_signup_trackers_on_noora_program_id"
     t.index ["onboarding_method_id"], name: "index_user_signup_trackers_on_onboarding_method_id"
+    t.index ["qr_code_id"], name: "index_user_signup_trackers_on_qr_code_id"
     t.index ["state_id"], name: "index_user_signup_trackers_on_state_id"
     t.index ["user_id"], name: "index_user_signup_trackers_on_user_id"
   end
@@ -202,6 +214,7 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
     t.bigint "onboarding_method_id"
     t.datetime "whatsapp_onboarding_date"
     t.integer "onboarding_attempts", default: 0
+    t.datetime "qr_scan_date"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["onboarding_method_id"], name: "index_users_on_onboarding_method_id"
@@ -214,6 +227,8 @@ ActiveRecord::Schema.define(version: 2023_03_06_163037) do
   add_foreign_key "exophones", "languages"
   add_foreign_key "exophones", "noora_programs", column: "program_id"
   add_foreign_key "hospitals", "states"
+  add_foreign_key "qr_codes", "noora_programs"
+  add_foreign_key "qr_codes", "states"
   add_foreign_key "rch_profiles", "users"
   add_foreign_key "textit_group_user_mappings", "textit_groups"
   add_foreign_key "textit_group_user_mappings", "users"

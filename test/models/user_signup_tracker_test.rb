@@ -12,10 +12,12 @@
 #  updated_at           :datetime         not null
 #  state_id             :bigint
 #  call_sid             :string
-#  exophone             :string
 #  onboarding_method_id :bigint
 #  completed            :boolean
 #  sms_id               :string
+#  qr_code_id           :bigint
+#  exophone_id          :bigint
+#  completed_at         :datetime
 #
 require 'test_helper'
 
