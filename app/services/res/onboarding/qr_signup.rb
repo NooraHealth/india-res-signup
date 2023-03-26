@@ -95,6 +95,14 @@ module Res
 
       private
 
+      def onboarding_method
+        "qr_code"
+      end
+
+      def qr_code_id
+        self.qr_code&.name
+      end
+
 
       def create_res_user
         self.res_user = User.new(
@@ -156,44 +164,6 @@ module Res
         end
       end
 
-      # this method adds a user to the relevant textit group using TextIt's APIs
-      def create_user_with_relevant_group
-        params = {id: self.res_user.id}
-        params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.logger
-        # below line interacts with the API handler for TextIt and creates the user
-        params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date,
-          "onboarding_method" => "qr_code",
-          "qr_code_id" => self.qr_code.name
-        }
-
-        op = TextitRapidproApi::CreateUser.(params)
-        if op.errors.present?
-          return false
-        end
-        true
-      end
-
-
-      # If a user is already on TextIt, the user is added to an existing group which is identified
-      # from the TextitGroup class
-      def add_user_to_existing_group
-        params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
-        params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.logger
-        params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date,
-          "onboarding_method" => "qr_code",
-          "qr_code_id" => self.qr_code.name
-        }
-
-        op = TextitRapidproApi::UpdateGroup.(params)
-        if op.errors.present?
-          return false
-        end
-        true
-      end
     end
   end
 end

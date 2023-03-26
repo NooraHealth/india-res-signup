@@ -55,6 +55,10 @@ module Res
 
       private
 
+      def onboarding
+        "ivr"
+      end
+
       def update_signup_tracker
         tracker = self.res_user.user_signup_trackers.find_by(call_sid: self.parsed_exotel_params[:call_sid])
         tracker&.update(condition_area_id: self.condition_area_id, completed: true)
@@ -72,21 +76,6 @@ module Res
         end
       end
 
-
-      # by the time user gets here, the assumption is that the user is already part
-      # of TextIt and has a UUID
-      def add_user_to_existing_group
-        params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
-        params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.logger
-        params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date,
-          "onboarding_method" => "ivr",
-          "qr_code_id" => ""
-        }
-
-        op = TextitRapidproApi::UpdateGroup.(params)
-      end
     end
   end
 end

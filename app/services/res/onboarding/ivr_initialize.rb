@@ -76,6 +76,10 @@ module Res
 
       private
 
+      def onboarding_method
+        "ivr"
+      end
+
       def create_res_user
         self.res_user = User.new(
           language_preference_id: self.exophone.language_id,
@@ -127,51 +131,14 @@ module Res
       def retrieve_textit_group
         self.textit_group = TextitGroup.where(program_id: self.exophone.program_id,
                                               language_id: self.exophone.language_id,
-                                              state_id: self.exophone.state_id).first
+                                              state_id: self.exophone.state_id,
+                                              onboarding_method_id: OnboardingMethod.id_for(:ivr)).first
 
         if self.textit_group.blank?
           self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"
         end
       end
 
-      # this method adds a user to the relevant textit group using TextIt's APIs
-      def create_user_with_relevant_group
-        params = {id: self.res_user.id}
-        params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.logger
-        # below line interacts with the API handler for TextIt and creates the user
-        params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date,
-          "onboarding_method" => "ivr",
-          "qr_code_id" => ""
-        }
-
-        op = TextitRapidproApi::CreateUser.(params)
-        if op.errors.present?
-          return false
-        end
-        true
-      end
-
-
-      # If a user is already on TextIt, the user is added to an existing group which is identified
-      # from the TextitGroup class
-      def add_user_to_existing_group
-        params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
-        params[:textit_group_id] = self.textit_group&.textit_id
-        params[:logger] = self.logger
-        params[:fields] = {
-          "date_joined" => self.res_user.whatsapp_onboarding_date,
-          "onboarding_method" => "ivr",
-          "qr_code_id" => ""
-        }
-
-        op = TextitRapidproApi::UpdateGroup.(params)
-        if op.errors.present?
-          return false
-        end
-        true
-      end
     end
   end
 end

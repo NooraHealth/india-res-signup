@@ -18,6 +18,16 @@ module Res
 
       protected
 
+      # this method will return the onboarding method of the user based
+      # on their type - i.e. based on the class called
+      def onboarding_method
+        ""
+      end
+
+      def qr_code_id
+        ""
+      end
+
       def retrieve_exophone
         self.exophone = Exophone.find_by virtual_number: self.parsed_exotel_params[:exophone]
       end
@@ -28,6 +38,46 @@ module Res
         if self.res_user.present?
           self.logger.info("SUCCESSFULLY FOUND user in DATABASE with number #{self.res_user.mobile_number}")
         end
+      end
+
+      # this method adds a user to the relevant textit group using TextIt's APIs
+      def create_user_with_relevant_group
+        params = {id: self.res_user.id}
+        params[:textit_group_id] = self.textit_group&.textit_id
+        params[:logger] = self.logger
+        # below line interacts with the API handler for TextIt and creates the user
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date,
+          "onboarding_method" => onboarding_method,
+          "qr_code_id" => qr_code_id
+        }
+
+        op = TextitRapidproApi::CreateUser.(params)
+        if op.errors.present?
+          self.errors = op.errors
+          return false
+        end
+        true
+      end
+
+      # If a user is already on TextIt, the user is added to an existing group which is identified
+      # from the TextitGroup class
+      def add_user_to_existing_group
+        params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
+        params[:textit_group_id] = self.textit_group&.textit_id
+        params[:logger] = self.logger
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date,
+          "onboarding_method" => onboarding_method,
+          "qr_code_id" => qr_code_id
+        }
+
+        op = TextitRapidproApi::UpdateGroup.(params)
+        if op.errors.present?
+          self.errors = op.errors
+          return false
+        end
+        true
       end
 
     end
