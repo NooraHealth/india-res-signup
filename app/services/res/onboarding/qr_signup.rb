@@ -60,6 +60,9 @@ module Res
           if self.res_user.program_id == self.qr_code.noora_program_id &&
             self.res_user.state_id == self.qr_code.state_id
             # do nothing, basically
+            # add a signup tracker for this event and return
+            add_signup_tracker
+            return self
           else
             # i.e. the user is calling after signing up for another program in another state
             # In this case, update the user's attributes to the one specified by this exophone

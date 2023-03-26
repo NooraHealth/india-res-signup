@@ -55,7 +55,7 @@ module Res
 
       private
 
-      def onboarding
+      def onboarding_method
         "ivr"
       end
 
