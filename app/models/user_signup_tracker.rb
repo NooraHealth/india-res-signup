@@ -24,8 +24,8 @@ class UserSignupTracker < ApplicationRecord
   belongs_to :condition_area, optional: true
   belongs_to :noora_program, optional: true
   belongs_to :language, optional: true
-  belongs_to :onboarding_method
-  belongs_to :state
+  belongs_to :onboarding_method, optional: true
+  belongs_to :state, optional: true
   belongs_to :qr_code, optional: true
   belongs_to :exophone, optional: true
 
