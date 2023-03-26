@@ -1,14 +1,15 @@
 # this class will update the database with the right condition area for the user based
 # on what is sent in the request. This is a generalized class, and any service that offers
 # a webhook for us to update stuff can call this endpoint to update our database with the
-# changes
+# changes. The "channel" attribute gives us where the request is coming from
 # Parameters:
 # {
 #   "mobile_number": "",
 #   "condition_area": "",
 #   "program_name": "",
 #   "onboarding_method": "",
-#   "language_code": ""
+#   "language_code": "",
+#   "channel": "" # textit, turn etc.
 # }
 
 module Res
@@ -25,17 +26,27 @@ module Res
 
 
       def call
+        # based on the channel, extract the mobile number
+        channel = self.update_params[:channel]
+
+        # first extract the mobile number of the user
+        mobile_number = extract_mobile_number(channel, update_params)
+        if mobile_number.blank?
+          self.errors << "User not found with mobile number: #{mobile_number}"
+          return self
+        end
+
         # first look for the condition area id sent in the params
         self.condition_area_id = ConditionArea.id_for(self.update_params[:condition_area])
         if self.condition_area_id.blank?
-          self.errors << "Condition area not sent for user with mobile #{self.update_params[:mobile_number]}"
+          self.errors << "Condition area not sent for user with mobile #{mobile_number}"
           return self
         end
 
         # now retrieve the program_id from params
         self.program_id = NooraProgram.id_for(self.update_params[:program_name])
         if self.program_id.blank?
-          self.errors << "Program not found for user with mobile #{self.update_params[:mobile_number]}"
+          self.errors << "Program not found for user with mobile #{mobile_number}"
           return self
         end
 
@@ -45,9 +56,9 @@ module Res
 
         # retrieve the user from the database. Ideally the user should exist at this point in time
         # If they don't throw an error and exit
-        self.res_user = User.find_by mobile_number: self.update_params[:mobile_number]
+        self.res_user = User.find_by mobile_number: mobile_number
         if self.res_user.blank?
-          self.errors << "Could not find RES user with mobile number: #{self.update_params[:mobile_number]}"
+          self.errors << "Could not find RES user with mobile number: #{mobile_number}"
           return self
         end
 
@@ -56,7 +67,6 @@ module Res
 
         # update the signup tracker
         update_signup_tracker
-
 
         self
       end
