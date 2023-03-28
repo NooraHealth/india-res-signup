@@ -46,6 +46,8 @@ module Res
         return self if self.errors.present?
 
         unless create_user_with_relevant_group
+          # resetting errors because we don't need them to carry over for the whole rest of the request
+          self.errors = []
           add_user_to_existing_group
         end
 
