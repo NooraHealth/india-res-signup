@@ -77,22 +77,39 @@ module RchPortal
         "onboarding_method" => "ivr"
       }
 
-      # if user already exists on TextIt, then change their group
-      if check_user_on_textit(self.rch_user)
-        result = add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
-      else
-        result = create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+      unless create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+        # resetting errors because we don't need them to carry over for the whole rest of the request
+        self.errors = []
+        add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
       end
 
-      # if there is an issue signing up the user onto, WA don't update the flag for that user
-      if result.errors.present?
-        self.errors += result.errors
-        return self
-      end
+      # if there are issues with signing on the user don't update the user as signed up
+      return self if self.errors.present?
 
       self.rch_user.update(signed_up_to_whatsapp: true, whatsapp_onboarding_date: DateTime.now, onboarding_method_id: OnboardingMethod.id_for(:ivr))
 
+      add_signup_tracker
+
       self
+    end
+
+    private
+
+    def add_signup_tracker
+      tracker = self.rch_user.user_signup_trackers.build(
+        noora_program_id: self.exophone.program_id,
+        language_id: self.exophone.language_id,
+        onboarding_method_id: OnboardingMethod.id_for(:ivr),
+        state_id: self.exophone.state_id,
+        call_sid: self.parsed_params[:call_sid],
+        completed: true,
+        exophone_id: self.exophone.id
+      )
+      unless tracker.save
+        self.errors << tracker.errors.full_messages
+        return false
+      end
+      true
     end
 
   end

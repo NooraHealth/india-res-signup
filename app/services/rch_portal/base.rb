@@ -27,6 +27,11 @@ module RchPortal
 
       # below line interacts with the API handler for TextIt and creates the user
       op = TextitRapidproApi::CreateUser.(params)
+      if op.errors.present?
+        self.errors = op.errors
+        return false
+      end
+      true
     end
 
 
@@ -42,6 +47,11 @@ module RchPortal
       params[:fields] = fields
 
       op = TextitRapidproApi::UpdateGroup.(params)
+      if op.errors.present?
+        self.errors = op.errors
+        return false
+      end
+      true
     end
 
   end

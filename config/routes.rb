@@ -42,13 +42,16 @@
 #           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
 #                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
-#                                   rch_create_user POST /rch/create_user(.:format)                                                               rch_portal/onboarding#create
-#                                        rch_import POST /rch/import(.:format)                                                                    rch_portal/onboarding#import
-#                             rch_link_based_signup POST /rch/link_based_signup(.:format)                                                         rch_portal/onboarding#link_based_signup
-#                          rch_turn_language_change PUT  /rch/turn_language_change(.:format)                                                      rch_portal/onboarding#update_language
-#                                    rch_ivr_signup GET  /rch/ivr_signup(.:format)                                                                rch_portal/onboarding#ivr
-#                         rch_acknowledge_wa_signup PUT  /rch/acknowledge_wa_signup(.:format)                                                     rch_portal/webhooks#acknowledge_wa_signup
-#                    rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_onboarding_attempts
+#                     rch_portal_punjab_create_user POST /rch_portal/punjab/create_user(.:format)                                                 rch_portal/punjab/onboarding#create
+#                          rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
+#               rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
+#                      rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
+#             rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
+#                  rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
+#       rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
+#              rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
+#                  rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
+#             rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_onboarding_attempts
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -198,13 +201,29 @@ Rails.application.routes.draw do
   ##################################################### RCH Endpoints ################################################################
   ###########################################################################################################################
 
-  post 'rch/create_user', to: 'rch_portal/onboarding#create'
-  post 'rch/import', to: 'rch_portal/onboarding#import'
-  post 'rch/link_based_signup', to: 'rch_portal/onboarding#link_based_signup'
-  put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
-  get 'rch/ivr_signup', to: 'rch_portal/onboarding#ivr'
-  put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
-  post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_onboarding_attempts'
+  namespace :rch_portal do
+
+    # all endpoints related to Punjab
+    namespace :punjab do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+    end
+
+
+    namespace :andhra_pradesh do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+    end
+
+
+    put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
+    post 'update_onboarding_attempts', to: 'webhooks#update_onboarding_attempts'
+  end
+
 
   ###########################################################################################################################
   ##################################################### RCH Endpoints ################################################################

@@ -13,7 +13,8 @@
 module RchPortal
   class LinkBasedSignup < RchPortal::Base
 
-    attr_accessor :turn_params, :rch_user
+    attr_accessor :turn_params, :rch_user, :state_id, :language_id, :condition_area_id, :program_id,
+                  :onboarding_method_id
 
     def initialize(logger, params)
       super(logger)
@@ -46,14 +47,14 @@ module RchPortal
       end
 
       # Update the onboarding method for this user based on where the link is coming from
-      onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
+      self.onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
       self.rch_user.update(onboarding_method_id: onboarding_method_id)
 
       # first extract the relevant params to be used for determining user's campaign
-      language_id = Language.with_code(self.turn_params[:language_code])&.id
-      condition_area_id = ConditionArea.id_for(self.turn_params[:condition_area])
-      state_id = State.id_for(self.turn_params[:state_name])
-      program_id = NooraProgram.id_for(self.turn_params[:program_name])
+      self.language_id = Language.with_code(self.turn_params[:language_code])&.id
+      self.condition_area_id = ConditionArea.id_for(self.turn_params[:condition_area])
+      self.state_id = State.id_for(self.turn_params[:state_name])
+      self.program_id = NooraProgram.id_for(self.turn_params[:program_name])
 
       # update the user's language preference to the one reflected in the API
       self.rch_user.update(language_preference_id: language_id)
@@ -76,24 +77,38 @@ module RchPortal
         "onboarding_method" => self.rch_user.onboarding_method&.name
       }
 
-      # now add user to the respective group on TextIt
-      # If the user is already on textit, don't do anything. Because this user is already onboarded onto
-      # some other program
-      if check_user_on_textit(self.rch_user)
-        result = add_user_to_existing_group(self.rch_user, textit_group, cf_params)
-      else
-        result = create_user_with_relevant_group(self.rch_user, textit_group, cf_params)
+      unless create_user_with_relevant_group(self.rch_user, textit_group, cf_params)
+        # resetting errors because we don't need them to carry over for the whole rest of the request
+        self.errors = []
+        add_user_to_existing_group(self.rch_user, textit_group, cf_params)
       end
 
-      # if there is an issue signing up the user onto, WA don't update the flag for that user
-      if result.errors.present?
-        self.errors += result.errors
-        return self
-      end
+      # if there are issues with signing on the user don't update the user as signed up
+      return self if self.errors.present?
 
       self.rch_user.update(signed_up_to_whatsapp: true, whatsapp_onboarding_date: DateTime.now) # indicating that the user has successfully signed up to WhatsApp
 
+      add_signup_tracker
+
       self
     end
+
+    private
+
+    def add_signup_tracker
+      tracker = self.rch_user.user_signup_trackers.build(
+        noora_program_id: self.program_id,
+        language_id: self.language_id,
+        onboarding_method_id: self.onboarding_method_id,
+        state_id: self.state_id,
+        completed: true
+      )
+      unless tracker.save
+        self.errors << tracker.errors.full_messages
+        return false
+      end
+      true
+    end
+
   end
 end

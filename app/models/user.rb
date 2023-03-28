@@ -144,6 +144,17 @@ class User < ApplicationRecord
     self.signed_up_to_whatsapp
   end
 
+  ######################## SIGNUP TRACKER RELATED METHODS #############################
+
+  def add_signup_tracker(program_id, condition_area_id, language_id)
+    self.user_signup_trackers.build(condition_area_id: condition_area_id,
+                                    program_id: program_id,
+                                    language_id: language_id)
+  end
+
+
+
+
   private
 
   # def update_whatsapp_id
