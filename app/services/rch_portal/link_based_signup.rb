@@ -77,6 +77,8 @@ module RchPortal
       }
 
       unless create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+        # resetting errors because we don't need them to carry over for the whole rest of the request
+        self.errors = []
         add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
       end
 

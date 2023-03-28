@@ -78,6 +78,8 @@ module RchPortal
       }
 
       unless create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+        # resetting errors because we don't need them to carry over for the whole rest of the request
+        self.errors = []
         add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
       end
 
@@ -94,12 +96,12 @@ module RchPortal
     private
 
     def add_signup_tracker
-      tracker = self.res_user.user_signup_trackers.build(
+      tracker = self.rch_user.user_signup_trackers.build(
         noora_program_id: self.exophone.program_id,
         language_id: self.exophone.language_id,
         onboarding_method_id: OnboardingMethod.id_for(:ivr),
         state_id: self.exophone.state_id,
-        call_sid: self.parsed_exotel_params[:call_sid],
+        call_sid: self.parsed_params[:call_sid],
         completed: true,
         exophone_id: self.exophone.id
       )
