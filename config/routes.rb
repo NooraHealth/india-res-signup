@@ -46,6 +46,10 @@
 #                          rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
 #               rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
 #                      rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
+#             rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
+#                  rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
+#       rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
+#              rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
 #                  rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
 #             rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_onboarding_attempts
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
@@ -207,6 +211,7 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
 
+
     namespace :andhra_pradesh do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
@@ -214,10 +219,6 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
 
-
-    namespace :andhra_pradesh do
-
-    end
 
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'update_onboarding_attempts', to: 'webhooks#update_onboarding_attempts'

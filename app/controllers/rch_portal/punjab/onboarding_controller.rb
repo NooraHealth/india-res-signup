@@ -49,7 +49,7 @@ module RchPortal
       # this endpoint will handle all onboarding that are based off of IVR
       # Based on the exophone, the relevant program, condition area and language is chosen and users
       # are onboarded onto the specific program based on that
-      def ivr
+      def ivr_signup
         op = RchPortal::IvrSignup.(logger, exotel_params)
         if op.errors.present?
           logger.warn("IVR Signup failed with the errors: #{op.errors.to_sentence}")
