@@ -55,6 +55,7 @@ module Res
 
         add_signup_tracker
 
+        self
       end
 
       protected
