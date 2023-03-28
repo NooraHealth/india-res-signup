@@ -13,7 +13,8 @@
 module RchPortal
   class LinkBasedSignup < RchPortal::Base
 
-    attr_accessor :turn_params, :rch_user, :state_id, :language_id, :condition_area_id, :program_id
+    attr_accessor :turn_params, :rch_user, :state_id, :language_id, :condition_area_id, :program_id,
+                  :onboarding_method_id
 
     def initialize(logger, params)
       super(logger)
@@ -46,7 +47,7 @@ module RchPortal
       end
 
       # Update the onboarding method for this user based on where the link is coming from
-      onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
+      self.onboarding_method_id = OnboardingMethod.id_for(self.turn_params[:onboarding_method])
       self.rch_user.update(onboarding_method_id: onboarding_method_id)
 
       # first extract the relevant params to be used for determining user's campaign
@@ -76,10 +77,10 @@ module RchPortal
         "onboarding_method" => self.rch_user.onboarding_method&.name
       }
 
-      unless create_user_with_relevant_group(self.rch_user, self.textit_group, cf_params)
+      unless create_user_with_relevant_group(self.rch_user, textit_group, cf_params)
         # resetting errors because we don't need them to carry over for the whole rest of the request
         self.errors = []
-        add_user_to_existing_group(self.rch_user, self.textit_group, cf_params)
+        add_user_to_existing_group(self.rch_user, textit_group, cf_params)
       end
 
       # if there are issues with signing on the user don't update the user as signed up
@@ -95,13 +96,12 @@ module RchPortal
     private
 
     def add_signup_tracker
-      tracker = self.res_user.user_signup_trackers.build(
+      tracker = self.rch_user.user_signup_trackers.build(
         noora_program_id: self.program_id,
         language_id: self.language_id,
-        onboarding_method_id: OnboardingMethod.id_for(:sms),
+        onboarding_method_id: self.onboarding_method_id,
         state_id: self.state_id,
-        completed: true,
-        exophone_id: self.exophone.id
+        completed: true
       )
       unless tracker.save
         self.errors << tracker.errors.full_messages
