@@ -9,7 +9,8 @@
 module RchPortal
   class IvrSignup < RchPortal::Base
 
-    attr_accessor :exotel_params, :parsed_params, :language_preference, :rch_user, :exophone, :textit_group
+    attr_accessor :exotel_params, :parsed_params, :language_preference, :rch_user, :exophone, :textit_group,
+                  :condition_area_id
 
     def initialize(logger, params)
       super(logger)
@@ -61,7 +62,8 @@ module RchPortal
       # update the user's language preference to the appropriate one chosen by the user
       self.rch_user.update(language_preference_id: self.language_preference.id)
 
-      self.textit_group = TextitGroup.find_by(condition_area_id: self.rch_user.user_condition_area_mappings.with_program_id(self.rch_user.program_id).first&.condition_area_id,
+      self.condition_area_id = self.rch_user.user_condition_area_mappings.with_program_id(self.rch_user.program_id).first&.condition_area_id
+      self.textit_group = TextitGroup.find_by(condition_area_id: self.condition_area_id,
                                               program_id: self.exophone.program_id,
                                               state_id: self.exophone.state_id)
 
@@ -103,7 +105,8 @@ module RchPortal
         state_id: self.exophone.state_id,
         call_sid: self.parsed_params[:call_sid],
         completed: true,
-        exophone_id: self.exophone.id
+        exophone_id: self.exophone.id,
+        condition_area_id: self.condition_area_id
       )
       unless tracker.save
         self.errors << tracker.errors.full_messages

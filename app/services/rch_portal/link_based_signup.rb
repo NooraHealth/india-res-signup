@@ -101,6 +101,7 @@ module RchPortal
         language_id: self.language_id,
         onboarding_method_id: self.onboarding_method_id,
         state_id: self.state_id,
+        condition_area_id: self.condition_area_id,
         completed: true
       )
       unless tracker.save
