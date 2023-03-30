@@ -52,6 +52,8 @@
 #              rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
 #                  rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
 #             rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_onboarding_attempts
+#                         rch_acknowledge_wa_signup PUT  /rch/acknowledge_wa_signup(.:format)                                                     rch_portal/webhooks#acknowledge_wa_signup
+#                    rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_onboarding_attempts
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -223,6 +225,9 @@ Rails.application.routes.draw do
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'update_onboarding_attempts', to: 'webhooks#update_onboarding_attempts'
   end
+
+  put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
+  post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_onboarding_attempts'
 
 
   ###########################################################################################################################
