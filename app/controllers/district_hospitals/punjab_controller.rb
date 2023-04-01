@@ -2,6 +2,11 @@
 # All RES and RCH related actions will be done here - i.e. all inbound and outbound actions
 # for a user to signup for our service
 
+# All states that have the standardized onboarding flow for RES will be using this controller
+# 1. ccp_ivr_initialize_user - Creates the user on TextIt and onboards them on to the MCH Neutral Campaign
+# 2. ccp_ivr_select_condition_area - Updates TextIt group based on condition area chosen by user
+# 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
+
 module DistrictHospitals
   class PunjabController < ApplicationController
 
@@ -20,8 +25,8 @@ module DistrictHospitals
         render json: {success: false, errors: op.errors.to_sentence}
         return
       end
-      # for now return 200 no matter what
-      render 'exotel_wa_signup'
+      # for now return 200 if the user is successfully onboarded
+      render 'dh_signup'
     end
 
     # this endpoint will handle all link-based signups that happens for users on the RCH portal

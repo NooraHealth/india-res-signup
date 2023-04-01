@@ -169,6 +169,19 @@ Rails.application.routes.draw do
 
 
 
+  ##################################################### Karnataka Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/karnataka/ivr_initialize_user', to: 'district_hospitals/karnataka#ccp_ivr_initialize_user'
+  get 'res/karnataka/ivr_select_condition_area', to: 'district_hospitals/karnataka#ccp_ivr_select_condition_area'
+  post 'res/karnataka/qr_signup', to: 'district_hospitals/karnataka#ccp_qr_signup'
+  put 'res/karnataka/acknowledge_condition_area_selection', to: 'district_hospitals/karnataka#ccp_acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Karnataka Endpoints ########################################################
+
+
+
   ##################################################### HP Endpoints ########################################################
   ##############################################################################################################
 
@@ -178,7 +191,6 @@ Rails.application.routes.draw do
 
   ##############################################################################################################
   ##################################################### HP Endpoints ########################################################
-
 
 
 
