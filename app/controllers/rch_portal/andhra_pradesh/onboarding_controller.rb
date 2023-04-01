@@ -1,3 +1,8 @@
+# this controller and action deals with all actions that have to do with loading users onto
+# our backend from the RCH database. We can have a variety of onboarding options - including
+# giving an endpoint they can consume, or us having a script that pulls from their API
+#
+
 module RchPortal
   module AndhraPradesh
     class OnboardingController < ApplicationController

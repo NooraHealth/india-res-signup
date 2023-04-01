@@ -32,32 +32,32 @@ module RchPortal
         end
       end
 
-      # this endpoint will handle all link-based signups that happens for users on the RCH portal
-      # The link essentially sends users a custom message that triggers a stack on Turn, which will specify
-      # the condition area, language and state of the user to onboard them onto the right campaign
-      def link_based_signup
-        op = RchPortal::LinkBasedSignup.(logger, turn_params)
-        if op.errors.present?
-          logger.warn("Link based signup failed with errors: #{op.errors.to_sentence}")
-          render json: {success:false, errors: op.errors}
-        else
-          render json: {success: true}
-        end
-      end
-
-
-      # this endpoint will handle all onboarding that are based off of IVR
-      # Based on the exophone, the relevant program, condition area and language is chosen and users
-      # are onboarded onto the specific program based on that
-      def ivr_signup
-        op = RchPortal::IvrSignup.(logger, exotel_params)
-        if op.errors.present?
-          logger.warn("IVR Signup failed with the errors: #{op.errors.to_sentence}")
-          render json: {errors: op.errors}
-        else
-          render json: {}
-        end
-      end
+      # # this endpoint will handle all link-based signups that happens for users on the RCH portal
+      # # The link essentially sends users a custom message that triggers a stack on Turn, which will specify
+      # # the condition area, language and state of the user to onboard them onto the right campaign
+      # def link_based_signup
+      #   op = RchPortal::LinkBasedSignup.(logger, turn_params)
+      #   if op.errors.present?
+      #     logger.warn("Link based signup failed with errors: #{op.errors.to_sentence}")
+      #     render json: {success:false, errors: op.errors}
+      #   else
+      #     render json: {success: true}
+      #   end
+      # end
+      #
+      #
+      # # this endpoint will handle all onboarding that are based off of IVR
+      # # Based on the exophone, the relevant program, condition area and language is chosen and users
+      # # are onboarded onto the specific program based on that
+      # def ivr_signup
+      #   op = RchPortal::IvrSignup.(logger, exotel_params)
+      #   if op.errors.present?
+      #     logger.warn("IVR Signup failed with the errors: #{op.errors.to_sentence}")
+      #     render json: {errors: op.errors}
+      #   else
+      #     render json: {}
+      #   end
+      # end
 
 
       # this is an endpoint that will be used to update a user's language through WA
@@ -68,13 +68,13 @@ module RchPortal
 
       private
 
-      def turn_params
-        params.permit!
-      end
-
-      def exotel_params
-        params.permit!
-      end
+      # def turn_params
+      #   params.permit!
+      # end
+      #
+      # def exotel_params
+      #   params.permit!
+      # end
 
       def import_params
         params.permit!

@@ -156,36 +156,6 @@ Rails.application.routes.draw do
 
 
 
-
-
-
-  ##################################################### HP Endpoints ########################################################
-  ##############################################################################################################
-
-  get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
-  get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
-  get 'mch/hp/initialize_user', to: 'district_hospitals/hp#initialize_user'
-
-  ##############################################################################################################
-  ##################################################### HP Endpoints ########################################################
-
-
-
-
-  ##################################################### Haryana Endpoints ########################################################
-  ##############################################################################################################
-
-  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ivr_initialize_user'
-  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ivr_select_condition_area'
-  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#qr_signup'
-  put 'res/haryana/acknowledge_condition_area_selection', to: 'district_hospitals/haryana#acknowledge_condition_area'
-
-  ##############################################################################################################
-  ##################################################### Haryana Endpoints ########################################################
-
-
-
-
   ##################################################### UNICEF SNCU Endpoints ########################################################
   ###########################################################################################################################
 
@@ -198,7 +168,34 @@ Rails.application.routes.draw do
   ##################################################### UNICEF SNCU Endpoints ########################################################
 
 
-  ##################################################### RCH Endpoints ################################################################
+
+  ##################################################### HP Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'mch/hp/wa_signup', to: 'district_hospitals/hp#ccp_wa_signup'
+  get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#ccp_change_whatsapp_number'
+  get 'mch/hp/initialize_user', to: 'district_hospitals/hp#ccp_initialize_user'
+
+  ##############################################################################################################
+  ##################################################### HP Endpoints ########################################################
+
+
+
+
+  ##################################################### Haryana RES Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ccp_ivr_initialize_user'
+  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ccp_ivr_select_condition_area'
+  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#ccp_qr_signup'
+  put 'res/haryana/acknowledge_condition_area_selection', to: 'district_hospitals/haryana#ccp_acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Haryana RES Endpoints ########################################################
+
+
+
+  ##################################################### RCH Ingestion Endpoints ################################################################
   ###########################################################################################################################
 
   namespace :rch_portal do
@@ -207,29 +204,37 @@ Rails.application.routes.draw do
     namespace :punjab do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
-      post 'link_based_signup', to: 'onboarding#link_based_signup'
-      get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
-
 
     namespace :andhra_pradesh do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
-      post 'link_based_signup', to: 'onboarding#link_based_signup'
-      get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
-
 
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
   end
 
-  # put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
-  # post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_onboarding_attempts'
+  ###########################################################################################################################
+  ##################################################### RCH Ingestion Endpoints ################################################################
 
+
+
+  ##################################################### RCH Onboarding Endpoints ################################################################
+  ###########################################################################################################################
+
+  namespace :district_hospitals do
+
+    # Punjab RCH Endpoints
+    get 'rch_portal/punjab/ivr_signup', to: 'punjab#rch_ivr_signup'
+    post 'rch_portal/punjab/link_based_signup', to: 'punjab#rch_link_based_signup'
+
+    # Andhra Pradesh RCH Endpoints
+    get 'rch_portal/andhra_pradesh/ivr_signup', to: 'andhra_pradesh#rch_ivr_signup'
+    post 'rch_portal/andhra_pradesh/link_based_signup', to: 'andhra_pradesh#rch_link_based_signup'
+
+  end
 
   ###########################################################################################################################
-  ##################################################### RCH Endpoints ################################################################
-
-
+  ##################################################### RCH Onboarding Endpoints ################################################################
 end
