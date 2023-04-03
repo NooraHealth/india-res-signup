@@ -74,19 +74,31 @@ module RchPortal
       self.rch_user.add_condition_area(self.rch_user.program_id, condition_area_id)
 
       rch_profile = self.rch_user.build_rch_profile(rch_id: self.rch_params[:rch_id],
-                                           name: self.rch_params[:name],
-                                           health_facility: self.rch_params[:health_facility],
-                                           health_block: self.rch_params[:health_block],
-                                           village: self.rch_params[:village],
-                                           husband_name: self.rch_params[:husband_name],
-                                           mother_age: self.rch_params[:mother_age],
-                                           anm_name: self.rch_params[:anm_name],
-                                           anm_contact: self.rch_params[:anm_contact],
-                                           asha_name: self.rch_params[:asha_name],
-                                           asha_contact: self.rch_params[:asha_contact],
-                                           registration_date: self.rch_params[:registration_date],
-                                           high_risk_details: self.rch_params[:high_risk_details]
-                                          )
+                                                   name: self.rch_params[:name],
+                                                   health_facility: self.rch_params[:health_facility],
+                                                   health_block: self.rch_params[:health_block],
+                                                   village: self.rch_params[:village],
+                                                   husband_name: self.rch_params[:husband_name],
+                                                   mother_age: self.rch_params[:mother_age],
+                                                   anm_name: self.rch_params[:anm_name],
+                                                   anm_contact: self.rch_params[:anm_contact],
+                                                   asha_name: self.rch_params[:asha_name],
+                                                   asha_contact: self.rch_params[:asha_contact],
+                                                   registration_date: self.rch_params[:registration_date],
+                                                   high_risk_details: self.rch_params[:high_risk_details],
+                                                   case_no: self.rch_params[:case_no],
+                                                   mobile_of: self.rch_params[:mobile_of],
+                                                   address: self.rch_params[:address],
+                                                   med_past_illness: self.rch_params[:med_past_illness],
+                                                   rch_visit_1_date: self.rch_params[:rch_visit_1_date],
+                                                   rch_visit_2_date: self.rch_params[:rch_visit_2_date],
+                                                   rch_visit_3_date: self.rch_params[:rch_visit_3_date],
+                                                   rch_visit_4_date: self.rch_params[:rch_visit_4_date],
+                                                   rch_visit_5_date: self.rch_params[:rch_visit_5_date],
+                                                   rch_visit_6_date: self.rch_params[:rch_visit_6_date],
+                                                   rch_visit_7_date: self.rch_params[:rch_visit_7_date],
+                                                   rch_visit_8_date: self.rch_params[:rch_visit_8_date]
+                                                  )
 
       # unless RCH profile gets saved, do not proceed
       unless rch_profile.save

@@ -44,10 +44,12 @@
 #                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
 #                     rch_portal_punjab_create_user POST /rch_portal/punjab/create_user(.:format)                                                 rch_portal/punjab/onboarding#create
 #                          rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
+#                  rch_portal_punjab_update_profile PUT  /rch_portal/punjab/update_profile(.:format)                                              rch_portal/punjab/onboarding#update_profile
 #               rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
 #                      rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
 #             rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
 #                  rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
+#          rch_portal_andhra_pradesh_update_profile PUT  /rch_portal/andhra_pradesh/update_profile(.:format)                                      rch_portal/andhra_pradesh/onboarding#update_profile
 #       rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
 #              rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
 #                  rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
@@ -207,6 +209,7 @@ Rails.application.routes.draw do
     namespace :punjab do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
+      put 'update_profile', to: 'onboarding#update_profile'
       post 'link_based_signup', to: 'onboarding#link_based_signup'
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
@@ -215,6 +218,7 @@ Rails.application.routes.draw do
     namespace :andhra_pradesh do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
+      put 'update_profile', to: 'onboarding#update_profile'
       post 'link_based_signup', to: 'onboarding#link_based_signup'
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end

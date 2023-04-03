@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_26_200646) do
+ActiveRecord::Schema.define(version: 2023_04_03_202542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,17 @@ ActiveRecord::Schema.define(version: 2023_03_26_200646) do
     t.string "asha_name"
     t.integer "case_no"
     t.boolean "high_risk_pregnancy", default: false
+    t.string "mobile_of"
+    t.string "address"
+    t.string "med_past_illness"
+    t.datetime "rch_visit_1_date"
+    t.datetime "rch_visit_2_date"
+    t.datetime "rch_visit_3_date"
+    t.datetime "rch_visit_4_date"
+    t.datetime "rch_visit_5_date"
+    t.datetime "rch_visit_6_date"
+    t.datetime "rch_visit_7_date"
+    t.datetime "rch_visit_8_date"
     t.index ["user_id"], name: "index_rch_profiles_on_user_id"
   end
 
