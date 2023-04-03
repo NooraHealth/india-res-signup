@@ -78,6 +78,7 @@ module RchPortal
                                                    health_facility: self.rch_params[:health_facility],
                                                    health_block: self.rch_params[:health_block],
                                                    village: self.rch_params[:village],
+                                                   high_risk_pregnancy: self.rch_params[:high_risk_pregnancy],
                                                    husband_name: self.rch_params[:husband_name],
                                                    mother_age: self.rch_params[:mother_age],
                                                    anm_name: self.rch_params[:anm_name],

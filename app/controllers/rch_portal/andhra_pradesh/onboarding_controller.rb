@@ -59,7 +59,7 @@ module RchPortal
         end
       end
 
-      
+
       def update_profile
         op = RchPortal::UpdateRchProfile.(logger, profile_params)
         if op.errors.present?
