@@ -76,6 +76,7 @@ module RchPortal
       rch_profile = self.rch_user.build_rch_profile(rch_id: self.rch_params[:rch_id],
                                                    name: self.rch_params[:name],
                                                    health_facility: self.rch_params[:health_facility],
+                                                   health_sub_facility: self.rch_params[:health_sub_facility],
                                                    health_block: self.rch_params[:health_block],
                                                    village: self.rch_params[:village],
                                                    high_risk_pregnancy: self.rch_params[:high_risk_pregnancy],
