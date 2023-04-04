@@ -14,14 +14,19 @@ module RchPortal
     def call
 
       # first find the user with the mobile number
-      self.rch_user = User.find_by(mobile_number: self.update_params[:mobile_number])
+      self.rch_user = User.find_by(mobile_number: "0#{self.update_params[:mobile_number]}")
 
       if self.rch_user.blank?
         self.errors << "User not found with mobile number #{self.update_params[:mobile_number]}"
         return self
       end
 
-      # TODO - validate user state from params
+      state_id = State.id_for(self.update_params[:state_name])
+      if self.rch_user.state_id != state_id
+        self.errors << "User is not part of the state: #{self.update_params[:state_name]}"
+        return self
+      end
+
 
       rch_profile = self.rch_user.rch_profile
       rch_profile_params = {}
@@ -55,6 +60,7 @@ module RchPortal
         return self
       end
 
+      self
     end
   end
 end

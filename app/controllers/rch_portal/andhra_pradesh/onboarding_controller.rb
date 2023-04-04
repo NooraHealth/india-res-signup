@@ -95,6 +95,10 @@ module RchPortal
         params.permit!
       end
 
+      def profile_params
+        params.permit!
+      end
+
       def initiate_logger
         self.logger = Logger.new("#{Rails.root}/log/rch/andhra_pradesh/#{action_name}.log")
         self.logger.info("-------------------------------------")
