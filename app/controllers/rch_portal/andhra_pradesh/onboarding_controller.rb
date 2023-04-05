@@ -63,7 +63,7 @@ module RchPortal
       def update_profile
         op = RchPortal::UpdateRchProfile.(logger, profile_params)
         if op.errors.present?
-          logger.warn("IVR Signup failed with the errors: #{op.errors.to_sentence}")
+          logger.warn("Profile update failed with errors: #{op.errors.to_sentence}")
           render json: {errors: op.errors}
         else
           render json: {success: true, user: op.rch_user, rch_profile: op.rch_user.rch_profile}

@@ -226,6 +226,7 @@ Rails.application.routes.draw do
 
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
+    post 'update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
   end
 
   # put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
