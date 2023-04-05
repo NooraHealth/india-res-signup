@@ -113,6 +113,7 @@ module Res
           program_id: self.program_id,
           state_id: self.state_id,
           whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           mobile_number: self.qr_code_params[:mobile_number]
         )
 
@@ -129,7 +130,8 @@ module Res
           language_preference_id: self.language_id,
           program_id: self.program_id,
           state_id: self.state_id,
-          whatsapp_onboarding_date: DateTime.now
+          whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
         )
           self.errors << self.res_user.errors.full_messages
           return false

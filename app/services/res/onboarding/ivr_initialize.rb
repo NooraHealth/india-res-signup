@@ -93,6 +93,7 @@ module Res
           state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
           whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
 
@@ -109,6 +110,7 @@ module Res
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           incoming_call_date: DateTime.now # TODO - think about this
         )
           self.errors << self.res_user.errors.full_messages
