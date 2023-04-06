@@ -33,6 +33,7 @@
 #  rch_visit_6_date    :datetime
 #  rch_visit_7_date    :datetime
 #  rch_visit_8_date    :datetime
+#  district            :string
 #
 
 one:

@@ -31,6 +31,7 @@ module RchPortal
       rch_profile = self.rch_user.rch_profile
       rch_profile_params = {}
       rch_profile_params[:name] = self.update_params[:name] if rch_profile.name.blank?
+      rch_profile_params[:district] = self.update_params[:district] if rch_profile.district.blank?
       rch_profile[:health_facility] = self.update_params[:health_facility] if rch_profile.health_facility.blank?
       rch_profile[:health_block] = self.update_params[:health_block] if rch_profile.health_block.blank?
       rch_profile[:health_sub_facility] = self.update_params[:health_sub_facility] if rch_profile.health_sub_facility.blank?
