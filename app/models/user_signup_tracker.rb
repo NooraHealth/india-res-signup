@@ -30,7 +30,7 @@ class UserSignupTracker < ApplicationRecord
   belongs_to :qr_code, optional: true
   belongs_to :exophone, optional: true
 
-  validates :call_sid, uniqueness: true
+  validates :call_sid, uniqueness: true, allow_nil: true
 
   scope :active_signups, -> {
     where active: true
