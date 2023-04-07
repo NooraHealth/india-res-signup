@@ -230,7 +230,8 @@ Rails.application.routes.draw do
   end
 
   # put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
-  # post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_onboarding_attempts'
+  post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_ivr_onboarding_attempts'
+
 
 
   ###########################################################################################################################
