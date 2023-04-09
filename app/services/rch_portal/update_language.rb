@@ -13,7 +13,7 @@ module RchPortal
       @params = params
     end
 
-    def validate
+    def verify_parameters
       @params.require [:mobile_number, :language]
 
       if not @params[:mobile_number].start_with? "0"
@@ -43,7 +43,7 @@ module RchPortal
 
     def call
 
-      validate
+      verify_parameters
 
       user = get_user_object
       language = get_language_object
