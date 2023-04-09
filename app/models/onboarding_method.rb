@@ -15,7 +15,8 @@ class OnboardingMethod < ApplicationRecord
     [
       :ivr,
       :sms,
-      :whatsapp
+      :whatsapp,
+      :qr_code
     ]
   end
 end

@@ -34,12 +34,26 @@
 #                                  mch_hp_wa_signup GET  /mch/hp/wa_signup(.:format)                                                              district_hospitals/hp#wa_signup
 #                     mch_hp_change_whatsapp_number GET  /mch/hp/change_whatsapp_number(.:format)                                                 district_hospitals/hp#change_whatsapp_number
 #                            mch_hp_initialize_user GET  /mch/hp/initialize_user(.:format)                                                        district_hospitals/hp#initialize_user
+#                   res_haryana_ivr_initialize_user GET  /res/haryana/ivr_initialize_user(.:format)                                               district_hospitals/haryana#ivr_initialize_user
+#             res_haryana_ivr_select_condition_area GET  /res/haryana/ivr_select_condition_area(.:format)                                         district_hospitals/haryana#ivr_select_condition_area
+#                             res_haryana_qr_signup POST /res/haryana/qr_signup(.:format)                                                         district_hospitals/haryana#qr_signup
+#  res_haryana_acknowledge_condition_area_selection PUT  /res/haryana/acknowledge_condition_area_selection(.:format)                              district_hospitals/haryana#acknowledge_condition_area
 #               unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
 #           unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                     unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
 #                           unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
-#                          rch_rch_external_onboard POST /rch/rch_external_onboard(.:format)                                                      rch_portal/onboarding#external
-#                          rch_turn_language_change PUT  /rch/turn_language_change(.:format)                                                      rch_portal/onboarding#update_language
+#                     rch_portal_punjab_create_user POST /rch_portal/punjab/create_user(.:format)                                                 rch_portal/punjab/onboarding#create
+#                          rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
+#                  rch_portal_punjab_update_profile PUT  /rch_portal/punjab/update_profile(.:format)                                              rch_portal/punjab/onboarding#update_profile
+#               rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
+#                      rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
+#             rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
+#                  rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
+#          rch_portal_andhra_pradesh_update_profile PUT  /rch_portal/andhra_pradesh/update_profile(.:format)                                      rch_portal/andhra_pradesh/onboarding#update_profile
+#       rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
+#              rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
+#                  rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
+#         rch_portal_ivr_update_onboarding_attempts POST /rch_portal/ivr_update_onboarding_attempts(.:format)                                     rch_portal/webhooks#update_ivr_onboarding_attempts
 #                                rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                         rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                                rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -160,6 +174,19 @@ Rails.application.routes.draw do
 
 
 
+  ##################################################### Haryana Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ivr_initialize_user'
+  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ivr_select_condition_area'
+  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#qr_signup'
+  put 'res/haryana/acknowledge_condition_area_selection', to: 'district_hospitals/haryana#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Haryana Endpoints ########################################################
+
+
+
 
   ##################################################### UNICEF SNCU Endpoints ########################################################
   ###########################################################################################################################
@@ -173,13 +200,39 @@ Rails.application.routes.draw do
   ##################################################### UNICEF SNCU Endpoints ########################################################
 
 
-
   ##################################################### RCH Endpoints ################################################################
   ###########################################################################################################################
 
-  post 'rch/rch_external_onboard', to: 'rch_portal/onboarding#external'
-  put 'rch/turn_language_change', to: 'rch_portal/onboarding#update_language'
-  # TODO - add all the rest of the RCH endpoints
+  namespace :rch_portal do
+
+    # all endpoints related to Punjab
+    namespace :punjab do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      put 'update_profile', to: 'onboarding#update_profile'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+    end
+
+
+    namespace :andhra_pradesh do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      put 'update_profile', to: 'onboarding#update_profile'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+    end
+
+
+    put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
+    post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
+    post 'update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
+  end
+
+  # put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
+  post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_ivr_onboarding_attempts'
+
+
 
   ###########################################################################################################################
   ##################################################### RCH Endpoints ################################################################

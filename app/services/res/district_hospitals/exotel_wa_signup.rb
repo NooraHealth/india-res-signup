@@ -45,17 +45,17 @@ module Res
         retrieve_textit_group
         return self if self.errors.present?
 
-        # check if the user already exists on Textit.
-        # If they do - return true, and add them to the relevant group
-        # else = return false and create a new user who belongs to the right group
-        if check_user_on_textit
-          # user already exists on TextIt
+        unless create_user_with_relevant_group
+          # resetting errors because we don't need them to carry over for the whole rest of the request
+          self.errors = []
           add_user_to_existing_group
-        else
-          # create user with the relevant group
-          create_user_with_relevant_group
         end
 
+        return self if self.errors.present?
+
+        add_signup_tracker
+
+        self
       end
 
       protected
@@ -69,6 +69,8 @@ module Res
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
           incoming_call_date: DateTime.now,
+          whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           mobile_number: self.parsed_exotel_params[:user_mobile]
         )
 
@@ -88,7 +90,9 @@ module Res
           condition_area_id: self.exophone.condition_area_id,
           program_id: self.exophone.program_id,
           state_id: self.exophone.state_id,
-          incoming_call_date: DateTime.now
+          incoming_call_date: DateTime.now,
+          whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true
         )
           self.errors << self.res_user.errors.full_messages
           return
@@ -108,8 +112,17 @@ module Res
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+
+        # params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::UpdateGroup.(params)
+        if op.errors.present?
+          self.errors << op.errors
+          return false
+        end
+        true
       end
 
       def create_user_with_relevant_group
@@ -120,8 +133,34 @@ module Res
         params = {id: self.res_user.id}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+
+        # params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::CreateUser.(params)
+        if op.errors.present?
+          self.errors << op.errors
+          return false
+        end
+        true
+      end
+
+      def add_signup_tracker
+        tracker = self.res_user.user_signup_trackers.build(
+          noora_program_id: self.exophone.program_id,
+          language_id: self.exophone.language_id,
+          onboarding_method_id: OnboardingMethod.id_for(:ivr),
+          state_id: self.exophone.state_id,
+          call_sid: self.parsed_exotel_params[:call_sid],
+          completed: true,
+          exophone_id: self.exophone.id
+        )
+        unless tracker.save
+          self.errors << tracker.errors.full_messages
+          return false
+        end
+        true
       end
 
       # def check_user_on_textit

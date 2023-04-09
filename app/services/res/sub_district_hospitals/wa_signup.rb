@@ -82,6 +82,10 @@ module Res
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
         # below line interacts with the API handler for TextIt and creates the user
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+
         op = TextitRapidproApi::CreateUser.(params)
       end
 
@@ -93,6 +97,10 @@ module Res
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+
         op = TextitRapidproApi::UpdateGroup.(params)
       end
 

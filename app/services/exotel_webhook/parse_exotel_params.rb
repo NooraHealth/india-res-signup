@@ -47,6 +47,8 @@ module ExotelWebhook
       call_to = self.exotel_params["CallTo"]
       exophone = self.exotel_params["To"]
 
+      call_sid = self.exotel_params["CallSid"]
+
       # TODO - add more params as they become relevant
 
       {
@@ -55,7 +57,8 @@ module ExotelWebhook
         current_time: current_time,
         language_id: language_id,
         call_to: call_to,
-        exophone: exophone
+        exophone: exophone,
+        call_sid: call_sid
       }
     end
 

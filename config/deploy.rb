@@ -2,7 +2,7 @@
 lock "~> 3.17.1"
 
 set :application, "ind-res-signup"
-set :repo_url, "git@github.com:NooraHealth/res-signup-service.git"
+set :repo_url, "git@github.com:NooraHealth/ind-res-signup.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -11,7 +11,7 @@ set :branch, ENV['REFERENCE'] || ENV['BRANCH'] || :master
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/sreeramramasubramanian/ind-res-signup"
 
-set :linked_files, %w(config/database.yml config/master.key config/textit_config.yml)
+set :linked_files, %w(config/database.yml config/master.key config/textit_config.yml config/turn_api_config.yml)
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
 set :puma_rackup, -> { File.join(current_path, 'config.ru') }

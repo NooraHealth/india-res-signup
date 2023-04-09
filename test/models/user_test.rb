@@ -28,6 +28,9 @@
 #  last_menstrual_period     :datetime
 #  expected_date_of_delivery :datetime
 #  onboarding_method_id      :bigint
+#  whatsapp_onboarding_date  :datetime
+#  onboarding_attempts       :integer          default(0)
+#  qr_scan_date              :datetime
 #
 require 'test_helper'
 

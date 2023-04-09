@@ -50,15 +50,16 @@ module TextitRapidproApi
     end
 
     def body_params
+      # TODO - ideally only the group attributes must be getting updated
+
       language_iso_code = self.user.reload.language_preference&.iso_code
       group_id = self.user_params[:textit_group_id]
+      custom_fields = self.user_params[:fields]
       {
         "groups" => [group_id],
         "language" => language_iso_code,
         "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
-        "fields" => {
-          "date_joined" => (user_params[:signup_time] || DateTime.now)
-        }
+        "fields" => custom_fields
       }
     end
 
@@ -68,11 +69,15 @@ module TextitRapidproApi
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
         self.logger&.info("SUCCESSFUL updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number}")
-        self.user.update(signed_up_to_whatsapp: true)
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
         self.errors << "FAILED updation of group on TEXTIT for user with number #{self.user.mobile_number} with reason: #{parsed_response}"
+      elsif self.response.status == 429
+        # means we have exceeded the rate limiting limit. Log the user in a separate file and deal with it soon
+        rate_limiting_logger = Logger.new("#{Rails.root}/log/missed_users_from_rate_limiting.log")
+        rate_limiting_logger.warn("#{user.international_whatsapp_number} -- from program #{user.program&.name}")
+        self.errors << "API Request throttled. User #{user.international_whatsapp_number} from program #{user.program&.name} will be parked for later"
       else
         parsed_response = JSON.parse(self.response.body) rescue {}
         self.logger&.info("ERROR while updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")

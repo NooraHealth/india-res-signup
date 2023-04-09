@@ -28,6 +28,9 @@
 #  last_menstrual_period     :datetime
 #  expected_date_of_delivery :datetime
 #  onboarding_method_id      :bigint
+#  whatsapp_onboarding_date  :datetime
+#  onboarding_attempts       :integer          default(0)
+#  qr_scan_date              :datetime
 #
 class User < ApplicationRecord
 
@@ -48,7 +51,9 @@ class User < ApplicationRecord
   has_many :condition_areas, through: :user_condition_area_mappings
 
 
-  has_one :rch_profile
+  has_one :rch_profile, dependent: :destroy
+
+  # after_save :update_whatsapp_id TODO - better way to do this
 
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
@@ -84,6 +89,10 @@ class User < ApplicationRecord
     gems_user? and (self.signed_up_to_ivr || self.signed_up_to_whatsapp) and self.incoming_call_date.present?
   end
 
+  def rch_id
+    self.rch_profile&.rch_id
+  end
+
 
   ######################## CONDITION AREA RELATED METHODS #############################
 
@@ -109,7 +118,7 @@ class User < ApplicationRecord
     if self.user_condition_area_mappings.with_program_id(program_id).pluck(:condition_area_id).include?(condition_area_id)
       # do nothing, because the user already belongs to that particular condition area
     else
-      self.user_condition_area_mappings.build(condition_area_id: condition_area_id, noora_program_id: program_id).save
+      return self.user_condition_area_mappings.build(condition_area_id: condition_area_id, noora_program_id: program_id).save
     end
   end
 
@@ -127,7 +136,31 @@ class User < ApplicationRecord
 
   ######################## CONDITION AREA RELATED METHODS #############################
 
+  # this method will tell if a user is fully signed up to a particular program
+  # of RES. For now, this means that the user has selected their language and condition area
+  def fully_onboarded_to_res?(program_id)
+    self.language_preference_id.present? &&
+    self.user_condition_area_mappings.where(noora_program_id: program_id).present? &&
+    self.signed_up_to_whatsapp
+  end
+
+  ######################## SIGNUP TRACKER RELATED METHODS #############################
+
+  def add_signup_tracker(program_id, condition_area_id, language_id)
+    self.user_signup_trackers.build(condition_area_id: condition_area_id,
+                                    program_id: program_id,
+                                    language_id: language_id)
+  end
 
 
+
+
+  private
+
+  # def update_whatsapp_id
+  #   if self.signed_up_to_whatsapp && self.whatsapp_id.blank?
+  #     op = TurnApi::UpdateWhatsappId.perform_async(self.id)
+  #   end
+  # end
 
 end

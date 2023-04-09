@@ -22,4 +22,9 @@ class Language < ApplicationRecord
       :marathi
     ]
   end
+
+  # code here can be a symbol or a string
+  def self.with_code(code)
+    find_by(iso_code: code.to_s)
+  end
 end

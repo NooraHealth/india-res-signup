@@ -41,7 +41,7 @@ gem "roo", "~> 2.8.0"
 gem "annotate"
 
 gem "faraday"
-gem "sidekiq"
+gem "sidekiq", "~> 6.5.6"
 gem "prose"
 
 gem "sentry-ruby"
@@ -49,6 +49,8 @@ gem "sentry-rails"
 
 gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+
+gem 'rake'
 
 gem "devise"
 gem 'pg'

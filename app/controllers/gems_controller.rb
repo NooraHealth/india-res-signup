@@ -10,6 +10,7 @@ class GemsController < ApplicationController
     op = Res::Gems::IvrModalitySelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully updated user's modality preferences")
   end
@@ -19,6 +20,7 @@ class GemsController < ApplicationController
     op = Res::Gems::IvrLanguageSelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully updated user's language")
   end
@@ -28,6 +30,7 @@ class GemsController < ApplicationController
     op = Res::Gems::ConfirmWhatsappNumber.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully confirmed user's WA number")
   end
@@ -37,6 +40,7 @@ class GemsController < ApplicationController
     op = Res::Gems::ChangeWhatsappNumber.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully changed user's WA number")
   end
@@ -47,16 +51,19 @@ class GemsController < ApplicationController
     op = Res::Gems::IvrConditionAreaSelection.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully selected user's condition area")
   end
 
 
   # when the user selects their condition area through WA message
+  # this does nothing more than just acknowledge the fact that a user is part of a condition area
   def whatsapp_condition_area_selection
-    op = Res::Gems::WhatsappConditionAreaSelection.(logger, gems_params)
+    op = Res::Gems::WhatsappConditionAreaSelection.(logger, textit_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully selected user's condition area")
   end
@@ -66,6 +73,7 @@ class GemsController < ApplicationController
     op = Res::Gems::UnsubscribeIvr.(logger, gems_params)
     if op.errors.present?
       logger.info("Operation failed and returned error: #{op.errors.to_sentence}")
+      return
     end
     logger.info("Successfully selected unsubscribed from IVR services")
   end
@@ -104,6 +112,10 @@ class GemsController < ApplicationController
   private
 
   def gems_params
+    params.permit!
+  end
+
+  def textit_params
     params.permit!
   end
 

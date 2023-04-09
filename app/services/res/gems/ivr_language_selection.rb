@@ -32,7 +32,7 @@ module Res
         # if user doesn't exist, create them
         if self.res_user.blank?
           self.res_user = User.new(mobile_number: self.parsed_exotel_params[:user_mobile],
-                                   incoming_call_date: Time.now,
+                                   incoming_call_date: DateTime.now,
                                    program_id: NooraProgram.id_for(:gems),
                                    language_preference_id: self.language_id,
                                    state_id: self.state_id)
@@ -48,7 +48,7 @@ module Res
         else
           self.res_user.update(language_preference_id: self.language_id,
                                program_id: NooraProgram.id_for(:gems),
-                               incoming_call_date: Time.now,
+                               incoming_call_date: DateTime.now,
                                state_id: self.state_id)
 
           # if the user is already part of another program, update that they have signed up for the GEMS program

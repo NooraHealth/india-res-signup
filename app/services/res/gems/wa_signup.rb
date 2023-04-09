@@ -1,6 +1,6 @@
 # this class will sign the user up to WA using TextIt API Handlers
 # Typically, in the GEMS project, at this time the user has given consent and has chosen their language of preference
-# Once the condition area has been chosen, this operation will add the user to each respective campaign on TextItg
+# Once the modality has been chosen, this operation will add the user to each respective campaign on TextIt
 
 module Res
   module Gems
@@ -42,6 +42,8 @@ module Res
           create_user_with_relevant_group
         end
 
+        self
+
       end
 
 
@@ -81,7 +83,10 @@ module Res
 
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+        # params[:signup_time] = self.res_user.incoming_call_date
         # below line interacts with the API handler for TextIt and creates the user
         op = TextitRapidproApi::CreateUser.(params)
       end
@@ -94,7 +99,10 @@ module Res
         params = {id: self.res_user.id, uuid: self.res_user.textit_uuid}
         params[:textit_group_id] = self.textit_group&.textit_id
         params[:logger] = self.logger
-        params[:signup_time] = self.res_user.incoming_call_date
+        params[:fields] = {
+          "date_joined" => self.res_user.whatsapp_onboarding_date
+        }
+        # params[:signup_time] = self.res_user.incoming_call_date
         op = TextitRapidproApi::UpdateGroup.(params)
       end
 

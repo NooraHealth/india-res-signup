@@ -59,7 +59,6 @@ module TextitRapidproApi
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
         self.logger&.info("SUCCESSFUL updation of user language to #{self.user.reload.language_preference&.iso_code} for user with number #{self.user.mobile_number}")
-        self.user.update(signed_up_to_whatsapp: true)
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED updation of user language to #{self.user.reload.language_preference&.iso_code} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")
