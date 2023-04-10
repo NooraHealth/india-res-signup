@@ -186,6 +186,18 @@ Rails.application.routes.draw do
   ##################################################### Haryana Endpoints ########################################################
 
 
+  ##################################################### Karnataka Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/karnataka/ivr_initialize_user', to: 'district_hospitals/karnataka#ivr_initialize_user'
+  get 'res/karnataka/ivr_select_condition_area', to: 'district_hospitals/karnataka#ivr_select_condition_area'
+  post 'res/karnataka/qr_signup', to: 'district_hospitals/karnataka#qr_signup'
+  put 'res/karnataka/acknowledge_condition_area_selection', to: 'district_hospitals/karnataka#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Karnataka Endpoints ########################################################
+
+
 
 
   ##################################################### UNICEF SNCU Endpoints ########################################################
