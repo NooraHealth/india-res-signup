@@ -198,6 +198,18 @@ Rails.application.routes.draw do
   ##################################################### Karnataka Endpoints ########################################################
 
 
+  ##################################################### Andhra Pradesh Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/andhra_pradesh/ivr_initialize_user', to: 'district_hospitals/andhra_pradesh#ivr_initialize_user'
+  get 'res/andhra_pradesh/ivr_select_condition_area', to: 'district_hospitals/andhra_pradesh#ivr_select_condition_area'
+  post 'res/andhra_pradesh/qr_signup', to: 'district_hospitals/andhra_pradesh#qr_signup'
+  put 'res/andhra_pradesh/acknowledge_condition_area_selection', to: 'district_hospitals/andhra_pradesh#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Andhra Pradesh Endpoints ########################################################
+
+
 
 
   ##################################################### UNICEF SNCU Endpoints ########################################################
