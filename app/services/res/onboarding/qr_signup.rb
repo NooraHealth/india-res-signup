@@ -93,6 +93,9 @@ module Res
 
         # now create the user on TextIt with the relevant parameters
         unless create_user_with_relevant_group
+          # resetting errors because we don't need them to carry over for the whole rest of the request
+          self.errors = []
+
           # i.e. if the creation of a new user fails, try updating the user's group details
           add_user_to_existing_group
         end
