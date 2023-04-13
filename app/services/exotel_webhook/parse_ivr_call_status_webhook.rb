@@ -46,12 +46,15 @@ module ExotelWebhook
 
       call_sids = self.exotel_params.deep_find("call_sids")
 
+      campaign_sid = self.exotel_params.deep_find("campaign_sid")
+
       # TODO - add more params as they become relevant
 
       {
         user_mobile: "0#{user_mobile}",
         exophone: exophone,
-        call_sids: call_sids
+        call_sids: call_sids,
+        campaign_sid: campaign_sid
       }
     end
 

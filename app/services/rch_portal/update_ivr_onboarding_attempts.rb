@@ -38,7 +38,10 @@ module RchPortal
       end
 
       # update onboarding attempts for this user
-      self.rch_user.update(onboarding_attempts: (self.rch_user.onboarding_attempts + 1))
+      # Ideally, this number should be equal to the number of ivr calls made to the
+      # user as recorded in the user_signup_tracker table
+      # The number of unique campaigns will tell us the number of onboarding attempts
+      self.rch_user.update(onboarding_attempts: (user.onboarding_attempts + 1))
 
       self
 
@@ -54,7 +57,8 @@ module RchPortal
         state_id: self.rch_user.state_id,
         call_sid: call_sid,
         exophone_id: self.exophone.id,
-        call_status: status
+        call_status: status,
+        campaign_sid: self.parsed_params[:campaign_sid]
       )
 
       unless tracker.save

@@ -19,6 +19,7 @@
 #  exophone_id          :bigint
 #  completed_at         :datetime
 #  call_status          :string
+#  campaign_sid         :string
 #
 class UserSignupTracker < ApplicationRecord
   belongs_to :user
