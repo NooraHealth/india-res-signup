@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_13_010253) do
+ActiveRecord::Schema.define(version: 2023_04_16_081847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 2023_04_13_010253) do
     t.string "text_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "condition_areas_id"
+    t.index ["condition_areas_id"], name: "index_qr_codes_on_condition_areas_id"
     t.index ["noora_program_id"], name: "index_qr_codes_on_noora_program_id"
     t.index ["state_id"], name: "index_qr_codes_on_state_id"
   end

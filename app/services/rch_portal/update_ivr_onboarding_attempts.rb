@@ -41,7 +41,10 @@ module RchPortal
       # Ideally, this number should be equal to the number of ivr calls made to the
       # user as recorded in the user_signup_tracker table
       # The number of unique campaigns will tell us the number of onboarding attempts
-      self.rch_user.update(onboarding_attempts: (user.onboarding_attempts + 1))
+      # onboarding_attempts = self.rch_user.user_signup_trackers.pluck(:campaign_sid).uniq.count
+      # self.rch_user.update(onboarding_attempts: onboarding_attempts)
+
+      self.rch_user.update(onboarding_attempts: (self.rch_user.onboarding_attempts + 1))
 
       self
 

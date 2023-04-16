@@ -131,7 +131,7 @@ module Res
         end
 
         # if condition area is present, add condition area to user
-        self.res_user.add_condition_area(self.program_id, self.condition_area_id)
+        self.res_user.add_condition_area(self.program_id, self.condition_area_id) if self.condition_area_id.present?
         # TODO - modify this to make add_condition_area return true/false
         # unless self.res_user.add_condition_area(self.program_id, self.condition_area_id)
         #   self.errors << self.res_user.errors.full_messages
@@ -155,7 +155,7 @@ module Res
         end
 
         # if condition area is present, add condition area to user
-        self.res_user.add_condition_area(self.program_id, self.condition_area_id)
+        self.res_user.add_condition_area(self.program_id, self.condition_area_id) if self.condition_area_id.present?
 
         true
       end
