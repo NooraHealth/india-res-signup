@@ -60,6 +60,17 @@ module RchPortal
       # end
 
 
+      def update_profile
+        op = RchPortal::UpdateRchProfile.(logger, profile_params)
+        if op.errors.present?
+          logger.warn("Profile update failed with errors: #{op.errors.to_sentence}")
+          render json: {errors: op.errors}
+        else
+          render json: {success: true, user: op.rch_user, rch_profile: op.rch_user.rch_profile}
+        end
+      end
+
+
       # this is an endpoint that will be used to update a user's language through WA
       # # TODO - Abhishek will implement this
       def update_language
@@ -81,6 +92,10 @@ module RchPortal
       end
 
       def rch_params
+        params.permit!
+      end
+
+      def profile_params
         params.permit!
       end
 

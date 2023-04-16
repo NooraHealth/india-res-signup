@@ -18,6 +18,8 @@
 #  qr_code_id           :bigint
 #  exophone_id          :bigint
 #  completed_at         :datetime
+#  call_status          :string
+#  campaign_sid         :string
 #
 require 'test_helper'
 

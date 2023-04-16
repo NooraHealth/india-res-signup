@@ -18,6 +18,8 @@
 #  qr_code_id           :bigint
 #  exophone_id          :bigint
 #  completed_at         :datetime
+#  call_status          :string
+#  campaign_sid         :string
 #
 class UserSignupTracker < ApplicationRecord
   belongs_to :user
@@ -28,6 +30,8 @@ class UserSignupTracker < ApplicationRecord
   belongs_to :state, optional: true
   belongs_to :qr_code, optional: true
   belongs_to :exophone, optional: true
+
+  validates :call_sid, uniqueness: true, allow_nil: true
 
   scope :active_signups, -> {
     where active: true

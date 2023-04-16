@@ -6,6 +6,7 @@
 # program_name:
 # qr_identifier:
 # language_code:
+# condition_area:
 #
 
 module Res
@@ -13,7 +14,7 @@ module Res
     class QrSignup < Res::Onboarding::Base
 
       attr_accessor :qr_code, :qr_code_params, :program_id, :state_id, :qr_code_id, :language_id,
-                    :res_user, :textit_group
+                    :res_user, :textit_group, :condition_area_id
 
       def initialize(logger, qr_code_params)
         super(logger)
@@ -27,6 +28,10 @@ module Res
         self.qr_code_id = QrCode.id_from_text_identifier(self.qr_code_params[:qr_identifier])
         self.qr_code = QrCode.find_by(id: qr_code_id)
         self.language_id = Language.with_code(self.qr_code_params[:language_code])&.id
+        self.condition_area_id = ConditionArea.id_for(self.qr_code_params[:condition_area])
+
+
+        # TODO - add validations if the request params don't have matching values for the QR
 
         # first make sure all compulsory attributes are present
         if self.program_id.blank?
@@ -88,6 +93,9 @@ module Res
 
         # now create the user on TextIt with the relevant parameters
         unless create_user_with_relevant_group
+          # resetting errors because we don't need them to carry over for the whole rest of the request
+          self.errors = []
+
           # i.e. if the creation of a new user fails, try updating the user's group details
           add_user_to_existing_group
         end
@@ -113,6 +121,7 @@ module Res
           program_id: self.program_id,
           state_id: self.state_id,
           whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
           mobile_number: self.qr_code_params[:mobile_number]
         )
 
@@ -120,6 +129,15 @@ module Res
           self.errors << self.res_user.errors.full_messages
           return false
         end
+
+        # if condition area is present, add condition area to user
+        self.res_user.add_condition_area(self.program_id, self.condition_area_id) if self.condition_area_id.present?
+        # TODO - modify this to make add_condition_area return true/false
+        # unless self.res_user.add_condition_area(self.program_id, self.condition_area_id)
+        #   self.errors << self.res_user.errors.full_messages
+        #   return false
+        # end
+
         true
       end
 
@@ -129,11 +147,16 @@ module Res
           language_preference_id: self.language_id,
           program_id: self.program_id,
           state_id: self.state_id,
-          whatsapp_onboarding_date: DateTime.now
+          whatsapp_onboarding_date: DateTime.now,
+          signed_up_to_whatsapp: true,
         )
           self.errors << self.res_user.errors.full_messages
           return false
         end
+
+        # if condition area is present, add condition area to user
+        self.res_user.add_condition_area(self.program_id, self.condition_area_id) if self.condition_area_id.present?
+
         true
       end
 
@@ -145,6 +168,7 @@ module Res
           onboarding_method_id: OnboardingMethod.id_for(:qr_code),
           state_id: self.state_id,
           qr_code_id: self.qr_code_id,
+          condition_area_id: self.condition_area_id,
           completed: false
         )
 
@@ -160,6 +184,7 @@ module Res
         self.textit_group = TextitGroup.where(program_id: self.program_id,
                                               language_id: self.language_id,
                                               state_id: self.state_id,
+                                              condition_area_id: self.condition_area_id,
                                               onboarding_method_id: OnboardingMethod.id_for(:qr_code)).first
 
         if self.textit_group.blank?

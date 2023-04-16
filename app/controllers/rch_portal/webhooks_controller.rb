@@ -12,6 +12,7 @@ module RchPortal
 
 
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
+    # also updates language of the user based on what they selected
     def acknowledge_wa_signup
       urns = wa_acknowledgement_params["urns"]
       uuid = wa_acknowledgement_params["uuid"]
@@ -28,7 +29,7 @@ module RchPortal
         render json: {success: false}
         return
       end
-      user.update(signed_up_to_whatsapp: true, textit_uuid: uuid)
+      user.update(signed_up_to_whatsapp: true, textit_uuid: uuid, whatsapp_onboarding_date: DateTime.now)
       self.logger.info("Successfully updated user #{mobile_number} as signed up to WA")
       render json: {success: true}
     end
@@ -38,19 +39,15 @@ module RchPortal
     # The format of the params is as follows:
     # {"campaign_sid"=>"6438318c00f10c0df9f2969324f365c0173u", "call_sid"=>"d410ae3950da25f20c098d49147d173u", "status"=>"completed", "from"=>"+917730904655", "caller_id"=>"+914069179581", "duration"=>55, "legs"=>[{"id"=>"35b991a988244ffcbf12b72dd9e15711", "on_call_duration"=>47, "status"=>"completed"}], "date_created"=>"2023-03-30T17:41:31+05:30", "date_updated"=>"2023-03-30T17:42:26+05:30", "digits"=>"1", "controller"=>"rch_portal/webhooks", "action"=>"update_onboarding_attempts", "webhook"=>{"campaign_sid"=>"6438318c00f10c0df9f2969324f365c0173u", "call_sid"=>"d410ae3950da25f20c098d49147d173u", "status"=>"completed", "from"=>"+917730904655", "caller_id"=>"+914069179581", "duration"=>55, "legs"=>[{"id"=>"35b991a988244ffcbf12b72dd9e15711", "on_call_duration"=>47, "status"=>"completed"}], "date_created"=>"2023-03-30T17:41:31+05:30", "date_updated"=>"2023-03-30T17:42:26+05:30", "digits"=>"1"}}
     def update_ivr_onboarding_attempts
-      mobile_number = exotel_webhook_params[:from]
-      # number is sent from Exotel in the format: +91XXXXXXXXXXX
-      mobile_number = mobile_number[3..(mobile_number.length)]
-      user = User.find_by mobile_number: "0#{mobile_number}"
-      if user.blank?
-        self.logger.warn("User not found with mobile number: #{mobile_number}")
-        render json: {success: false}
-        return
+      op = RchPortal::UpdateIvrOnboardingAttempts.(logger, exotel_webhook_params)
+      if op.errors.present?
+        logger.warn("Profile update failed with errors: #{op.errors.to_sentence}")
+        render json: {errors: op.errors}
+      else
+        logger.info("Updated onboarding attempts for user with mobile: #{op.rch_user.mobile_number}")
+        render json: {success: true}
       end
 
-      user.update(onboarding_attempts: (user.onboarding_attempts + 1))
-      self.logger.info("Successfully updated onboarding attempts for user: #{mobile_number}")
-      render json: {success: true}
     end
 
 
