@@ -50,6 +50,10 @@
 #              res_andhra_pradesh_ivr_select_condition_area GET  /res/andhra_pradesh/ivr_select_condition_area(.:format)                                  district_hospitals/andhra_pradesh#ivr_select_condition_area
 #                              res_andhra_pradesh_qr_signup POST /res/andhra_pradesh/qr_signup(.:format)                                                  district_hospitals/andhra_pradesh#qr_signup
 #   res_andhra_pradesh_acknowledge_condition_area_selection PUT  /res/andhra_pradesh/acknowledge_condition_area_selection(.:format)                       district_hospitals/andhra_pradesh#acknowledge_condition_area
+#                      res_aiims_nagpur_ivr_initialize_user GET  /res/aiims_nagpur/ivr_initialize_user(.:format)                                          district_hospitals/aiims_nagpur#ivr_initialize_user
+#                res_aiims_nagpur_ivr_select_condition_area GET  /res/aiims_nagpur/ivr_select_condition_area(.:format)                                    district_hospitals/aiims_nagpur#ivr_select_condition_area
+#                                res_aiims_nagpur_qr_signup POST /res/aiims_nagpur/qr_signup(.:format)                                                    district_hospitals/aiims_nagpur#qr_signup
+#     res_aiims_nagpur_acknowledge_condition_area_selection PUT  /res/aiims_nagpur/acknowledge_condition_area_selection(.:format)                         district_hospitals/aiims_nagpur#acknowledge_condition_area
 #                       unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
 #                   unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
 #                             unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
@@ -233,6 +237,18 @@ Rails.application.routes.draw do
 
   ##############################################################################################################
   ##################################################### Andhra Pradesh Endpoints ########################################################
+
+
+  ##################################################### AIIMS Nagpur Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/aiims_nagpur/ivr_initialize_user', to: 'district_hospitals/aiims_nagpur#ivr_initialize_user'
+  get 'res/aiims_nagpur/ivr_select_condition_area', to: 'district_hospitals/aiims_nagpur#ivr_select_condition_area'
+  post 'res/aiims_nagpur/qr_signup', to: 'district_hospitals/aiims_nagpur#qr_signup'
+  put 'res/aiims_nagpur/acknowledge_condition_area_selection', to: 'district_hospitals/aiims_nagpur#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### AIIMS Nagpur Endpoints ########################################################
 
 
 
