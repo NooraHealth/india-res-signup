@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_21_133415) do
+ActiveRecord::Schema.define(version: 2023_05_14_124105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 2023_04_21_133415) do
     t.string "call_status"
     t.string "campaign_sid"
     t.string "call_direction"
+    t.datetime "event_timestamp"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
     t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"

@@ -21,6 +21,7 @@
 #  call_status          :string
 #  campaign_sid         :string
 #  call_direction       :string
+#  event_timestamp      :datetime
 #
 class UserSignupTracker < ApplicationRecord
   belongs_to :user
