@@ -185,6 +185,7 @@ module Res
                                               language_id: self.language_id,
                                               state_id: self.state_id,
                                               condition_area_id: self.condition_area_id,
+                                              qr_code_id: self.qr_code.id,
                                               onboarding_method_id: OnboardingMethod.id_for(:qr_code)).first
 
         if self.textit_group.blank?
