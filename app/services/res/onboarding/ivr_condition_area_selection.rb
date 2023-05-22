@@ -36,7 +36,7 @@ module Res
 
         # now check if the user has completely onboarded themselves onto the service
         # if they have, just update tracker and don't do anything else
-        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id)
+        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id)
           update_signup_tracker
           return self
         end

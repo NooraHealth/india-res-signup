@@ -20,6 +20,8 @@
 #  completed_at         :datetime
 #  call_status          :string
 #  campaign_sid         :string
+#  call_direction       :string
+#  event_timestamp      :datetime
 #
 require 'test_helper'
 

@@ -24,5 +24,6 @@ class TextitGroup < ApplicationRecord
   belongs_to :language, optional: true
   belongs_to :state, optional: true
   belongs_to :onboarding_method, optional: true
+  belongs_to :qr_code, optional: true
 
 end

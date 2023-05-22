@@ -154,7 +154,10 @@ module Res
           state_id: self.exophone.state_id,
           call_sid: self.parsed_exotel_params[:call_sid],
           completed: true,
-          exophone_id: self.exophone.id
+          completed_at: DateTime.now,
+          event_timestamp: DateTime.now,
+          exophone_id: self.exophone.id,
+          call_direction: "inbound"
         )
         unless tracker.save
           self.errors << tracker.errors.full_messages
