@@ -1,8 +1,6 @@
 module DistrictHospitals
   class AndhraPradeshController < ApplicationController
 
-    attr_accessor :logger
-
     skip_forgery_protection
 
     before_action :initiate_logger

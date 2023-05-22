@@ -2,11 +2,11 @@ module RchPortal
   module AndhraPradesh
     class OnboardingController < ApplicationController
 
-      attr_accessor :logger
-
       skip_forgery_protection
 
       before_action :initiate_logger
+
+      around_action :handle_errors
 
       # TODO - implement token based authentication
       # before_action :authorize_token
@@ -71,11 +71,12 @@ module RchPortal
       end
 
 
-      # this is an endpoint that will be used to update a user's language through WA
-      # # TODO - Abhishek will implement this
       def update_language
 
+
       end
+
+
 
       private
 

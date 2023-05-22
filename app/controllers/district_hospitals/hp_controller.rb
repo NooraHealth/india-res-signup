@@ -1,9 +1,9 @@
 module DistrictHospitals
   class HpController < ApplicationController
 
-    attr_accessor :logger
-
     before_action :initiate_logger
+
+    skip_forgery_protection
 
     # this action first creates the user with all the initial conditions that we assume for
     # a user from HP

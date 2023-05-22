@@ -53,8 +53,6 @@ class User < ApplicationRecord
 
   has_one :rch_profile, dependent: :destroy
 
-  # after_save :update_whatsapp_id TODO - better way to do this
-
   # if the field `whatsapp_mobile_number` exists return that, else return mobile number
   def whatsapp_mobile_number
     super() || self.mobile_number

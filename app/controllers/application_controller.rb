@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include CustomErrors
 
+  attr_accessor :logger
 
   protected
 
@@ -15,10 +16,10 @@ class ApplicationController < ActionController::Base
   def handle_errors
     begin
       yield
-    rescue ::ActionController::ParameterMissing => error
-      message = "Missing parameter: '#{error.param}'"
-      elog message
-      render status: 400, json: {error: message, code: "PARAM_MISSING"}
+    # rescue ::ActionController::ParameterMissing => error
+    #   message = "Missing parameter: '#{error.param}'"
+    #   elog message
+    #   render status: 400, json: {error: message, code: "PARAM_MISSING"}
     rescue ErrorResponse => error
       elog error.message
       render status: error.status, json: error.data
