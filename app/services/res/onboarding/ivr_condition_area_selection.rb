@@ -36,7 +36,7 @@ module Res
 
         # now check if the user has completely onboarded themselves onto the service
         # if they have, just update tracker and don't do anything else
-        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id)
+        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id)
           update_signup_tracker
           return self
         end
@@ -79,7 +79,8 @@ module Res
         self.textit_group = TextitGroup.where(program_id: self.exophone.program_id,
                                               language_id: self.exophone.language_id,
                                               state_id: self.exophone.state_id,
-                                              condition_area_id: self.condition_area_id).first
+                                              condition_area_id: self.condition_area_id,
+                                              onboarding_method_id: OnboardingMethod.id_for(:ivr)).first
 
         if self.textit_group.blank?
           self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"

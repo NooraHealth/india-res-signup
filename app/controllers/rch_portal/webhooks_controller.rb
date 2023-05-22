@@ -12,6 +12,7 @@ module RchPortal
 
 
     # this action will be triggered from TextIt whenever a user signs up through direct WA onboarding
+    # also updates language of the user based on what they selected
     def acknowledge_wa_signup
       urns = wa_acknowledgement_params["urns"]
       uuid = wa_acknowledgement_params["uuid"]
@@ -28,7 +29,7 @@ module RchPortal
         render json: {success: false}
         return
       end
-      user.update(signed_up_to_whatsapp: true, textit_uuid: uuid)
+      user.update(signed_up_to_whatsapp: true, textit_uuid: uuid, whatsapp_onboarding_date: DateTime.now)
       self.logger.info("Successfully updated user #{mobile_number} as signed up to WA")
       render json: {success: true}
     end

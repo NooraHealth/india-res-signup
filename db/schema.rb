@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_06_124814) do
+ActiveRecord::Schema.define(version: 2023_05_14_124105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 2023_04_06_124814) do
     t.string "text_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "condition_area_id"
+    t.index ["condition_area_id"], name: "index_qr_codes_on_condition_area_id"
     t.index ["noora_program_id"], name: "index_qr_codes_on_noora_program_id"
     t.index ["state_id"], name: "index_qr_codes_on_state_id"
   end
@@ -189,6 +191,9 @@ ActiveRecord::Schema.define(version: 2023_04_06_124814) do
     t.bigint "exophone_id"
     t.datetime "completed_at"
     t.string "call_status"
+    t.string "campaign_sid"
+    t.string "call_direction"
+    t.datetime "event_timestamp"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
     t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
