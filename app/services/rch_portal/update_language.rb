@@ -8,37 +8,11 @@ module RchPortal
 
   class UpdateLanguage < RchPortal::Base
     include Errors
+    
+    attr_accessor :params
 
     def initialize(params)
-      @params = params
-    end
-
-    def verify_parameters
-      @params.require [:mobile_number, :language]
-
-      if not @params[:mobile_number].start_with? "0"
-        @params[:mobile_number] = "0" + @params[:mobile_number]
-      end
-    end
-
-    def get_user_object
-      user = User.find_by mobile_number: @params[:mobile_number]
-
-      if user.nil?
-        raise UserNotFound.new(@params[:mobile_number])
-      else
-        user
-      end
-    end
-
-    def get_language_object
-      language = Language.find_by iso_code: @params[:language]
-
-      if language.nil?
-        raise LanguageNotFound.new(@params[:language])
-      else
-        language
-      end
+      self.params = params
     end
 
     def call
@@ -52,5 +26,38 @@ module RchPortal
       TextitRapidproApi::UpdateLanguage.(id: user.id)
 
     end
+
+    private
+
+    def verify_parameters
+      self.params.require [:mobile_number, :language]
+
+      unless self.params[:mobile_number].start_with? "0"
+        self.params[:mobile_number] = "0" + self.params[:mobile_number]
+      end
+    end
+
+
+    def get_user_object
+      user = User.find_by mobile_number: self.params[:mobile_number]
+
+      if user.nil?
+        raise UserNotFound.new(self.params[:mobile_number], self.params[:action], self.params[:controller])
+      else
+        user
+      end
+    end
+
+
+    def get_language_object
+      language = Language.find_by iso_code: self.params[:language]
+
+      if language.nil?
+        raise LanguageNotFound.new(self.params[:language], self.params[:action], self.params[:controller])
+      else
+        language
+      end
+    end
+
   end
 end

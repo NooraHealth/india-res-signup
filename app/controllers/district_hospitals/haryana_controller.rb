@@ -7,6 +7,9 @@ module DistrictHospitals
 
     before_action :initiate_logger
 
+    # adding the handle_errors method only for select methods in this controller
+    around_action :handle_errors, only: [:qr_signup, :acknowledge_condition_area]
+
     def ivr_initialize_user
       op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)
       if op.errors.present?

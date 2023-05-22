@@ -1,10 +1,11 @@
 class ApplicationController < ActionController::Base
-  include Errors
+  include CustomErrors
 
-  around_action :handle_errors
 
-  def elog error
-    dirname = "#{Rails.root}/log/errors/#{controller_path}"
+  protected
+
+  def elog(error)
+    dirname = "#{Rails.root}/log/errors/#{self.controller_name}"
     FileUtils.mkdir_p dirname
 
     logger = Logger.new("#{dirname}/#{action_name}.log")
@@ -23,5 +24,4 @@ class ApplicationController < ActionController::Base
       render status: error.status, json: error.data
     end
   end
-
 end
