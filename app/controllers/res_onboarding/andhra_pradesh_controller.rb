@@ -78,6 +78,10 @@ module ResOnboarding
 
     private
 
+    def qr_code_params
+      params.permit!
+    end
+
     def turn_params
       params.permit!
     end
@@ -89,7 +93,7 @@ module ResOnboarding
     def initiate_logger
       self.logger = Logger.new("#{Rails.root}/log/res/andhra_pradesh/#{action_name}.log")
       self.logger.info("-------------------------------------")
-      logger.info("API parameters are: #{hp_dh_params}")
+      logger.info("API parameters are: #{turn_params}")
     end
 
   end
