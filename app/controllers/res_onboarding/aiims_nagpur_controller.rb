@@ -1,11 +1,5 @@
 module ResOnboarding
-  class AiimsNagpurController < ApplicationController
-
-    attr_accessor :logger
-
-    skip_forgery_protection
-
-    before_action :initiate_logger
+  class AiimsNagpurController < ResOnboarding::Base
 
     def ccp_ivr_initialize_user
       op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)

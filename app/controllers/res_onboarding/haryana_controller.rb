@@ -1,6 +1,6 @@
 # this controller will be the one that orchestrates all actions to do with RES in Haryana
-# This controller is unique in that the cloud telephony provider is Ozonetel and not Exotel
-# All RES related actions as well as RCH related actions will be done here
+# All RES and RCH related actions will be done here - i.e. all inbound and outbound actions
+# for a user to signup for our service
 
 # All states that have the standardized onboarding flow for RES will be using this controller
 # 1. ccp_ivr_initialize_user - Creates the user on TextIt and onboards them on to the MCH Neutral Campaign
@@ -8,13 +8,7 @@
 # 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
 
 module ResOnboarding
-  class HaryanaController < ApplicationController
-
-    attr_accessor :logger
-
-    skip_forgery_protection
-
-    before_action :initiate_logger
+  class HaryanaController < ResOnboarding::Base
 
     def ccp_ivr_initialize_user
       op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)

@@ -31,6 +31,8 @@
 #                               gems_retrieve_condition_area GET  /gems/retrieve_condition_area(.:format)                                                  gems_orchestration#retrieve_condition_area
 #                            gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
 #                                   gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
+#                                        res_update_language PUT  /res/update_language(.:format)                                                           users#update_language
+#                                      res_retrieve_language GET  /res/retrieve_language(.:format)                                                         users#retrieve_language
 #                   res_himachal_pradesh_ivr_initialize_user GET  /res/himachal_pradesh/ivr_initialize_user(.:format)                                      res_onboarding/himachal_pradesh#ccp_ivr_initialize_user
 #             res_himachal_pradesh_ivr_select_condition_area GET  /res/himachal_pradesh/ivr_select_condition_area(.:format)                                res_onboarding/himachal_pradesh#ccp_ivr_select_condition_area
 #                             res_himachal_pradesh_qr_signup POST /res/himachal_pradesh/qr_signup(.:format)                                                res_onboarding/himachal_pradesh#ccp_qr_signup
@@ -46,12 +48,14 @@
 #                               unicef_sncu_ivr_onboard_user GET  /unicef_sncu/ivr_onboard_user(.:format)                                                  district_hospitals/unicef_sncu_orchestration#wa_signup
 #                          res_karnataka_ivr_initialize_user GET  /res/karnataka/ivr_initialize_user(.:format)                                             res_onboarding/karnataka#ccp_ivr_initialize_user
 #                    res_karnataka_ivr_select_condition_area GET  /res/karnataka/ivr_select_condition_area(.:format)                                       res_onboarding/karnataka#ccp_ivr_select_condition_area
-#                                    res_karnataka_qr_signup POST /res/karnataka/qr_signup(.:format)                                                       res_onboarding/karnataka#ccp_qr_signup
 #         res_karnataka_acknowledge_condition_area_selection PUT  /res/karnataka/acknowledge_condition_area_selection(.:format)                            res_onboarding/karnataka#ccp_acknowledge_condition_area
 #                     res_andhra_pradesh_ivr_initialize_user GET  /res/andhra_pradesh/ivr_initialize_user(.:format)                                        res_onboarding/andhra_pradesh#ccp_ivr_initialize_user
 #               res_andhra_pradesh_ivr_select_condition_area GET  /res/andhra_pradesh/ivr_select_condition_area(.:format)                                  res_onboarding/andhra_pradesh#ccp_ivr_select_condition_area
 #                               res_andhra_pradesh_qr_signup POST /res/andhra_pradesh/qr_signup(.:format)                                                  res_onboarding/andhra_pradesh#ccp_qr_signup
 #    res_andhra_pradesh_acknowledge_condition_area_selection PUT  /res/andhra_pradesh/acknowledge_condition_area_selection(.:format)                       res_onboarding/andhra_pradesh#acknowledge_condition_area
+#                        res_maharashtra_ivr_initialize_user GET  /res/maharashtra/ivr_initialize_user(.:format)                                           res_onboarding/maharashtra#ccp_ivr_initialize_user
+#                  res_maharashtra_ivr_select_condition_area GET  /res/maharashtra/ivr_select_condition_area(.:format)                                     res_onboarding/maharashtra#ccp_ivr_select_condition_area
+#       res_maharashtra_acknowledge_condition_area_selection PUT  /res/maharashtra/acknowledge_condition_area_selection(.:format)                          res_onboarding/maharashtra#acknowledge_condition_area
 #                       res_aiims_nagpur_ivr_initialize_user GET  /res/aiims_nagpur/ivr_initialize_user(.:format)                                          res_onboarding/aiims_nagpur#ccp_ivr_initialize_user
 #                 res_aiims_nagpur_ivr_select_condition_area GET  /res/aiims_nagpur/ivr_select_condition_area(.:format)                                    res_onboarding/aiims_nagpur#ccp_ivr_select_condition_area
 #                                 res_aiims_nagpur_qr_signup POST /res/aiims_nagpur/qr_signup(.:format)                                                    res_onboarding/aiims_nagpur#ccp_qr_signup
@@ -176,6 +180,15 @@ Rails.application.routes.draw do
   #############################################################################################################################
   ##################################################### GEMS Endpoints ########################################################
 
+  ##################################################### COMMON ENDPOINTS ########################################################
+  ##############################################################################################################
+
+  put 'res/update_language', to: 'users#update_language'
+  get 'res/retrieve_language', to: 'users#retrieve_language'
+  
+  ##############################################################################################################
+  ##################################################### Himachal Pradesh (HP) Endpoints ########################################################
+
 
 
   ##################################################### Himachal Pradesh (HP) Endpoints ########################################################
@@ -225,7 +238,7 @@ Rails.application.routes.draw do
 
   get 'res/karnataka/ivr_initialize_user', to: 'res_onboarding/karnataka#ccp_ivr_initialize_user'
   get 'res/karnataka/ivr_select_condition_area', to: 'res_onboarding/karnataka#ccp_ivr_select_condition_area'
-  post 'res/karnataka/qr_signup', to: 'res_onboarding/karnataka#ccp_qr_signup'
+  # post 'res/karnataka/qr_signup', to: 'res_onboarding/karnataka#ccp_qr_signup'
   put 'res/karnataka/acknowledge_condition_area_selection', to: 'res_onboarding/karnataka#ccp_acknowledge_condition_area'
 
   ##############################################################################################################
@@ -243,6 +256,18 @@ Rails.application.routes.draw do
 
   ##############################################################################################################
   ##################################################### Andhra Pradesh Endpoints ########################################################
+
+  ##################################################### Maharashtra Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/maharashtra/ivr_initialize_user', to: 'res_onboarding/maharashtra#ccp_ivr_initialize_user'
+  get 'res/maharashtra/ivr_select_condition_area', to: 'res_onboarding/maharashtra#ccp_ivr_select_condition_area'
+  # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
+  put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Maharashtra Endpoints ########################################################
+
 
 
   ##################################################### AIIMS Nagpur Endpoints ########################################################

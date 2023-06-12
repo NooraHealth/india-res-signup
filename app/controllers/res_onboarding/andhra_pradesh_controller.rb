@@ -9,13 +9,7 @@
 # 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
 
 module ResOnboarding
-  class AndhraPradeshController < ApplicationController
-
-    attr_accessor :logger
-
-    skip_forgery_protection
-
-    before_action :initiate_logger
+  class AndhraPradeshController < ResOnboarding::Base
 
     def ccp_ivr_initialize_user
 

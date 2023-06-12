@@ -8,13 +8,7 @@
 # 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
 
 module ResOnboarding
-  class PunjabController < ApplicationController
-
-    attr_accessor :logger
-
-    skip_forgery_protection
-
-    before_action :initiate_logger
+  class PunjabController < ResOnboarding::Base
 
     # this endpoint handles the missed call based signup mechanism that we have for
     # DHs in Punjab. As soon as the user calls this number, they will be added to the respective campaign

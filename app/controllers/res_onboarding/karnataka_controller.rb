@@ -9,13 +9,7 @@
 
 
 module ResOnboarding
-  class KarnatakaController < ApplicationController
-
-    attr_accessor :logger
-
-    skip_forgery_protection
-
-    before_action :initiate_logger
+  class KarnatakaController < ResOnboarding::Base
 
     # this endpoint orchestrates the missed call based onboarding mechanism that we have
     # in Karnataka at the moment.
@@ -62,17 +56,6 @@ module ResOnboarding
         render json: {success: true}
       end
     end
-
-    def qr_signup
-      op = Res::Onboarding::QrSignup.(self.logger, qr_code_params)
-      if op.errors.present?
-        logger.warn("QR Signup failed with the errors: #{op.errors.to_sentence}")
-        render json: {success: false, errors: op.errors}
-      else
-        render json: {success: true}
-      end
-    end
-
 
     private
 
