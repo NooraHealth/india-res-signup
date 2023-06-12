@@ -1,14 +1,14 @@
-# this controller will be the one that orchestrates all actions to do with RES in Andhra Pradesh
-# This controller is unique in that the cloud telephony provider is Ozonetel and not Exotel
-# All RES related actions as well as RCH related actions will be done here
+# this controller contains all onboarding related actions for a user in Punjab
+# All RES and RCH related actions will be done here - i.e. all inbound and outbound actions
+# for a user to signup for our service
 
 # All states that have the standardized onboarding flow for RES will be using this controller
 # 1. ccp_ivr_initialize_user - Creates the user on TextIt and onboards them on to the MCH Neutral Campaign
 # 2. ccp_ivr_select_condition_area - Updates TextIt group based on condition area chosen by user
 # 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
 
-module DistrictHospitals
-  class AndhraPradeshController < ApplicationController
+module ResOnboarding
+  class PunjabController < ApplicationController
 
     attr_accessor :logger
 
@@ -16,20 +16,19 @@ module DistrictHospitals
 
     before_action :initiate_logger
 
-    def ccp_ivr_initialize_user
-
+    # this endpoint handles the missed call based signup mechanism that we have for
+    # DHs in Punjab. As soon as the user calls this number, they will be added to the respective campaign
+    def ccp_dh_signup
+      op = Res::DistrictHospitals::ExotelWaSignup.(logger, exotel_params)
+      if op.errors.present?
+        logger.info("Operation returned error: #{op.errors.to_sentence}")
+        render json: {success: false, errors: op.errors.to_sentence}
+        return
+      end
+      # for now return 200 if the user is successfully onboarded
+      render 'dh_signup'
     end
 
-    def ccp_ivr_select_condition_area
-
-    end
-
-    def ccp_ivr_acknowledge_condition_area
-
-    end
-
-
-    # PLATFORM - Always from Turn
     # this endpoint will handle all link-based signups that happens for users on the RCH portal
     # The link essentially sends users a custom message that triggers a stack on Turn, which will specify
     # the condition area, language and state of the user to onboard them onto the right campaign
@@ -44,8 +43,6 @@ module DistrictHospitals
     end
 
 
-    # TODO - TEMPORARILY ON EXOTEL, CHANGE TO OZONETEL
-
     # this endpoint will handle all onboarding that are based off of IVR
     # Based on the exophone, the relevant program, condition area and language is chosen and users
     # are onboarded onto the specific program based on that
@@ -59,26 +56,9 @@ module DistrictHospitals
       end
     end
 
-
-    def qr_signup
-      op = Res::Onboarding::QrSignup.(self.logger, qr_code_params)
-      if op.errors.present?
-        logger.warn("QR Signup failed with the errors: #{op.errors.to_sentence}")
-        render json: {success: false, errors: op.errors}
-      else
-        render json: {success: true}
-      end
-    end
-
-    def acknowledge_condition_area
-      op = Res::Onboarding::AcknowledgeConditionAreaChange.(self.logger, params.permit!)
-      if op.errors.present?
-        logger.warn("Updating condition area failed with the following errors: #{op.errors.to_sentence}")
-        render json: {success: false, errors: op.errors}
-      else
-        render json: {success: true}
-      end
-    end
+    # below actions control signups for the mohalla clinic service that is live
+    # at the community level in Punjab - one for GEMS, ANC and PNC
+    # TODO - add actions below for the three different
 
 
     private
@@ -92,9 +72,9 @@ module DistrictHospitals
     end
 
     def initiate_logger
-      self.logger = Logger.new("#{Rails.root}/log/res/andhra_pradesh/#{action_name}.log")
+      self.logger = Logger.new("#{Rails.root}/log/res/punjab/#{action_name}.log")
       self.logger.info("-------------------------------------")
-      logger.info("API parameters are: #{hp_dh_params}")
+      logger.info("API parameters are: #{params}")
     end
 
   end

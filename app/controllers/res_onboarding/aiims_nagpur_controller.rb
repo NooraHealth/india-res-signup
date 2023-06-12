@@ -1,5 +1,5 @@
-module DistrictHospitals
-  class HimachalPradeshController < ApplicationController
+module ResOnboarding
+  class AiimsNagpurController < ApplicationController
 
     attr_accessor :logger
 
@@ -7,7 +7,7 @@ module DistrictHospitals
 
     before_action :initiate_logger
 
-    def ivr_initialize_user
+    def ccp_ivr_initialize_user
       op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)
       if op.errors.present?
         logger.warn("IVR initialization failed with the errors: #{op.errors.to_sentence}")
@@ -17,7 +17,7 @@ module DistrictHospitals
       end
     end
 
-    def ivr_select_condition_area
+    def ccp_ivr_select_condition_area
       op = Res::Onboarding::IvrConditionAreaSelection.(self.logger, exotel_params)
       if op.errors.present?
         logger.warn("IVR Condition Area selection failed with the following errors: #{op.errors.to_sentence}")
@@ -28,7 +28,7 @@ module DistrictHospitals
 
     end
 
-    def qr_signup
+    def ccp_qr_signup
       op = Res::Onboarding::QrSignup.(self.logger, qr_code_params)
       if op.errors.present?
         logger.warn("QR Signup failed with the errors: #{op.errors.to_sentence}")
@@ -59,7 +59,7 @@ module DistrictHospitals
     end
 
     def initiate_logger
-      self.logger = Logger.new("#{Rails.root}/log/himachal_pradesh/#{action_name}.log")
+      self.logger = Logger.new("#{Rails.root}/log/aiims_nagpur/#{action_name}.log")
       self.logger.info("-------------------------------------")
       logger.info("API parameters are: #{params.permit!}")
     end

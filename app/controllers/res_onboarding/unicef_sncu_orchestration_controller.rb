@@ -1,8 +1,11 @@
-# this controller handles all actions that are involved in the SNCU UNICEF flow:
+
+# this controller handles all actions that are involved in the SNCU UNICEF IVR flow:
 # 1. Age in weeks of the baby
 # 2. Language preference of the user
 # 3. checking if the user is an existing one or not
 # ... and so on
+
+# This endpoint also handles users signing up up for WA by calling our SNCU number in AP and Karnataka
 
 module DistrictHospitals
   class UnicefSncuOrchestrationController < ApplicationController
@@ -66,6 +69,18 @@ module DistrictHospitals
       language_id = params[:language_id]
       user&.update(language_preference_id: language_id)
       render json: {}
+    end
+
+    # endpoint that onboards a user onto the SNCU WA program
+    def wa_signup
+      op = Res::DistrictHospitals::ExotelWaSignup.(logger, exotel_params)
+      if op.errors.present?
+        logger.info("Operation returned error: #{op.errors.to_sentence}")
+        render json: {success: false, errors: op.errors.to_sentence}
+        return
+      end
+      # for now return 200 if the user is successfully onboarded
+      render 'dh_signup'
     end
 
 

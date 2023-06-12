@@ -3,6 +3,11 @@
 # The endpoint is token protected and validation of the token happens
 # in the controller
 
+# TODO
+# This operation will also handle cases where we need to add a user to a different campaign
+# if they are already signed up for our service by other means, we need to refine their campaign
+# to the EDD-based campaign through textit
+
 module RchPortal
   class CreateUser < RchPortal::Base
 
