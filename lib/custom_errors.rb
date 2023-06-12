@@ -17,6 +17,8 @@ module CustomErrors
     end
   end
 
+  # below are the common errors that we are catching at each point.
+
   class LanguageNotFound < ErrorResponse
     def initialize(language, action, controller)
       super("Language '#{language}' not found", "NO_LANG", 404, action, controller)

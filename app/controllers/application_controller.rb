@@ -21,7 +21,11 @@ class ApplicationController < ActionController::Base
     #   elog message
     #   render status: 400, json: {error: message, code: "PARAM_MISSING"}
     rescue ErrorResponse => error
+      # log the error onto a file in the system
       elog error.message
+
+      # raise exception on Sentry
+
       render status: error.status, json: error.data
     end
   end
