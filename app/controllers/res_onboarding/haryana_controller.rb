@@ -62,7 +62,7 @@ module ResOnboarding
     end
 
     def initiate_logger
-      self.logger = Logger.new("#{Rails.root}/log/res/haryana/#{action_name}.log")
+      self.logger = Logger.new("#{Rails.root}/log/haryana/#{action_name}.log")
       self.logger.info("-------------------------------------")
       logger.info("API parameters are: #{params.permit!}")
     end
