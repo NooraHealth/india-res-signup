@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_14_124105) do
+ActiveRecord::Schema.define(version: 2023_06_13_040224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,9 +146,11 @@ ActiveRecord::Schema.define(version: 2023_05_14_124105) do
     t.integer "language_id"
     t.bigint "state_id"
     t.bigint "onboarding_method_id"
+    t.bigint "qr_code_id"
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["onboarding_method_id"], name: "index_textit_groups_on_onboarding_method_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
+    t.index ["qr_code_id"], name: "index_textit_groups_on_qr_code_id"
     t.index ["state_id"], name: "index_textit_groups_on_state_id"
   end
 
@@ -194,6 +196,7 @@ ActiveRecord::Schema.define(version: 2023_05_14_124105) do
     t.string "campaign_sid"
     t.string "call_direction"
     t.datetime "event_timestamp"
+    t.index ["call_sid"], name: "index_user_signup_trackers_on_call_sid"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
     t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
@@ -235,6 +238,7 @@ ActiveRecord::Schema.define(version: 2023_05_14_124105) do
     t.datetime "qr_scan_date"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
+    t.index ["mobile_number"], name: "index_users_on_mobile_number"
     t.index ["onboarding_method_id"], name: "index_users_on_onboarding_method_id"
     t.index ["program_id"], name: "index_users_on_program_id"
     t.index ["states_id"], name: "index_users_on_states_id"
