@@ -21,7 +21,7 @@ module ResOnboarding
         return
       end
       # for now return 200 if the user is successfully onboarded
-      render 'dh_signup'
+      render json: {success: true}
     end
 
 

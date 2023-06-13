@@ -49,6 +49,7 @@
 #                          res_karnataka_ivr_initialize_user GET  /res/karnataka/ivr_initialize_user(.:format)                                             res_onboarding/karnataka#ccp_ivr_initialize_user
 #                    res_karnataka_ivr_select_condition_area GET  /res/karnataka/ivr_select_condition_area(.:format)                                       res_onboarding/karnataka#ccp_ivr_select_condition_area
 #         res_karnataka_acknowledge_condition_area_selection PUT  /res/karnataka/acknowledge_condition_area_selection(.:format)                            res_onboarding/karnataka#ccp_acknowledge_condition_area
+#                                 res_karnataka_dh_wa_signup GET  /res/karnataka/dh_wa_signup(.:format)                                                    res_onboarding/karnataka#ccp_dh_signup
 #                     res_andhra_pradesh_ivr_initialize_user GET  /res/andhra_pradesh/ivr_initialize_user(.:format)                                        res_onboarding/andhra_pradesh#ccp_ivr_initialize_user
 #               res_andhra_pradesh_ivr_select_condition_area GET  /res/andhra_pradesh/ivr_select_condition_area(.:format)                                  res_onboarding/andhra_pradesh#ccp_ivr_select_condition_area
 #                               res_andhra_pradesh_qr_signup POST /res/andhra_pradesh/qr_signup(.:format)                                                  res_onboarding/andhra_pradesh#ccp_qr_signup
@@ -56,6 +57,9 @@
 #                        res_maharashtra_ivr_initialize_user GET  /res/maharashtra/ivr_initialize_user(.:format)                                           res_onboarding/maharashtra#ccp_ivr_initialize_user
 #                  res_maharashtra_ivr_select_condition_area GET  /res/maharashtra/ivr_select_condition_area(.:format)                                     res_onboarding/maharashtra#ccp_ivr_select_condition_area
 #       res_maharashtra_acknowledge_condition_area_selection PUT  /res/maharashtra/acknowledge_condition_area_selection(.:format)                          res_onboarding/maharashtra#acknowledge_condition_area
+#                               res_maharashtra_dh_wa_signup GET  /res/maharashtra/dh_wa_signup(.:format)                                                  res_onboarding/maharashtra#ccp_dh_signup
+#                                    res_punjab_dh_wa_signup GET  /res/punjab/dh_wa_signup(.:format)                                                       res_onboarding/punjab#ccp_dh_signup
+#                            res_madhya_pradesh_dh_wa_signup GET  /res/madhya_pradesh/dh_wa_signup(.:format)                                               res_onboarding/madhya_pradesh#ccp_dh_signup
 #                       res_aiims_nagpur_ivr_initialize_user GET  /res/aiims_nagpur/ivr_initialize_user(.:format)                                          res_onboarding/aiims_nagpur#ccp_ivr_initialize_user
 #                 res_aiims_nagpur_ivr_select_condition_area GET  /res/aiims_nagpur/ivr_select_condition_area(.:format)                                    res_onboarding/aiims_nagpur#ccp_ivr_select_condition_area
 #                                 res_aiims_nagpur_qr_signup POST /res/aiims_nagpur/qr_signup(.:format)                                                    res_onboarding/aiims_nagpur#ccp_qr_signup
@@ -241,6 +245,9 @@ Rails.application.routes.draw do
   # post 'res/karnataka/qr_signup', to: 'res_onboarding/karnataka#ccp_qr_signup'
   put 'res/karnataka/acknowledge_condition_area_selection', to: 'res_onboarding/karnataka#ccp_acknowledge_condition_area'
 
+  # Below are the DH signup endpoints
+  get 'res/karnataka/dh_wa_signup', to: 'res_onboarding/karnataka#ccp_dh_signup'
+
   ##############################################################################################################
   ##################################################### Karnataka Endpoints ########################################################
 
@@ -257,6 +264,8 @@ Rails.application.routes.draw do
   ##############################################################################################################
   ##################################################### Andhra Pradesh Endpoints ########################################################
 
+
+
   ##################################################### Maharashtra Endpoints ########################################################
   ##############################################################################################################
 
@@ -265,9 +274,33 @@ Rails.application.routes.draw do
   # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
   put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
 
+  # Below are the DH signup endpoints
+  get 'res/maharashtra/dh_wa_signup', to: 'res_onboarding/maharashtra#ccp_dh_signup'
+
   ##############################################################################################################
   ##################################################### Maharashtra Endpoints ########################################################
 
+
+
+  ##################################################### Punjab Endpoints ########################################################
+  ##############################################################################################################
+
+  # Below are the DH signup endpoints
+  get 'res/punjab/dh_wa_signup', to: 'res_onboarding/punjab#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Punjab Endpoints ########################################################
+
+
+
+  ##################################################### Madhya Pradesh Endpoints ########################################################
+  ##############################################################################################################
+
+  # Below are the DH signup endpoints
+  get 'res/madhya_pradesh/dh_wa_signup', to: 'res_onboarding/madhya_pradesh#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Madhya Pradesh Endpoints ########################################################
 
 
   ##################################################### AIIMS Nagpur Endpoints ########################################################

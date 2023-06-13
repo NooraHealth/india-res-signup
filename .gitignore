@@ -30,6 +30,7 @@
 config/textit_config.yml
 config/turn_api_config.yml
 scripts
+/temp
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key

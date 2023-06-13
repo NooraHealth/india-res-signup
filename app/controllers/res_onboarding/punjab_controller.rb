@@ -20,7 +20,7 @@ module ResOnboarding
         return
       end
       # for now return 200 if the user is successfully onboarded
-      render 'dh_signup'
+      render json: {success: true}
     end
 
     # this endpoint will handle all link-based signups that happens for users on the RCH portal
