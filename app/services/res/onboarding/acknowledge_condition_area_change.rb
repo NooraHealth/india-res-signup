@@ -32,7 +32,7 @@ module Res
         # first extract the mobile number of the user
         mobile_number = extract_mobile_number(channel, update_params)
         if mobile_number.blank?
-          self.errors << "User not found with mobile number: #{mobile_number}"
+          self.errors << "Mobile number not found in params"
           return self
         end
 

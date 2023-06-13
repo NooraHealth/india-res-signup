@@ -1,90 +1,100 @@
 # == Route Map
 #
-#                                                    Prefix Verb URI Pattern                                                                              Controller#Action
-#                    res_district_hospitals_whatsapp_signup GET  /res/district_hospitals/whatsapp/signup(.:format)                                        dh#exotel_wa_signup
-#              res_district_hospitals_update_condition_area POST /res/district_hospitals/update_condition_area(.:format)                                  whatsapp#update_condition_area
-#                                    sdh_modality_selection GET  /sdh/modality_selection(.:format)                                                        sdh#ivr_modality_selection
-#                                    sdh_language_selection GET  /sdh/language_selection(.:format)                                                        sdh#ivr_language_selection
-#                              sdh_condition_area_selection GET  /sdh/condition_area_selection(.:format)                                                  sdh#ivr_condition_area_selection
-#                                        sdh_pin_code_input GET  /sdh/pin_code_input(.:format)                                                            sdh#pin_code_input
-#                                sdh_days_to_delivery_input GET  /sdh/days_to_delivery_input(.:format)                                                    sdh#days_to_delivery_input
-#                               sdh_confirm_whatsapp_number GET  /sdh/confirm_whatsapp_number(.:format)                                                   sdh#confirm_whatsapp_number
-#                                sdh_change_whatsapp_number GET  /sdh/change_whatsapp_number(.:format)                                                    sdh#change_whatsapp_number
-#                                       sdh_outro_selection GET  /sdh/outro_selection(.:format)                                                           sdh#outro_message
-#                   sdh_check_language_selection_completion GET  /sdh/check_language_selection_completion(.:format)                                       sdh#check_language_selection_complete
-#                   sdh_check_modality_selection_completion GET  /sdh/check_modality_selection_completion(.:format)                                       sdh#check_modality_selection_complete
-#             sdh_check_condition_area_selection_completion GET  /sdh/check_condition_area_selection_completion(.:format)                                 sdh#check_condition_area_selection_complete
-#         sdh_check_whatsapp_number_confirmation_completion GET  /sdh/check_whatsapp_number_confirmation_completion(.:format)                             sdh#check_whatsapp_number_confirmation_complete
-#                                   sdh_check_existing_user GET  /sdh/check_existing_user(.:format)                                                       sdh_orchestration#check_existing_user
-#                                    sdh_weeks_since_signup GET  /sdh/weeks_since_signup(.:format)                                                        sdh_orchestration#weeks_since_signup
-#                                           sdh_day_of_week GET  /sdh/day_of_week(.:format)                                                               sdh_orchestration#day_of_week
-#                                   gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#ivr_modality_selection
-#                                   gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#ivr_language_selection
-#                             gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#ivr_condition_area_selection
-#                    gems_whatsapp_condition_area_selection POST /gems/whatsapp_condition_area_selection(.:format)                                        gems#whatsapp_condition_area_selection
-#                                      gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
-#                              gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
-#                               gems_change_whatsapp_number GET  /gems/change_whatsapp_number(.:format)                                                   gems#change_whatsapp_number
-#                                      gems_unsubscribe_ivr GET  /gems/unsubscribe_ivr(.:format)                                                          gems#unsubscribe_ivr
-#                                 gems_unsubscribe_whatsapp POST /gems/unsubscribe_whatsapp(.:format)                                                     gems#unsubscribe_whatsapp
-#                               gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
-#                              gems_retrieve_condition_area GET  /gems/retrieve_condition_area(.:format)                                                  gems_orchestration#retrieve_condition_area
-#                           gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
-#                                  gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
-#                                          mch_hp_wa_signup GET  /mch/hp/wa_signup(.:format)                                                              district_hospitals/hp#wa_signup
-#                             mch_hp_change_whatsapp_number GET  /mch/hp/change_whatsapp_number(.:format)                                                 district_hospitals/hp#change_whatsapp_number
-#                                    mch_hp_initialize_user GET  /mch/hp/initialize_user(.:format)                                                        district_hospitals/hp#initialize_user
-#                  res_himachal_pradesh_ivr_initialize_user GET  /res/himachal_pradesh/ivr_initialize_user(.:format)                                      district_hospitals/himachal_pradesh#ivr_initialize_user
-#            res_himachal_pradesh_ivr_select_condition_area GET  /res/himachal_pradesh/ivr_select_condition_area(.:format)                                district_hospitals/himachal_pradesh#ivr_select_condition_area
-#                            res_himachal_pradesh_qr_signup POST /res/himachal_pradesh/qr_signup(.:format)                                                district_hospitals/himachal_pradesh#qr_signup
-# res_himachal_pradesh_acknowledge_condition_area_selection PUT  /res/himachal_pradesh/acknowledge_condition_area_selection(.:format)                     district_hospitals/himachal_pradesh#acknowledge_condition_area
-#                           res_haryana_ivr_initialize_user GET  /res/haryana/ivr_initialize_user(.:format)                                               district_hospitals/haryana#ivr_initialize_user
-#                     res_haryana_ivr_select_condition_area GET  /res/haryana/ivr_select_condition_area(.:format)                                         district_hospitals/haryana#ivr_select_condition_area
-#                                     res_haryana_qr_signup POST /res/haryana/qr_signup(.:format)                                                         district_hospitals/haryana#qr_signup
-#          res_haryana_acknowledge_condition_area_selection PUT  /res/haryana/acknowledge_condition_area_selection(.:format)                              district_hospitals/haryana#acknowledge_condition_area
-#                         res_karnataka_ivr_initialize_user GET  /res/karnataka/ivr_initialize_user(.:format)                                             district_hospitals/karnataka#ivr_initialize_user
-#                   res_karnataka_ivr_select_condition_area GET  /res/karnataka/ivr_select_condition_area(.:format)                                       district_hospitals/karnataka#ivr_select_condition_area
-#                                   res_karnataka_qr_signup POST /res/karnataka/qr_signup(.:format)                                                       district_hospitals/karnataka#qr_signup
-#        res_karnataka_acknowledge_condition_area_selection PUT  /res/karnataka/acknowledge_condition_area_selection(.:format)                            district_hospitals/karnataka#acknowledge_condition_area
-#                    res_andhra_pradesh_ivr_initialize_user GET  /res/andhra_pradesh/ivr_initialize_user(.:format)                                        district_hospitals/andhra_pradesh#ivr_initialize_user
-#              res_andhra_pradesh_ivr_select_condition_area GET  /res/andhra_pradesh/ivr_select_condition_area(.:format)                                  district_hospitals/andhra_pradesh#ivr_select_condition_area
-#                              res_andhra_pradesh_qr_signup POST /res/andhra_pradesh/qr_signup(.:format)                                                  district_hospitals/andhra_pradesh#qr_signup
-#   res_andhra_pradesh_acknowledge_condition_area_selection PUT  /res/andhra_pradesh/acknowledge_condition_area_selection(.:format)                       district_hospitals/andhra_pradesh#acknowledge_condition_area
-#                      res_aiims_nagpur_ivr_initialize_user GET  /res/aiims_nagpur/ivr_initialize_user(.:format)                                          district_hospitals/aiims_nagpur#ivr_initialize_user
-#                res_aiims_nagpur_ivr_select_condition_area GET  /res/aiims_nagpur/ivr_select_condition_area(.:format)                                    district_hospitals/aiims_nagpur#ivr_select_condition_area
-#                                res_aiims_nagpur_qr_signup POST /res/aiims_nagpur/qr_signup(.:format)                                                    district_hospitals/aiims_nagpur#qr_signup
-#     res_aiims_nagpur_acknowledge_condition_area_selection PUT  /res/aiims_nagpur/acknowledge_condition_area_selection(.:format)                         district_hospitals/aiims_nagpur#acknowledge_condition_area
-#                       unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
-#                   unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
-#                             unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
-#                                   unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
-#                             rch_portal_punjab_create_user POST /rch_portal/punjab/create_user(.:format)                                                 rch_portal/punjab/onboarding#create
-#                                  rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
-#                          rch_portal_punjab_update_profile PUT  /rch_portal/punjab/update_profile(.:format)                                              rch_portal/punjab/onboarding#update_profile
-#                       rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
-#                              rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
-#                     rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
-#                          rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
-#                  rch_portal_andhra_pradesh_update_profile PUT  /rch_portal/andhra_pradesh/update_profile(.:format)                                      rch_portal/andhra_pradesh/onboarding#update_profile
-#               rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
-#                      rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
-#                          rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
-#                 rch_portal_ivr_update_onboarding_attempts POST /rch_portal/ivr_update_onboarding_attempts(.:format)                                     rch_portal/webhooks#update_ivr_onboarding_attempts
-#                     rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_ivr_onboarding_attempts
-#                            rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_ivr_onboarding_attempts
-#                                        rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
-#                                 rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
-#                                        rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
-#                                 update_rails_disk_service PUT  /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
-#                                      rails_direct_uploads POST /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
+#                                                     Prefix Verb URI Pattern                                                                              Controller#Action
+#                         res_res_onboarding_whatsapp_signup GET  /res/res_onboarding/whatsapp/signup(.:format)                                            dh#exotel_wa_signup
+#                   res_res_onboarding_update_condition_area POST /res/res_onboarding/update_condition_area(.:format)                                      whatsapp#update_condition_area
+#                                     sdh_modality_selection GET  /sdh/modality_selection(.:format)                                                        sdh#ivr_modality_selection
+#                                     sdh_language_selection GET  /sdh/language_selection(.:format)                                                        sdh#ivr_language_selection
+#                               sdh_condition_area_selection GET  /sdh/condition_area_selection(.:format)                                                  sdh#ivr_condition_area_selection
+#                                         sdh_pin_code_input GET  /sdh/pin_code_input(.:format)                                                            sdh#pin_code_input
+#                                 sdh_days_to_delivery_input GET  /sdh/days_to_delivery_input(.:format)                                                    sdh#days_to_delivery_input
+#                                sdh_confirm_whatsapp_number GET  /sdh/confirm_whatsapp_number(.:format)                                                   sdh#confirm_whatsapp_number
+#                                 sdh_change_whatsapp_number GET  /sdh/change_whatsapp_number(.:format)                                                    sdh#change_whatsapp_number
+#                                        sdh_outro_selection GET  /sdh/outro_selection(.:format)                                                           sdh#outro_message
+#                    sdh_check_language_selection_completion GET  /sdh/check_language_selection_completion(.:format)                                       sdh#check_language_selection_complete
+#                    sdh_check_modality_selection_completion GET  /sdh/check_modality_selection_completion(.:format)                                       sdh#check_modality_selection_complete
+#              sdh_check_condition_area_selection_completion GET  /sdh/check_condition_area_selection_completion(.:format)                                 sdh#check_condition_area_selection_complete
+#          sdh_check_whatsapp_number_confirmation_completion GET  /sdh/check_whatsapp_number_confirmation_completion(.:format)                             sdh#check_whatsapp_number_confirmation_complete
+#                                    sdh_check_existing_user GET  /sdh/check_existing_user(.:format)                                                       sdh_orchestration#check_existing_user
+#                                     sdh_weeks_since_signup GET  /sdh/weeks_since_signup(.:format)                                                        sdh_orchestration#weeks_since_signup
+#                                            sdh_day_of_week GET  /sdh/day_of_week(.:format)                                                               sdh_orchestration#day_of_week
+#                                    gems_modality_selection GET  /gems/modality_selection(.:format)                                                       gems#ivr_modality_selection
+#                                    gems_language_selection GET  /gems/language_selection(.:format)                                                       gems#ivr_language_selection
+#                              gems_condition_area_selection GET  /gems/condition_area_selection(.:format)                                                 gems#ivr_condition_area_selection
+#                     gems_whatsapp_condition_area_selection POST /gems/whatsapp_condition_area_selection(.:format)                                        gems#whatsapp_condition_area_selection
+#                                       gems_outro_selection GET  /gems/outro_selection(.:format)                                                          gems#outro_message
+#                               gems_confirm_whatsapp_number GET  /gems/confirm_whatsapp_number(.:format)                                                  gems#confirm_whatsapp_number
+#                                gems_change_whatsapp_number GET  /gems/change_whatsapp_number(.:format)                                                   gems#change_whatsapp_number
+#                                       gems_unsubscribe_ivr GET  /gems/unsubscribe_ivr(.:format)                                                          gems#unsubscribe_ivr
+#                                  gems_unsubscribe_whatsapp POST /gems/unsubscribe_whatsapp(.:format)                                                     gems#unsubscribe_whatsapp
+#                                gems_retrieve_user_language GET  /gems/retrieve_user_language(.:format)                                                   gems_orchestration#retrieve_language
+#                               gems_retrieve_condition_area GET  /gems/retrieve_condition_area(.:format)                                                  gems_orchestration#retrieve_condition_area
+#                            gems_retrieve_days_since_signup GET  /gems/retrieve_days_since_signup(.:format)                                               gems_orchestration#number_of_days_since_signup
+#                                   gems_check_existing_user GET  /gems/check_existing_user(.:format)                                                      gems#check_existing_user
+#                                        res_update_language PUT  /res/update_language(.:format)                                                           users#update_language
+#                                      res_retrieve_language GET  /res/retrieve_language(.:format)                                                         users#retrieve_language
+#                   res_himachal_pradesh_ivr_initialize_user GET  /res/himachal_pradesh/ivr_initialize_user(.:format)                                      res_onboarding/himachal_pradesh#ccp_ivr_initialize_user
+#             res_himachal_pradesh_ivr_select_condition_area GET  /res/himachal_pradesh/ivr_select_condition_area(.:format)                                res_onboarding/himachal_pradesh#ccp_ivr_select_condition_area
+#                             res_himachal_pradesh_qr_signup POST /res/himachal_pradesh/qr_signup(.:format)                                                res_onboarding/himachal_pradesh#ccp_qr_signup
+#  res_himachal_pradesh_acknowledge_condition_area_selection PUT  /res/himachal_pradesh/acknowledge_condition_area_selection(.:format)                     res_onboarding/himachal_pradesh#ccp_acknowledge_condition_area
+#                            res_haryana_ivr_initialize_user GET  /res/haryana/ivr_initialize_user(.:format)                                               res_onboarding/haryana#ccp_ivr_initialize_user
+#                      res_haryana_ivr_select_condition_area GET  /res/haryana/ivr_select_condition_area(.:format)                                         res_onboarding/haryana#ccp_ivr_select_condition_area
+#                                      res_haryana_qr_signup POST /res/haryana/qr_signup(.:format)                                                         res_onboarding/haryana#ccp_qr_signup
+#           res_haryana_acknowledge_condition_area_selection PUT  /res/haryana/acknowledge_condition_area_selection(.:format)                              res_onboarding/haryana#ccp_acknowledge_condition_area
+#                        unicef_sncu_get_language_preference GET  /unicef_sncu/get_language_preference(.:format)                                           district_hospitals/unicef_sncu_orchestration#retrieve_language_preference
+#                    unicef_sncu_update_language_preferences GET  /unicef_sncu/update_language_preferences(.:format)                                       district_hospitals/unicef_sncu_orchestration#update_language_preference
+#                              unicef_sncu_baby_age_in_weeks GET  /unicef_sncu/baby_age_in_weeks(.:format)                                                 district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks
+#                                    unicef_sncu_day_of_week GET  /unicef_sncu/day_of_week(.:format)                                                       district_hospitals/unicef_sncu_orchestration#day_of_week
+#                               unicef_sncu_ivr_onboard_user GET  /unicef_sncu/ivr_onboard_user(.:format)                                                  district_hospitals/unicef_sncu_orchestration#wa_signup
+#                          res_karnataka_ivr_initialize_user GET  /res/karnataka/ivr_initialize_user(.:format)                                             res_onboarding/karnataka#ccp_ivr_initialize_user
+#                    res_karnataka_ivr_select_condition_area GET  /res/karnataka/ivr_select_condition_area(.:format)                                       res_onboarding/karnataka#ccp_ivr_select_condition_area
+#         res_karnataka_acknowledge_condition_area_selection PUT  /res/karnataka/acknowledge_condition_area_selection(.:format)                            res_onboarding/karnataka#ccp_acknowledge_condition_area
+#                                 res_karnataka_dh_wa_signup GET  /res/karnataka/dh_wa_signup(.:format)                                                    res_onboarding/karnataka#ccp_dh_signup
+#                     res_andhra_pradesh_ivr_initialize_user GET  /res/andhra_pradesh/ivr_initialize_user(.:format)                                        res_onboarding/andhra_pradesh#ccp_ivr_initialize_user
+#               res_andhra_pradesh_ivr_select_condition_area GET  /res/andhra_pradesh/ivr_select_condition_area(.:format)                                  res_onboarding/andhra_pradesh#ccp_ivr_select_condition_area
+#                               res_andhra_pradesh_qr_signup POST /res/andhra_pradesh/qr_signup(.:format)                                                  res_onboarding/andhra_pradesh#ccp_qr_signup
+#    res_andhra_pradesh_acknowledge_condition_area_selection PUT  /res/andhra_pradesh/acknowledge_condition_area_selection(.:format)                       res_onboarding/andhra_pradesh#acknowledge_condition_area
+#                        res_maharashtra_ivr_initialize_user GET  /res/maharashtra/ivr_initialize_user(.:format)                                           res_onboarding/maharashtra#ccp_ivr_initialize_user
+#                  res_maharashtra_ivr_select_condition_area GET  /res/maharashtra/ivr_select_condition_area(.:format)                                     res_onboarding/maharashtra#ccp_ivr_select_condition_area
+#       res_maharashtra_acknowledge_condition_area_selection PUT  /res/maharashtra/acknowledge_condition_area_selection(.:format)                          res_onboarding/maharashtra#acknowledge_condition_area
+#                               res_maharashtra_dh_wa_signup GET  /res/maharashtra/dh_wa_signup(.:format)                                                  res_onboarding/maharashtra#ccp_dh_signup
+#                                    res_punjab_dh_wa_signup GET  /res/punjab/dh_wa_signup(.:format)                                                       res_onboarding/punjab#ccp_dh_signup
+#                            res_madhya_pradesh_dh_wa_signup GET  /res/madhya_pradesh/dh_wa_signup(.:format)                                               res_onboarding/madhya_pradesh#ccp_dh_signup
+#                       res_aiims_nagpur_ivr_initialize_user GET  /res/aiims_nagpur/ivr_initialize_user(.:format)                                          res_onboarding/aiims_nagpur#ccp_ivr_initialize_user
+#                 res_aiims_nagpur_ivr_select_condition_area GET  /res/aiims_nagpur/ivr_select_condition_area(.:format)                                    res_onboarding/aiims_nagpur#ccp_ivr_select_condition_area
+#                                 res_aiims_nagpur_qr_signup POST /res/aiims_nagpur/qr_signup(.:format)                                                    res_onboarding/aiims_nagpur#ccp_qr_signup
+#      res_aiims_nagpur_acknowledge_condition_area_selection PUT  /res/aiims_nagpur/acknowledge_condition_area_selection(.:format)                         res_onboarding/aiims_nagpur#acknowledge_condition_area
+#                              rch_portal_punjab_create_user POST /rch_portal/punjab/create_user(.:format)                                                 rch_portal/punjab/onboarding#create
+#                                   rch_portal_punjab_import POST /rch_portal/punjab/import(.:format)                                                      rch_portal/punjab/onboarding#import
+#                           rch_portal_punjab_update_profile PUT  /rch_portal/punjab/update_profile(.:format)                                              rch_portal/punjab/onboarding#update_profile
+#                        rch_portal_punjab_link_based_signup POST /rch_portal/punjab/link_based_signup(.:format)                                           rch_portal/punjab/onboarding#link_based_signup
+#                               rch_portal_punjab_ivr_signup GET  /rch_portal/punjab/ivr_signup(.:format)                                                  rch_portal/punjab/onboarding#ivr_signup
+#                      rch_portal_andhra_pradesh_create_user POST /rch_portal/andhra_pradesh/create_user(.:format)                                         rch_portal/andhra_pradesh/onboarding#create
+#                           rch_portal_andhra_pradesh_import POST /rch_portal/andhra_pradesh/import(.:format)                                              rch_portal/andhra_pradesh/onboarding#import
+#                   rch_portal_andhra_pradesh_update_profile PUT  /rch_portal/andhra_pradesh/update_profile(.:format)                                      rch_portal/andhra_pradesh/onboarding#update_profile
+#                rch_portal_andhra_pradesh_link_based_signup POST /rch_portal/andhra_pradesh/link_based_signup(.:format)                                   rch_portal/andhra_pradesh/onboarding#link_based_signup
+#                       rch_portal_andhra_pradesh_ivr_signup GET  /rch_portal/andhra_pradesh/ivr_signup(.:format)                                          rch_portal/andhra_pradesh/onboarding#ivr_signup
+#                           rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
+#                  rch_portal_ivr_update_onboarding_attempts POST /rch_portal/ivr_update_onboarding_attempts(.:format)                                     rch_portal/webhooks#update_ivr_onboarding_attempts
+#                      rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_ivr_onboarding_attempts
+#                             rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_ivr_onboarding_attempts
+#                res_onboarding_rch_portal_punjab_ivr_signup GET  /res_onboarding/rch_portal/punjab/ivr_signup(.:format)                                   res_onboarding/punjab#rch_ivr_signup
+#         res_onboarding_rch_portal_punjab_link_based_signup POST /res_onboarding/rch_portal/punjab/link_based_signup(.:format)                            res_onboarding/punjab#rch_link_based_signup
+#        res_onboarding_rch_portal_andhra_pradesh_ivr_signup GET  /res_onboarding/rch_portal/andhra_pradesh/ivr_signup(.:format)                           res_onboarding/andhra_pradesh#rch_ivr_signup
+# res_onboarding_rch_portal_andhra_pradesh_link_based_signup POST /res_onboarding/rch_portal/andhra_pradesh/link_based_signup(.:format)                    res_onboarding/andhra_pradesh#rch_link_based_signup
+#                                         rails_service_blob GET  /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
+#                                  rails_blob_representation GET  /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
+#                                         rails_disk_service GET  /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
+#                                  update_rails_disk_service PUT  /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
+#                                       rails_direct_uploads POST /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
-  get 'res/district_hospitals/whatsapp/signup', to: 'dh#exotel_wa_signup'
+  get 'res/res_onboarding/whatsapp/signup', to: 'dh#exotel_wa_signup'
 
   # this endpoint updates the condition area of a user based on parameters
-  post 'res/district_hospitals/update_condition_area', to: 'whatsapp#update_condition_area'
+  post 'res/res_onboarding/update_condition_area', to: 'whatsapp#update_condition_area'
 
 
   ####################################################### SDH Endpoints #######################################################
@@ -174,29 +184,24 @@ Rails.application.routes.draw do
   #############################################################################################################################
   ##################################################### GEMS Endpoints ########################################################
 
-
-
-
-
-
-  ##################################################### HP Endpoints (OLD) ########################################################
+  ##################################################### COMMON ENDPOINTS ########################################################
   ##############################################################################################################
 
-  get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
-  get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
-  get 'mch/hp/initialize_user', to: 'district_hospitals/hp#initialize_user'
-
+  put 'res/update_language', to: 'users#update_language'
+  get 'res/retrieve_language', to: 'users#retrieve_language'
+  
   ##############################################################################################################
-  ##################################################### HP Endpoints (OLD) ########################################################
+  ##################################################### Himachal Pradesh (HP) Endpoints ########################################################
+
 
 
   ##################################################### Himachal Pradesh (HP) Endpoints ########################################################
   ##############################################################################################################
 
-  get 'res/himachal_pradesh/ivr_initialize_user', to: 'district_hospitals/himachal_pradesh#ivr_initialize_user'
-  get 'res/himachal_pradesh/ivr_select_condition_area', to: 'district_hospitals/himachal_pradesh#ivr_select_condition_area'
-  post 'res/himachal_pradesh/qr_signup', to: 'district_hospitals/himachal_pradesh#qr_signup'
-  put 'res/himachal_pradesh/acknowledge_condition_area_selection', to: 'district_hospitals/himachal_pradesh#acknowledge_condition_area'
+  get 'res/himachal_pradesh/ivr_initialize_user', to: 'res_onboarding/himachal_pradesh#ccp_ivr_initialize_user'
+  get 'res/himachal_pradesh/ivr_select_condition_area', to: 'res_onboarding/himachal_pradesh#ccp_ivr_select_condition_area'
+  post 'res/himachal_pradesh/qr_signup', to: 'res_onboarding/himachal_pradesh#ccp_qr_signup'
+  put 'res/himachal_pradesh/acknowledge_condition_area_selection', to: 'res_onboarding/himachal_pradesh#ccp_acknowledge_condition_area'
 
   ##############################################################################################################
   ##################################################### Himachal Pradesh (HP) Endpoints ########################################################
@@ -206,49 +211,13 @@ Rails.application.routes.draw do
   ##################################################### Haryana Endpoints ########################################################
   ##############################################################################################################
 
-  get 'res/haryana/ivr_initialize_user', to: 'district_hospitals/haryana#ivr_initialize_user'
-  get 'res/haryana/ivr_select_condition_area', to: 'district_hospitals/haryana#ivr_select_condition_area'
-  post 'res/haryana/qr_signup', to: 'district_hospitals/haryana#qr_signup'
-  put 'res/haryana/acknowledge_condition_area_selection', to: 'district_hospitals/haryana#acknowledge_condition_area'
+  get 'res/haryana/ivr_initialize_user', to: 'res_onboarding/haryana#ccp_ivr_initialize_user'
+  get 'res/haryana/ivr_select_condition_area', to: 'res_onboarding/haryana#ccp_ivr_select_condition_area'
+  post 'res/haryana/qr_signup', to: 'res_onboarding/haryana#ccp_qr_signup'
+  put 'res/haryana/acknowledge_condition_area_selection', to: 'res_onboarding/haryana#ccp_acknowledge_condition_area'
 
   ##############################################################################################################
   ##################################################### Haryana Endpoints ########################################################
-
-
-  ##################################################### Karnataka Endpoints ########################################################
-  ##############################################################################################################
-
-  get 'res/karnataka/ivr_initialize_user', to: 'district_hospitals/karnataka#ivr_initialize_user'
-  get 'res/karnataka/ivr_select_condition_area', to: 'district_hospitals/karnataka#ivr_select_condition_area'
-  post 'res/karnataka/qr_signup', to: 'district_hospitals/karnataka#qr_signup'
-  put 'res/karnataka/acknowledge_condition_area_selection', to: 'district_hospitals/karnataka#acknowledge_condition_area'
-
-  ##############################################################################################################
-  ##################################################### Karnataka Endpoints ########################################################
-
-
-  ##################################################### Andhra Pradesh Endpoints ########################################################
-  ##############################################################################################################
-
-  get 'res/andhra_pradesh/ivr_initialize_user', to: 'district_hospitals/andhra_pradesh#ivr_initialize_user'
-  get 'res/andhra_pradesh/ivr_select_condition_area', to: 'district_hospitals/andhra_pradesh#ivr_select_condition_area'
-  post 'res/andhra_pradesh/qr_signup', to: 'district_hospitals/andhra_pradesh#qr_signup'
-  put 'res/andhra_pradesh/acknowledge_condition_area_selection', to: 'district_hospitals/andhra_pradesh#acknowledge_condition_area'
-
-  ##############################################################################################################
-  ##################################################### Andhra Pradesh Endpoints ########################################################
-
-
-  ##################################################### AIIMS Nagpur Endpoints ########################################################
-  ##############################################################################################################
-
-  get 'res/aiims_nagpur/ivr_initialize_user', to: 'district_hospitals/aiims_nagpur#ivr_initialize_user'
-  get 'res/aiims_nagpur/ivr_select_condition_area', to: 'district_hospitals/aiims_nagpur#ivr_select_condition_area'
-  post 'res/aiims_nagpur/qr_signup', to: 'district_hospitals/aiims_nagpur#qr_signup'
-  put 'res/aiims_nagpur/acknowledge_condition_area_selection', to: 'district_hospitals/aiims_nagpur#acknowledge_condition_area'
-
-  ##############################################################################################################
-  ##################################################### AIIMS Nagpur Endpoints ########################################################
 
 
 
@@ -261,11 +230,100 @@ Rails.application.routes.draw do
   get 'unicef_sncu/baby_age_in_weeks', to: 'district_hospitals/unicef_sncu_orchestration#baby_age_in_weeks'
   get 'unicef_sncu/day_of_week', to: 'district_hospitals/unicef_sncu_orchestration#day_of_week'
 
+  get 'unicef_sncu/ivr_onboard_user', to: 'district_hospitals/unicef_sncu_orchestration#wa_signup'
+
   ###########################################################################################################################
   ##################################################### UNICEF SNCU Endpoints ########################################################
 
 
-  ##################################################### RCH Endpoints ################################################################
+
+  ##################################################### Karnataka Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/karnataka/ivr_initialize_user', to: 'res_onboarding/karnataka#ccp_ivr_initialize_user'
+  get 'res/karnataka/ivr_select_condition_area', to: 'res_onboarding/karnataka#ccp_ivr_select_condition_area'
+  # post 'res/karnataka/qr_signup', to: 'res_onboarding/karnataka#ccp_qr_signup'
+  put 'res/karnataka/acknowledge_condition_area_selection', to: 'res_onboarding/karnataka#ccp_acknowledge_condition_area'
+
+  # Below are the DH signup endpoints
+  get 'res/karnataka/dh_wa_signup', to: 'res_onboarding/karnataka#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Karnataka Endpoints ########################################################
+
+
+
+  ##################################################### Andhra Pradesh Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/andhra_pradesh/ivr_initialize_user', to: 'res_onboarding/andhra_pradesh#ccp_ivr_initialize_user'
+  get 'res/andhra_pradesh/ivr_select_condition_area', to: 'res_onboarding/andhra_pradesh#ccp_ivr_select_condition_area'
+  post 'res/andhra_pradesh/qr_signup', to: 'res_onboarding/andhra_pradesh#ccp_qr_signup'
+  put 'res/andhra_pradesh/acknowledge_condition_area_selection', to: 'res_onboarding/andhra_pradesh#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### Andhra Pradesh Endpoints ########################################################
+
+
+
+  ##################################################### Maharashtra Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/maharashtra/ivr_initialize_user', to: 'res_onboarding/maharashtra#ccp_ivr_initialize_user'
+  get 'res/maharashtra/ivr_select_condition_area', to: 'res_onboarding/maharashtra#ccp_ivr_select_condition_area'
+  # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
+  put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
+
+  # Below are the DH signup endpoints
+  get 'res/maharashtra/dh_wa_signup', to: 'res_onboarding/maharashtra#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Maharashtra Endpoints ########################################################
+
+
+
+  ##################################################### Punjab Endpoints ########################################################
+  ##############################################################################################################
+
+  # Below are the DH signup endpoints
+  get 'res/punjab/dh_wa_signup', to: 'res_onboarding/punjab#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Punjab Endpoints ########################################################
+
+
+
+  ##################################################### Madhya Pradesh Endpoints ########################################################
+  ##############################################################################################################
+
+  # Below are the DH signup endpoints
+  get 'res/madhya_pradesh/dh_wa_signup', to: 'res_onboarding/madhya_pradesh#ccp_dh_signup'
+
+  ##############################################################################################################
+  ##################################################### Madhya Pradesh Endpoints ########################################################
+
+
+  ##################################################### AIIMS Nagpur Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/aiims_nagpur/ivr_initialize_user', to: 'res_onboarding/aiims_nagpur#ccp_ivr_initialize_user'
+  get 'res/aiims_nagpur/ivr_select_condition_area', to: 'res_onboarding/aiims_nagpur#ccp_ivr_select_condition_area'
+  post 'res/aiims_nagpur/qr_signup', to: 'res_onboarding/aiims_nagpur#ccp_qr_signup'
+  put 'res/aiims_nagpur/acknowledge_condition_area_selection', to: 'res_onboarding/aiims_nagpur#acknowledge_condition_area'
+
+  ##############################################################################################################
+  ##################################################### AIIMS Nagpur Endpoints ########################################################
+
+
+
+
+  ##############################################################################################################
+  ##################################################### HP Endpoints ########################################################
+
+
+
+
+  ##################################################### RCH Ingestion Endpoints ################################################################
   ###########################################################################################################################
 
   namespace :rch_portal do
@@ -279,7 +337,6 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
 
-
     namespace :andhra_pradesh do
       post 'create_user', to: 'onboarding#create'
       post 'import', to: 'onboarding#import'
@@ -288,19 +345,53 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
     end
 
-
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
     post 'update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
   end
+
+  ###########################################################################################################################
+  ##################################################### RCH Ingestion Endpoints ################################################################
+
 
   # put 'rch/acknowledge_wa_signup', to: 'rch_portal/webhooks#acknowledge_wa_signup'
   post 'rch/update_onboarding_attempts', to: 'rch_portal/webhooks#update_ivr_onboarding_attempts'
 
 
 
-  ###########################################################################################################################
-  ##################################################### RCH Endpoints ################################################################
 
+  ##################################################### RCH Onboarding Endpoints ################################################################
+  ###########################################################################################################################
+
+  namespace :res_onboarding do
+
+    # Punjab RCH Endpoints
+    get 'rch_portal/punjab/ivr_signup', to: 'punjab#rch_ivr_signup'
+    post 'rch_portal/punjab/link_based_signup', to: 'punjab#rch_link_based_signup'
+
+    # Andhra Pradesh RCH Endpoints
+    get 'rch_portal/andhra_pradesh/ivr_signup', to: 'andhra_pradesh#rch_ivr_signup'
+    post 'rch_portal/andhra_pradesh/link_based_signup', to: 'andhra_pradesh#rch_link_based_signup'
+
+  end
+
+  ###########################################################################################################################
+  ##################################################### RCH Onboarding Endpoints ################################################################
+
+
+
+
+  # ##################################################### HP Endpoints (OLD) ########################################################
+  # ##############################################################################################################
+  # #### DEPRECATED ###
+  #
+  # get 'mch/hp/wa_signup', to: 'district_hospitals/hp#wa_signup'
+  # get 'mch/hp/change_whatsapp_number', to: 'district_hospitals/hp#change_whatsapp_number'
+  # get 'mch/hp/initialize_user', to: 'district_hospitals/hp#initialize_user'
+  #
+  # #### DEPRECATED ###
+  # ##############################################################################################################
+  # ##################################################### HP Endpoints (OLD) ########################################################
+  #
 
 end
