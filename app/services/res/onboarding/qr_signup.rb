@@ -169,7 +169,8 @@ module Res
           state_id: self.state_id,
           qr_code_id: self.qr_code_id,
           condition_area_id: self.condition_area_id,
-          completed: false
+          completed: false,
+          event_timestamp: DateTime.now
         )
 
         unless tracker.save
