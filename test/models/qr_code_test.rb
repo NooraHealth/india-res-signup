@@ -11,6 +11,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  condition_area_id :bigint
+#  text_encoded      :string
 #
 require 'test_helper'
 

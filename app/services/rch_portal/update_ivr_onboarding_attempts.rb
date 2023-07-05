@@ -61,7 +61,9 @@ module RchPortal
         call_sid: call_sid,
         exophone_id: self.exophone.id,
         call_status: status,
-        campaign_sid: self.parsed_params[:campaign_sid]
+        campaign_sid: self.parsed_params[:campaign_sid],
+        event_timestamp: DateTime.now,
+        call_direction: "outbound"
       )
 
       unless tracker.save

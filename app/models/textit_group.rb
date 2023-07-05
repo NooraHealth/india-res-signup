@@ -13,6 +13,7 @@
 #  language_id          :integer
 #  state_id             :bigint
 #  onboarding_method_id :bigint
+#  qr_code_id           :bigint
 #
 class TextitGroup < ApplicationRecord
 
