@@ -106,7 +106,9 @@ module RchPortal
         call_sid: self.parsed_params[:call_sid],
         completed: true,
         exophone_id: self.exophone.id,
-        condition_area_id: self.condition_area_id
+        condition_area_id: self.condition_area_id,
+        event_timestamp: DateTime.now,
+        call_direction: self.parsed_params[:direction]
       )
       unless tracker.save
         self.errors << tracker.errors.full_messages

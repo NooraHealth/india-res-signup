@@ -77,6 +77,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-sidekiq'
   gem 'capistrano-rbenv'
+
 end
 
 group :test do
