@@ -30,6 +30,8 @@ set :puma_init_active_record, true
 set :puma_preload_app, false
 set :pty,  false
 
+# set :ssh_options, { forward_agent: true, user: "sreeramramasubramanian", auth_methods: ['publickey'], keys: %w(~/.ssh/id_rsa) }
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
