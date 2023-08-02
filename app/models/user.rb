@@ -31,6 +31,8 @@
 #  whatsapp_onboarding_date  :datetime
 #  onboarding_attempts       :integer          default(0)
 #  qr_scan_date              :datetime
+#  registered_on_whatsapp    :boolean          default(TRUE)
+#  reference_user_id         :integer
 #
 class User < ApplicationRecord
 
@@ -42,6 +44,7 @@ class User < ApplicationRecord
   belongs_to :hospital, optional: true
   belongs_to :state, optional: true
   belongs_to :onboarding_method, optional: true
+  belongs_to :reference_user, class_name: "User", optional: true
 
   has_many :user_signup_trackers, dependent: :destroy
 

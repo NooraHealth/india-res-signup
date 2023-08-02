@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_08_182150) do
+ActiveRecord::Schema.define(version: 2023_08_02_000045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2023_07_08_182150) do
     t.string "campaign_sid"
     t.string "call_direction"
     t.datetime "event_timestamp"
+    t.string "platform"
     t.index ["call_sid"], name: "index_user_signup_trackers_on_call_sid"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
     t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
@@ -238,6 +239,7 @@ ActiveRecord::Schema.define(version: 2023_07_08_182150) do
     t.integer "onboarding_attempts", default: 0
     t.datetime "qr_scan_date"
     t.boolean "registered_on_whatsapp", default: true
+    t.integer "reference_user_id"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["mobile_number"], name: "index_users_on_mobile_number"

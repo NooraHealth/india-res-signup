@@ -31,6 +31,8 @@
 #  whatsapp_onboarding_date  :datetime
 #  onboarding_attempts       :integer          default(0)
 #  qr_scan_date              :datetime
+#  registered_on_whatsapp    :boolean          default(TRUE)
+#  reference_user_id         :integer
 #
 
 one:

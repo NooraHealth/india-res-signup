@@ -22,6 +22,7 @@
 #  campaign_sid         :string
 #  call_direction       :string
 #  event_timestamp      :datetime
+#  platform             :string
 #
 require 'test_helper'
 
