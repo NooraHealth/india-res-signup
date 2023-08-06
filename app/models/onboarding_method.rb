@@ -17,7 +17,8 @@ class OnboardingMethod < ApplicationRecord
       :sms,
       :whatsapp,
       :qr_code,
-      :teletraining_call
+      :teletraining_call,
+      :rch_portal_direct
     ]
   end
 end
