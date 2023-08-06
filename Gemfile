@@ -38,7 +38,7 @@ gem "roo"
 gem "annotate"
 
 gem "faraday"
-gem "sidekiq", "~> 6.5.6"
+gem "sidekiq"
 gem "prose"
 
 gem "sentry-ruby"
