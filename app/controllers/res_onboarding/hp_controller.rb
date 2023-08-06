@@ -4,7 +4,7 @@
 #####################################################################################
 
 
-module DistrictHospitals
+module ResOnboarding
   class HpController < ApplicationController
 
     attr_accessor :logger

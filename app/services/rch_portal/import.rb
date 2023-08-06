@@ -1,5 +1,7 @@
-# this operation will accept user records in bulk and add them to our database
-# in bulk
+# this operation will accept user records in bulk and add them to a background task
+# to create the users one by one in the database.
+# This service will create an object of type UserImportList which will contain the status
+# of importing of each user
 
 module RchPortal
   class Import < RchPortal::Base

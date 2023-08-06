@@ -7,7 +7,7 @@
 
 # This endpoint also handles users signing up up for WA by calling our SNCU number in AP and Karnataka
 
-module DistrictHospitals
+module ResOnboarding
   class UnicefSncuOrchestrationController < ApplicationController
 
     attr_accessor :parsed_exotel_params
