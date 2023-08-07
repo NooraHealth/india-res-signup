@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: user_import_jobs
+#
+#  id              :bigint           not null, primary key
+#  import_date     :datetime
+#  number_of_users :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+one:
+  import_date: 2023-08-06 14:24:57
+  number_of_users: 1
+
+two:
+  import_date: 2023-08-06 14:24:57
+  number_of_users: 1

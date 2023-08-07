@@ -1,24 +1,23 @@
 # == Schema Information
 #
-# Table name: onboarding_methods
+# Table name: import_statuses
 #
 #  id         :bigint           not null, primary key
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class OnboardingMethod < ApplicationRecord
+class ImportStatus < ApplicationRecord
 
   include Seedable
 
   def self.values
     [
-      :ivr,
-      :sms,
-      :whatsapp,
-      :qr_code,
-      :teletraining_call,
-      :rch_portal_direct
+      :queued,
+      :in_progress,
+      :completed,
+      :failed
     ]
   end
 end
+

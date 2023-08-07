@@ -77,6 +77,7 @@
 #                           rch_portal_acknowledge_wa_signup PUT  /rch_portal/acknowledge_wa_signup(.:format)                                              rch_portal/webhooks#acknowledge_wa_signup
 #                  rch_portal_ivr_update_onboarding_attempts POST /rch_portal/ivr_update_onboarding_attempts(.:format)                                     rch_portal/webhooks#update_ivr_onboarding_attempts
 #                      rch_portal_update_onboarding_attempts POST /rch_portal/update_onboarding_attempts(.:format)                                         rch_portal/webhooks#update_ivr_onboarding_attempts
+#                             rch_portal_surveycto_wa_signup POST /rch_portal/surveycto_wa_signup(.:format)                                                rch_portal/common#surveycto_wa_signup
 #                             rch_update_onboarding_attempts POST /rch/update_onboarding_attempts(.:format)                                                rch_portal/webhooks#update_ivr_onboarding_attempts
 #                res_onboarding_rch_portal_punjab_ivr_signup GET  /res_onboarding/rch_portal/punjab/ivr_signup(.:format)                                   res_onboarding/punjab#rch_ivr_signup
 #         res_onboarding_rch_portal_punjab_link_based_signup POST /res_onboarding/rch_portal/punjab/link_based_signup(.:format)                            res_onboarding/punjab#rch_link_based_signup
@@ -318,7 +319,6 @@ Rails.application.routes.draw do
 
 
 
-
   ##################################################### RCH Ingestion Endpoints ################################################################
   ###########################################################################################################################
 
@@ -331,6 +331,7 @@ Rails.application.routes.draw do
       put 'update_profile', to: 'onboarding#update_profile'
       post 'link_based_signup', to: 'onboarding#link_based_signup'
       get 'ivr_signup', to: 'onboarding#ivr_signup'
+
     end
 
     namespace :andhra_pradesh do
@@ -344,6 +345,10 @@ Rails.application.routes.draw do
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
     post 'update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
+
+    # this endpoint will be used for signing up a user to WA from SCTO
+    post 'surveycto_wa_signup', to: 'common#surveycto_wa_signup'
+
   end
 
   ###########################################################################################################################

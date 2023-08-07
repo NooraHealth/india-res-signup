@@ -12,7 +12,7 @@ server 'intranet.noorahealth.org', user: 'sreeramramasubramanian', roles: %w{web
 set :stage, 'production'
 set :use_sudo, false
 set :rbenv_type, :user
-set :rbenv_ruby, '2.7.2' # Edit this if you are using MRI Ruby
+set :rbenv_ruby, '3.0.6' # Edit this if you are using MRI Ruby
 
 set :sidekiq_roles, :app
 
