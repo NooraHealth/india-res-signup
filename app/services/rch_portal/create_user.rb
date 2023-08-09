@@ -3,7 +3,6 @@
 # The endpoint is token protected and validation of the token happens
 # in the controller
 
-# TODO
 # This operation will also handle cases where we need to add a user to a different campaign
 # if they are already signed up for our service by other means, we need to refine their campaign
 # to the EDD-based campaign through textit
@@ -168,8 +167,6 @@ module RchPortal
                                expected_date_of_delivery: self.rch_params[:expected_date_of_delivery],
                                onboarding_method_id: onboarding_method_id
       )
-
-      debugger
 
       # unless user record gets saved, do not proceed
       unless self.rch_user.save

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_06_083550) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_200654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_083550) do
     t.index ["state_id"], name: "index_hospitals_on_state_id"
   end
 
+  create_table "import_job_items", force: :cascade do |t|
+    t.bigint "import_job_id", null: false
+    t.integer "user_id"
+    t.bigint "import_status_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "error_message"
+    t.jsonb "api_params"
+    t.string "external_identifier"
+    t.index ["import_job_id"], name: "index_import_job_items_on_import_job_id"
+    t.index ["import_status_id"], name: "index_import_job_items_on_import_status_id"
+    t.index ["user_id"], name: "index_import_job_items_on_user_id"
+  end
+
+  create_table "import_jobs", force: :cascade do |t|
+    t.datetime "import_date"
+    t.integer "number_of_records"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "maximum_items", default: 1000
+    t.bigint "import_status_id"
+    t.bigint "import_type_id"
+    t.index ["import_status_id"], name: "index_import_jobs_on_import_status_id"
+    t.index ["import_type_id"], name: "index_import_jobs_on_import_type_id"
+  end
+
   create_table "import_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "import_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -172,25 +204,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_083550) do
     t.index ["user_id"], name: "index_user_condition_area_mappings_on_user_id"
   end
 
-  create_table "user_import_job_items", force: :cascade do |t|
-    t.bigint "user_import_job_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "import_status_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "error_message"
-    t.index ["import_status_id"], name: "index_user_import_job_items_on_import_status_id"
-    t.index ["user_id"], name: "index_user_import_job_items_on_user_id"
-    t.index ["user_import_job_id"], name: "index_user_import_job_items_on_user_import_job_id"
-  end
-
-  create_table "user_import_jobs", force: :cascade do |t|
-    t.datetime "import_date"
-    t.integer "number_of_users"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "user_program_trackers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "noora_program_id"
@@ -277,6 +290,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_083550) do
   add_foreign_key "exophones", "languages"
   add_foreign_key "exophones", "noora_programs", column: "program_id"
   add_foreign_key "hospitals", "states"
+  add_foreign_key "import_job_items", "import_jobs"
+  add_foreign_key "import_job_items", "import_statuses"
+  add_foreign_key "import_job_items", "users"
   add_foreign_key "qr_codes", "noora_programs"
   add_foreign_key "qr_codes", "states"
   add_foreign_key "rch_profiles", "users"
@@ -288,9 +304,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_06_083550) do
   add_foreign_key "user_condition_area_mappings", "condition_areas"
   add_foreign_key "user_condition_area_mappings", "noora_programs"
   add_foreign_key "user_condition_area_mappings", "users"
-  add_foreign_key "user_import_job_items", "import_statuses"
-  add_foreign_key "user_import_job_items", "user_import_jobs"
-  add_foreign_key "user_import_job_items", "users"
   add_foreign_key "user_program_trackers", "noora_programs"
   add_foreign_key "user_program_trackers", "users"
   add_foreign_key "user_signup_trackers", "condition_areas"
