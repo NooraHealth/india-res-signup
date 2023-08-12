@@ -23,8 +23,10 @@ module RchPortal
       # if user is already present, we update their campaign to the RCH one and
       # return a success message saying that this user has already signed up and shall
       # be added to the right campaign
+
       self.rch_user = User.find_by(mobile_number: "0#{self.rch_params[:mobile_number]}")
-      if self.rch_user.present?
+
+      if self.rch_user.present? and self.rch_user.signed_up_to_whatsapp?
 
         # if the user is already present, but signed up for another program, we will silently
         # switch their campaign to the correct one in the backend if they are still pregnant
@@ -34,7 +36,7 @@ module RchPortal
           create_rch_profile(self.rch_user)
 
           # if their ED is in the future, add them to the respective state's RCH campaign
-          if edd > Date.today?
+          if edd > Date.today
             # update the user's params to RCH and add EDD, LMP etc.
             update_user(self.rch_params)
 
@@ -51,16 +53,15 @@ module RchPortal
 
             # now update the user to the relevant group
             add_user_to_existing_group(self.rch_user, textit_group, cf_params)
+            return self
           else
             # i.e. the user is already part of another campaign, but we got their data
             # after their EDD has passed. In this case we do NOTHING
 
             # .....Wow such empty, much wow.....
+            self.errors << "User with mobile #{self.rch_user.mobile_number} part of another campaign and has passed EDD"
+            return self
           end
-
-        else
-          # in this case, the user already exists and is already part of RCH
-          self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id} as part of RCH program"
         end
 
         self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id} as part of #{self.rch_user&.program&.name}"

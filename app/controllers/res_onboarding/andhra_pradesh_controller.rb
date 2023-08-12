@@ -12,12 +12,29 @@ module ResOnboarding
   class AndhraPradeshController < ResOnboarding::Base
 
     def ccp_ivr_initialize_user
-
+      op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)
+      if op.errors.present?
+        logger.warn("IVR initialization failed with the errors: #{op.errors.to_sentence}")
+        render json: {errors: op.errors}
+      else
+        if op.existing_user
+          render json: {result: 2}
+        else
+          render json: {result: 1}
+        end
+      end
     end
 
     def ccp_ivr_select_condition_area
-
+      op = Res::Onboarding::IvrConditionAreaSelection.(self.logger, exotel_params)
+      if op.errors.present?
+        logger.warn("IVR Condition Area selection failed with the following errors: #{op.errors.to_sentence}")
+        render json: {errors: op.errors}
+      else
+        render json: {}
+      end
     end
+
 
     def ccp_ivr_acknowledge_condition_area
 

@@ -3,28 +3,23 @@
 # Table name: rch_profiles
 #
 #  id                  :bigint           not null, primary key
-#  name                :string
-#  health_facility     :text
-#  health_block        :text
-#  health_sub_facility :text
-#  village             :text
-#  rch_id              :string
-#  husband_name        :string
-#  mother_age          :integer
-#  anm_name            :text
+#  address             :string
 #  anm_contact         :string
+#  anm_name            :text
 #  asha_contact        :string
-#  registration_date   :datetime
-#  high_risk_details   :text
-#  user_id             :bigint
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
 #  asha_name           :string
 #  case_no             :integer
+#  district            :string
+#  health_block        :text
+#  health_facility     :text
+#  health_sub_facility :text
+#  high_risk_details   :text
 #  high_risk_pregnancy :boolean          default(FALSE)
-#  mobile_of           :string
-#  address             :string
+#  husband_name        :string
 #  med_past_illness    :string
+#  mobile_of           :string
+#  mother_age          :integer
+#  name                :string
 #  rch_visit_1_date    :datetime
 #  rch_visit_2_date    :datetime
 #  rch_visit_3_date    :datetime
@@ -33,7 +28,20 @@
 #  rch_visit_6_date    :datetime
 #  rch_visit_7_date    :datetime
 #  rch_visit_8_date    :datetime
-#  district            :string
+#  registration_date   :datetime
+#  village             :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  rch_id              :string
+#  user_id             :bigint
+#
+# Indexes
+#
+#  index_rch_profiles_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 one:

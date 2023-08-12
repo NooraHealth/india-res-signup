@@ -3,26 +3,45 @@
 # Table name: user_signup_trackers
 #
 #  id                   :bigint           not null, primary key
-#  user_id              :bigint
-#  condition_area_id    :bigint
-#  noora_program_id     :bigint
-#  language_id          :bigint
 #  active               :boolean          default(FALSE)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  state_id             :bigint
+#  call_direction       :string
 #  call_sid             :string
-#  onboarding_method_id :bigint
-#  completed            :boolean
-#  sms_id               :string
-#  qr_code_id           :bigint
-#  exophone_id          :bigint
-#  completed_at         :datetime
 #  call_status          :string
 #  campaign_sid         :string
-#  call_direction       :string
+#  completed            :boolean
+#  completed_at         :datetime
 #  event_timestamp      :datetime
 #  platform             :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  condition_area_id    :bigint
+#  exophone_id          :bigint
+#  language_id          :bigint
+#  noora_program_id     :bigint
+#  onboarding_method_id :bigint
+#  qr_code_id           :bigint
+#  sms_id               :string
+#  state_id             :bigint
+#  user_id              :bigint
+#
+# Indexes
+#
+#  index_user_signup_trackers_on_call_sid              (call_sid)
+#  index_user_signup_trackers_on_condition_area_id     (condition_area_id)
+#  index_user_signup_trackers_on_exophone_id           (exophone_id)
+#  index_user_signup_trackers_on_language_id           (language_id)
+#  index_user_signup_trackers_on_noora_program_id      (noora_program_id)
+#  index_user_signup_trackers_on_onboarding_method_id  (onboarding_method_id)
+#  index_user_signup_trackers_on_qr_code_id            (qr_code_id)
+#  index_user_signup_trackers_on_state_id              (state_id)
+#  index_user_signup_trackers_on_user_id               (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (condition_area_id => condition_areas.id)
+#  fk_rails_...  (language_id => languages.id)
+#  fk_rails_...  (noora_program_id => noora_programs.id)
+#  fk_rails_...  (user_id => users.id)
 #
 require 'test_helper'
 

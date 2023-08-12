@@ -4,9 +4,17 @@
 #
 #  id         :bigint           not null, primary key
 #  name       :string
-#  state_id   :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  state_id   :bigint
+#
+# Indexes
+#
+#  index_hospitals_on_state_id  (state_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (state_id => states.id)
 #
 class Hospital < ApplicationRecord
   include Seedable

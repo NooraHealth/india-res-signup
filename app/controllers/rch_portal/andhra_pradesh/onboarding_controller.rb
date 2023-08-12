@@ -19,10 +19,14 @@ module RchPortal
       # before_action :authorize_token
 
       # endpoint for importing records onto our list of RCH records
-      def import
-        op = RchPortal::Import.(import_params)
-        @result = op.result
-        # TODO - render results object in json
+      def bulk_import_users
+        op = RchPortal::Import.(logger, import_params)
+        @results = op.results
+        if op.errors.present?
+          render status: 402, json: {errors: op.errors}
+        else
+          render status: 200, template: 'rch_portal/andhra_pradesh/bulk_import_users'
+        end
       end
 
       # this action onboards a single user onto the RCH Program

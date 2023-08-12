@@ -10,9 +10,10 @@ module RchPortal
 
     attr_accessor :import_job, :logger
 
-    def perform(job_id, api_params, logger_path)
+    def perform(job_id, logger_path)
       # initiate logger and create the logger file
       self.logger = Logger.new(logger_path)
+      self.import_job = ImportJob.find_by(id: job_id)
       self.call
     end
 
@@ -27,8 +28,8 @@ module RchPortal
       self.import_job.import_job_items.each do |import_item|
         # update the import_item to be in progress. Not really necessary, but helps to keep consistency
         import_item.update(import_status_id: ImportStatus.id_for(:in_progress))
-
-        op = RchPortal::CreateUser.(logger, import_item.api_params)
+        api_params = JSON.parse(import_item.api_params).with_indifferent_access
+        op = RchPortal::CreateUser.(self.logger, api_params)
         if op.errors.present?
           import_item.update(import_status_id: ImportStatus.id_for(:failed), error_message: op.errors.to_sentence)
         else

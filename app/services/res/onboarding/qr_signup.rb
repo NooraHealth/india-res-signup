@@ -68,6 +68,12 @@ module Res
             # add a signup tracker for this event and return
             add_signup_tracker
             return self
+          elsif self.res_user.program_id == NooraProgram.id_for(:rch) &&
+            self.res_user.state_id == self.exophone.state_id
+            # i.e. if the user is already part of the RCH program, nothing changes
+            # add a signup tracker for this event and move on
+            add_signup_tracker
+            return self
           else
             # i.e. the user is calling after signing up for another program in another state
             # In this case, update the user's attributes to the one specified by this exophone
