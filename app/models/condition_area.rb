@@ -34,4 +34,13 @@ class ConditionArea < ApplicationRecord
   #   ca = ConditionAreaNumberMapping.with_exotel_number(number).first
   #   return ca&.condition_area_id
   # end
+
+  def anc?
+    self.name == "anc"
+  end
+
+  def pnc?
+    self.name == "pnc"
+  end
+
 end
