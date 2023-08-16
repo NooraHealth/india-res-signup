@@ -71,7 +71,6 @@ class User < ApplicationRecord
   has_many :user_condition_area_mappings, dependent: :destroy
   has_many :condition_areas, through: :user_condition_area_mappings
 
-
   has_one :rch_profile, dependent: :destroy
 
   # after_save :update_whatsapp_id TODO - better way to do this
@@ -164,6 +163,14 @@ class User < ApplicationRecord
     self.user_condition_area_mappings.where(noora_program_id: program_id).present? &&
     self.signed_up_to_whatsapp &&
     self.state_id == state_id
+  end
+
+  def anc?(program_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id, condition_area_id: ConditionArea.id_for(:anc)).present?
+  end
+
+  def pnc?(program_id)
+    self.user_condition_area_mappings.where(noora_program_id: program_id, condition_area_id: ConditionArea.id_for(:pnc)).present?
   end
 
   ######################## SIGNUP TRACKER RELATED METHODS #############################

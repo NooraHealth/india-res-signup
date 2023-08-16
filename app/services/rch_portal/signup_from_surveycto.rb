@@ -38,7 +38,7 @@ module RchPortal
 
     attr_accessor :surveycto_params, :res_users, :failed_users, :textit_group, :mobile_numbers, :expected_date_of_delivery,
                   :program, :condition_area, :language, :onboarding_method_id, :call_id, :users_result, :state,
-                  :reference_user
+                  :reference_user, :baby_date_of_birth
 
     def initialize(logger, survey_cto_params)
       super(logger)
@@ -60,6 +60,8 @@ module RchPortal
       self.mobile_numbers = self.surveycto_params[:mobile_numbers]
       self.expected_date_of_delivery = self.surveycto_params[:expected_date_of_delivery]
       self.call_id = self.surveycto_params[:call_id]
+      self.baby_date_of_birth = self.surveycto_params[:baby_date_of_birth]
+
 
       # retrieve the reference user if there's a legitimate one
       self.reference_user = User.find_by mobile_number: "0#{self.surveycto_params[:reference_mobile_number]}"
@@ -70,10 +72,18 @@ module RchPortal
       self.mobile_numbers.each do |mobile|
         existing_user = User.find_by mobile_number: "0#{mobile}"
         if existing_user.present?
-          # if the user is already added to WhatsApp, add a signup tracker and move on
+          # if the user is already added to WhatsApp and is in ANC, add a signup tracker and move on
           if existing_user.signed_up_to_whatsapp?
+            # now unless the user wants to sign on to the PNC campaign (i.e. the condition area is pnc)
+            # we just acknowledge that the user has signed up and move on.
+            # If the condition area is pnc, then we will add them to the PNC campaign
+            if existing_user.anc?(NooraProgram.id_for(:rch)) and self.condition_area.pnc?
+              self.res_users << existing_user
+              next
+            end
+
             add_signup_tracker(existing_user)
-            self.users_result << {mobile_number: existing_user.mobile_number, success: true, errors: "User already signed up to WhatsApp"}
+            self.users_result << {mobile_number: existing_user.mobile_number, success: true, errors: "User already signed up to WhatsApp for the ANC campaign"}
           else
             self.res_users << existing_user
           end
@@ -144,7 +154,9 @@ module RchPortal
 
       self.textit_group = TextitGroup.where(condition_area_id: self.condition_area.id,
                                             program_id: self.program.id,
-                                            state_id: self.state&.id).first
+                                            state_id: self.state&.id,
+                                            onboarding_method_id: OnboardingMethod.id_for(:teletraining_call)).first
+
     end
 
 
@@ -153,7 +165,8 @@ module RchPortal
                           expected_date_of_delivery: self.expected_date_of_delivery,
                           program_id: self.program.id,
                           language_preference_id: self.language.id,
-                          reference_user_id: self.reference_user&.id
+                          reference_user_id: self.reference_user&.id,
+                          baby_date_of_birth: self.baby_date_of_birth
       )
 
       unless res_user.save
@@ -192,7 +205,8 @@ module RchPortal
       params[:fields] = {
         "date_joined" => DateTime.now,
         "onboarding_method" => onboarding_method,
-        "expected_date_of_delivery" => self.expected_date_of_delivery
+        "expected_date_of_delivery" => self.expected_date_of_delivery,
+        "baby_date_of_birth" => self.baby_date_of_birth
       }
 
       op = TextitRapidproApi::CreateUser.(params)
@@ -208,7 +222,8 @@ module RchPortal
       params[:fields] = {
         "date_joined" => DateTime.now,
         "onboarding_method" => onboarding_method,
-        "expected_date_of_delivery" => self.expected_date_of_delivery
+        "expected_date_of_delivery" => self.expected_date_of_delivery,
+        "baby_date_of_birth" => self.baby_date_of_birth
       }
 
       op = TextitRapidproApi::UpdateGroup.(params)
