@@ -25,7 +25,9 @@ module RchPortal
 
       # this method will take an array of ImportItem ids and give the status for all of them
       def check_import_status
-
+        op = RchPortal::CheckImportStatus.(logger, params.permit!)
+        @import_job_items = op.import_job_items
+        render status: 200, template: 'rch_portal/punjab/check_import_status'
       end
 
 

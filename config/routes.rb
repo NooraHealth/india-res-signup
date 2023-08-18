@@ -245,6 +245,7 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
 
       post 'bulk_import_users', to: 'onboarding#bulk_import_users'
+      post 'import_status', to: 'onboarding#check_import_status'
     end
 
     namespace :andhra_pradesh do
@@ -255,6 +256,7 @@ Rails.application.routes.draw do
       get 'ivr_signup', to: 'onboarding#ivr_signup'
 
       post 'bulk_import_users', to: 'onboarding#bulk_import_users'
+      post 'import_status', to: 'onboarding#check_import_status'
     end
 
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
