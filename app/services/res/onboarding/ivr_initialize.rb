@@ -48,6 +48,7 @@ module Res
             return self
           elsif self.res_user.program_id == NooraProgram.id_for(:rch) &&
             self.res_user.state_id == self.exophone.state_id
+
             if self.res_user.signed_up_to_whatsapp?
               # i.e. if the user is already part of the RCH program and has signed up to WhatsApp, nothing changes
               # add a signup tracker for this event and move on

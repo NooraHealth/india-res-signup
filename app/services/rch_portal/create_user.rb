@@ -188,7 +188,7 @@ module RchPortal
         onboarding_method_id: OnboardingMethod.id_for(:rch_portal_direct),
         state_id: self.state_id,
         completed: true,
-        condition_area_id: self.condition_area_id,
+        condition_area_id: ConditionArea.id_for(:anc),
         event_timestamp: DateTime.now
       )
       unless tracker.save

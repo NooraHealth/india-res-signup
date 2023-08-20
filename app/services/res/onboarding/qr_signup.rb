@@ -14,7 +14,7 @@ module Res
     class QrSignup < Res::Onboarding::Base
 
       attr_accessor :qr_code, :qr_code_params, :program_id, :state_id, :qr_code_id, :language_id,
-                    :res_user, :textit_group, :condition_area_id
+                    :res_user, :textit_group, :condition_area_id, :existing_user
 
       def initialize(logger, qr_code_params)
         super(logger)

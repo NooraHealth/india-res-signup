@@ -40,7 +40,7 @@ module Res
         else
           # if the user is already part of the RCH program, just record the call
           # and move on, do NOT update the user's campaign in any way
-          if self.res_user.program_id == NooraProgram.id_for(:rch)
+          if self.res_user.program_id == NooraProgram.id_for(:rch) && self.res_user.signed_up_to_whatsapp?
             add_signup_tracker
             return self
           end
