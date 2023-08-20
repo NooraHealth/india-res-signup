@@ -201,7 +201,8 @@ module RchPortal
     def update_user(params)
       self.rch_user.update(expected_date_of_delivery: params[:expected_date_of_delivery],
                            last_menstrual_period: params[:last_menstrual_period],
-                           program_id: NooraProgram.id_for(:rch))
+                           program_id: NooraProgram.id_for(:rch),
+                           onboarding_method_id: OnboardingMethod.id_for(:rch_portal_direct))
     end
 
   end
