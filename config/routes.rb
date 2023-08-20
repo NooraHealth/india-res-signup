@@ -172,7 +172,7 @@ Rails.application.routes.draw do
   ##############################################################################################################
 
   post 'res/andhra_pradesh/ivr_initialize_user', to: 'res_onboarding/andhra_pradesh#ccp_ivr_initialize_user'
-  post 'res/andhra_pradesh/ivr_select_condition_area', to: 'res_onboarding/andhra_pradesh#ccp_ivr_select_condition_area'
+  post 'res/andhra_pradesh/ivr_select_language', to: 'res_onboarding/andhra_pradesh#ccp_ivr_select_language'
   post 'res/andhra_pradesh/qr_signup', to: 'res_onboarding/andhra_pradesh#ccp_qr_signup'
   put 'res/andhra_pradesh/acknowledge_condition_area_selection', to: 'res_onboarding/andhra_pradesh#acknowledge_condition_area'
 
@@ -185,7 +185,8 @@ Rails.application.routes.draw do
   ##############################################################################################################
 
   get 'res/maharashtra/ivr_initialize_user', to: 'res_onboarding/maharashtra#ccp_ivr_initialize_user'
-  get 'res/maharashtra/ivr_select_condition_area', to: 'res_onboarding/maharashtra#ccp_ivr_select_condition_area'
+  get 'res/maharashtra/ivr_select_language', to: 'res_onboarding/maharashtra#ccp_ivr_select_language'
+
   # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
   put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
 

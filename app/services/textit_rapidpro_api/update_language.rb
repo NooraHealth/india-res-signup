@@ -29,6 +29,8 @@ module TextitRapidproApi
       end
 
       update_user
+
+      self
     end
 
     private

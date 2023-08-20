@@ -35,6 +35,15 @@ module ResOnboarding
       end
     end
 
+    def ccp_ivr_select_language
+      op = Res::Onboarding::IvrSelectLanguage.(self.logger, exotel_params)
+      if op.errors.present?
+        logger.warn("Language updation failed with the following errors: #{op.errors.to_sentence}")
+      else
+        render json: {}
+      end
+    end
+
 
     def ccp_ivr_acknowledge_condition_area
 
