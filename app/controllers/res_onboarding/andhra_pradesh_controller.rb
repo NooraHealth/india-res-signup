@@ -5,7 +5,7 @@
 
 # All states that have the standardized onboarding flow for RES will be using this controller
 # 1. ccp_ivr_initialize_user - Creates the user on TextIt and onboards them on to the MCH Neutral Campaign
-# 2. ccp_ivr_select_condition_area - Updates TextIt group based on condition area chosen by user
+# 2. ccp_ivr_select_language - Updates language on TextIt based on language chosen by user
 # 3. ccp_acknowledge_condition_area - Updates the condition area of a user based on their selection in WhatsApp
 
 module ResOnboarding

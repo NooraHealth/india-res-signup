@@ -17,8 +17,8 @@ module RchPortal
       self.rch_params = params
     end
 
-    def call
 
+    def call
       # First check by phone number, to see if the user is already present
       # if user is already present, we update their campaign to the RCH one and
       # return a success message saying that this user has already signed up and shall
@@ -26,6 +26,15 @@ module RchPortal
 
       self.rch_user = User.find_by(mobile_number: "0#{self.rch_params[:mobile_number]}")
 
+      # check if expected date of delivery is present
+      edd = self.rch_params[:expected_date_of_delivery]
+      if edd.blank?
+        self.errors << "Expected date of delivery cannot be empty"
+        return self
+      end
+
+      # if the user is already present and signed up to WA, we check for whether they're part of RCH
+      # or not, and if not sign them up to the relevant campaign
       if self.rch_user.present? and self.rch_user.signed_up_to_whatsapp?
 
         # if the user is already present, but signed up for another program, we will silently
@@ -35,7 +44,7 @@ module RchPortal
           # create the RCH profile of the user first
           create_rch_profile(self.rch_user)
 
-          # if their ED is in the future, add them to the respective state's RCH campaign
+          # if their EDD is in the future, add them to the respective state's RCH campaign
           if edd > Date.today
             # update the user's params to RCH and add EDD, LMP etc.
             update_user(self.rch_params)
@@ -53,6 +62,7 @@ module RchPortal
 
             # now update the user to the relevant group
             add_user_to_existing_group(self.rch_user, textit_group, cf_params)
+            add_signup_tracker(self.rch_user)
             return self
           else
             # i.e. the user is already part of another campaign, but we got their data
@@ -64,6 +74,8 @@ module RchPortal
           end
         end
 
+
+        # if we reached here, that means the user is already present and signed up for WA through RCH itself
         self.errors << "User with mobile number #{self.rch_params[:mobile_number]} already present with ID: #{self.rch_user.id} as part of #{self.rch_user&.program&.name}"
         return self
       end
@@ -82,13 +94,6 @@ module RchPortal
       if self.state_id.blank?
         self.errors << "State cannot be blank"
         return
-      end
-
-      # check if expected date of delivery is present
-      edd = self.rch_params[:expected_date_of_delivery]
-      if edd.blank?
-        self.errors << "Expected date of delivery cannot be empty"
-        return self
       end
 
       # extract onboarding method from API params

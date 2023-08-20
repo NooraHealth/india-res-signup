@@ -56,7 +56,7 @@ module Res
               return self
             else
               # in this case, the user is part of our DB, but has not opted into our service
-              # We should be adding them directly to the RCH service in this scenario
+              # We should be adding them directly to the RCH campaign in this scenario
               self.textit_group = TextitGroup.find_by(condition_area_id: ConditionArea.id_for(:anc),
                                                       program_id: NooraProgram.id_for(:rch),
                                                       state_id: self.res_user.state_id)

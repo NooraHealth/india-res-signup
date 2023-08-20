@@ -26,7 +26,7 @@
 #
 class ImportJobItem < ApplicationRecord
   belongs_to :import_job
-  belongs_to :user, optional: true
+  belongs_to :user, optional: true, dependent: :destroy
   belongs_to :import_status
 
 
