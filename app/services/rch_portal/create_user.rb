@@ -51,8 +51,7 @@ module RchPortal
 
             textit_group = TextitGroup.where(condition_area_id: ConditionArea.id_for(:anc),
                                              program_id: NooraProgram.id_for(:rch),
-                                             state_id: self.rch_user.state_id,
-                                             onboarding_method_id: OnboardingMethod.id_for(:rch_portal_direct)).first
+                                             state_id: self.rch_user.state_id).first
 
             cf_params = {
               "date_joined" => DateTime.now,
