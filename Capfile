@@ -34,6 +34,7 @@ require 'capistrano/puma'
 require 'capistrano/sidekiq'
 
 install_plugin Capistrano::Puma  # Default puma tasks
+install_plugin Capistrano::Puma::Daemon
 
 # install_plugin Capistrano::Sidekiq # Default sidekiq tasks
 # install_plugin Capistrano::Sidekiq::Systemd

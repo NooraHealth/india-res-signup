@@ -13,10 +13,21 @@ module RchPortal
 
 
       # endpoint for importing records onto our list of RCH records
-      def import
-        op = RchPortal::Import.(import_params)
-        @result = op.result
-        # TODO - render results object in json
+      def bulk_import_users
+        op = RchPortal::Import.(logger, import_params)
+        @results = op.results
+        if op.errors.present?
+          render status: 402, json: {errors: op.errors}
+        else
+          render status: 200, template: 'rch_portal/punjab/bulk_import_users'
+        end
+      end
+
+      # this method will take an array of ImportItem ids and give the status for all of them
+      def check_import_status
+        op = RchPortal::CheckImportStatus.(logger, params.permit!)
+        @import_job_items = op.import_job_items
+        render status: 200, template: 'rch_portal/punjab/check_import_status'
       end
 
 

@@ -8,6 +8,8 @@
 #  import_status_id   :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  error_message      :text
+#  api_params         :jsonb
 #
 require "test_helper"
 

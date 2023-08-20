@@ -14,7 +14,7 @@ module Res
     class QrSignup < Res::Onboarding::Base
 
       attr_accessor :qr_code, :qr_code_params, :program_id, :state_id, :qr_code_id, :language_id,
-                    :res_user, :textit_group, :condition_area_id
+                    :res_user, :textit_group, :condition_area_id, :existing_user
 
       def initialize(logger, qr_code_params)
         super(logger)
@@ -68,9 +68,38 @@ module Res
             # add a signup tracker for this event and return
             add_signup_tracker
             return self
+          elsif self.res_user.program_id == NooraProgram.id_for(:rch) &&
+            self.res_user.state_id == self.qr_code.state_id &&
+            self.res_user.expected_date_of_delivery > Date.today
+
+            if self.res_user.signed_up_to_whatsapp?
+              # i.e. if the user is already part of the RCH program and has signed up to WhatsApp, or has crossed EDD
+              # nothing changes add a signup tracker for this event and move on
+              add_signup_tracker
+              self.existing_user = true
+              return self
+            else
+              # in this case, the user is part of our DB, but has not opted into our service
+              # We should be adding them directly to the RCH campaign in this scenario
+              self.textit_group = TextitGroup.find_by(condition_area_id: ConditionArea.id_for(:anc),
+                                                      program_id: NooraProgram.id_for(:rch),
+                                                      state_id: self.res_user.state_id)
+              # add the user to textit with their RCH data
+              if create_user_with_relevant_group
+                self.res_user.update(whatsapp_onboarding_date: DateTime.now, signed_up_to_whatsapp: true)
+                add_signup_tracker
+              else
+                self.errors = []
+                add_user_to_existing_group
+                self.res_user.update(whatsapp_onboarding_date: DateTime.now, signed_up_to_whatsapp: true)
+                add_signup_tracker
+              end
+              self.existing_user = true
+              return self
+            end
           else
             # i.e. the user is calling after signing up for another program in another state
-            # In this case, update the user's attributes to the one specified by this exophone
+            # In this case, update the user's attributes to the one specified by this qr code
             unless update_res_user
               return self
             end

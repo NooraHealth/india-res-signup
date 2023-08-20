@@ -58,7 +58,8 @@ module ExotelWebhook
         language_id: language_id,
         call_to: call_to,
         exophone: exophone,
-        call_sid: call_sid
+        call_sid: call_sid,
+        language_code: language_id
       }
     end
 
