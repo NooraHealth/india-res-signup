@@ -40,6 +40,11 @@ module ExotelWebhook
       # the user's mobile number is always going to be the CallFrom attribute
       user_mobile = self.exotel_params.deep_find("CallFrom")
 
+      # if the number starts with +91, truncate to make it 0 prefixed
+      if user_mobile.starts_with?("+91")
+        user_mobile = user_mobile[3..user_mobile.length]
+      end
+
       current_time = self.exotel_params.deep_find("CurrentTime")
 
       language_id = self.exotel_params.deep_find("language_id")
