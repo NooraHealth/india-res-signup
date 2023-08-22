@@ -166,6 +166,7 @@ module RchPortal
     def create_user(onboarding_method_id)
       # if the user is not found yet, create the user
       self.rch_user = User.new(mobile_number: "0#{self.rch_params[:mobile_number]}",
+                               name: self.rch_params[:name],
                                program_id: NooraProgram.id_for(:rch),
                                state_id: self.state_id,
                                last_menstrual_period: self.rch_params[:last_menstrual_period],

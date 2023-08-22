@@ -94,6 +94,10 @@ class User < ApplicationRecord
     self.program_id == NooraProgram.id_for(:sdh)
   end
 
+  def name
+    super() || self.rch_profile.name
+  end
+
   # this method checks if a user has fully signed up for the SDH program
   def fully_signed_up_for_sdh?
     self.program_id == NooraProgram.id_for(:sdh) &&
