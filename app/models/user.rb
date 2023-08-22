@@ -95,7 +95,7 @@ class User < ApplicationRecord
   end
 
   def name
-    super() || self.rch_profile.name
+    super() || self.rch_profile&.name
   end
 
   # this method checks if a user has fully signed up for the SDH program
