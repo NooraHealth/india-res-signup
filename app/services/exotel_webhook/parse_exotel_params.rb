@@ -42,7 +42,7 @@ module ExotelWebhook
 
       # if the number starts with +91, truncate to make it 0 prefixed
       if user_mobile.starts_with?("+91")
-        user_mobile = user_mobile[3..user_mobile.length]
+        user_mobile = "0#{user_mobile[3..user_mobile.length]}"
       end
 
       current_time = self.exotel_params.deep_find("CurrentTime")
