@@ -185,8 +185,8 @@ Rails.application.routes.draw do
   ##############################################################################################################
 
   get 'res/maharashtra/ivr_initialize_user', to: 'res_onboarding/maharashtra#ccp_ivr_initialize_user'
-  get 'res/maharashtra/ccp_ivr_select_condition_area', to: 'res_onboarding/maharashtra#ccp_ivr_select_condition_area'
-  get 'res/maharashtra/ccp_ivr_select_language', to: 'res_onboarding/maharashtra#ccp_ivr_select_language'
+  get 'res/maharashtra/ivr_select_condition_area', to: 'res_onboarding/maharashtra#ccp_ivr_select_condition_area'
+  get 'res/maharashtra/ivr_select_language', to: 'res_onboarding/maharashtra#ccp_ivr_select_language'
 
   # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
   put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
