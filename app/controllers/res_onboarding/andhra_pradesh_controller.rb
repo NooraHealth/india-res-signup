@@ -18,9 +18,9 @@ module ResOnboarding
         render json: {errors: op.errors}
       else
         if op.existing_user
-          render json: {result: 2}
+          render status: 200, json: {result: 2}
         else
-          render json: {result: 1}
+          render status: 201, json: {result: 1}
         end
       end
     end
