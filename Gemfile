@@ -35,7 +35,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem "hashie"
 gem "roo"
-gem "annotate"
 
 gem "faraday"
 gem "sidekiq"
@@ -58,6 +57,7 @@ gem 'awesome_print'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem "annotate"
 end
 
 group :development do

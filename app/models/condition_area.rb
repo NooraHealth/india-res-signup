@@ -23,7 +23,10 @@ class ConditionArea < ApplicationRecord
       :cardiology_post_surgery,
       :gems_neutral,
       :diabetes,
-      :hypertension
+      :hypertension,
+      :mch_neutral,
+      :anc_edd,
+      :pnc_dob
     ]
   end
 

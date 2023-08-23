@@ -95,6 +95,7 @@ module Res
         end
 
         retrieve_textit_group
+
         return self if self.errors.present?
 
         # now create the user on TextIt with the relevant parameters
