@@ -190,6 +190,7 @@ Rails.application.routes.draw do
 
   # post 'res/maharashtra/qr_signup', to: 'res_onboarding/maharashtra#ccp_qr_signup'
   put 'res/maharashtra/acknowledge_condition_area_selection', to: 'res_onboarding/maharashtra#acknowledge_condition_area'
+  put 'res/maharashtra/acknowledge_language_change', to: 'res_onboarding/maharashtra#acknowledge_language_change'
 
   # Below are the DH signup endpoints
   get 'res/maharashtra/dh_wa_signup', to: 'res_onboarding/maharashtra#ccp_dh_signup'

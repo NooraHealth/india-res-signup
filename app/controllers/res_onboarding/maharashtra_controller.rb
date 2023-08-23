@@ -65,6 +65,16 @@ module ResOnboarding
       end
     end
 
+    def acknowledge_language_change
+      op = Res::Onboarding::AcknowledgeLanguageChange.(self.logger, params.permit!)
+      if op.errors.present?
+        logger.warn("Updating language failed with the following errors: #{op.errors.to_sentence}")
+        render json: {success: false, errors: op.errors}
+      else
+        render json: {success: true}
+      end
+    end
+
 
     private
 
