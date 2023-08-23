@@ -34,13 +34,6 @@ module Res
           return self
         end
 
-        # now check if the user has completely onboarded themselves onto the service
-        # if they have, just update tracker and don't do anything else
-        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id)
-          update_signup_tracker
-          return self
-        end
-
         # if the user has already signed up via RCH, just update the signup tracker
         # and move on
         if self.res_user.program_id == NooraProgram.id_for(:rch) &&
@@ -63,6 +56,13 @@ module Res
             end
             return self
           end
+        end
+
+        # now check if the user has completely onboarded themselves onto the service
+        # if they have, just update tracker and don't do anything else
+        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id)
+          update_signup_tracker
+          return self
         end
 
         self.condition_area_id = ConditionArea.id_for(self.ivr_params[:condition_area])
