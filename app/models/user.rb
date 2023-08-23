@@ -162,9 +162,9 @@ class User < ApplicationRecord
 
   # this method will tell if a user is fully signed up to a particular program
   # of RES. For now, this means that the user has selected their language and condition area
-  def fully_onboarded_to_res?(program_id, state_id = self.state_id)
+  def fully_onboarded_to_res?(program_id, state_id = self.state_id, condition_area_id = self.condition_area_id)
     self.language_preference_id.present? &&
-    self.user_condition_area_mappings.where(noora_program_id: program_id).present? &&
+    self.user_condition_area_mappings.where(noora_program_id: program_id, condition_area_id: condition_area_id).present? &&
     self.signed_up_to_whatsapp &&
     self.state_id == state_id
   end

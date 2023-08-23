@@ -58,16 +58,16 @@ module Res
           end
         end
 
-        # now check if the user has completely onboarded themselves onto the service
-        # if they have, just update tracker and don't do anything else
-        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id)
-          update_signup_tracker
-          return self
-        end
-
         self.condition_area_id = ConditionArea.id_for(self.ivr_params[:condition_area])
         if self.condition_area_id.blank?
           self.errors << "Condition area not found in Database"
+          return self
+        end
+
+        # now check if the user has completely onboarded themselves onto the service
+        # if they have, just update tracker and don't do anything else
+        if self.res_user.fully_onboarded_to_res?(self.exophone.program_id, self.exophone.state_id, self.condition_area_id)
+          update_signup_tracker
           return self
         end
 
