@@ -25,6 +25,7 @@ class ConditionArea < ApplicationRecord
       :diabetes,
       :hypertension,
       :mch_neutral,
+      :ncd_neutral,
       :anc_edd,
       :pnc_dob
     ]
