@@ -79,8 +79,7 @@ module Res
                                                            completed: false).first
 
         if tracker.blank?
-          # TODO - create a tracker that acknowledges the time at which
-          # this particular addition happened
+          # TODO - create a tracker that acknowledges the time at which this particular addition happened
           self.errors << "Tracker not found for user with mobile: #{self.res_user.mobile_number}"
           return self
         end
