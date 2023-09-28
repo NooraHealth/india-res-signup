@@ -56,6 +56,7 @@ module TextitRapidproApi
       group_id = self.user_params[:textit_group_id]
       custom_fields = self.user_params[:fields]
       {
+        "name" => self.user.name,
         "groups" => [group_id],
         "language" => language_iso_code,
         "urns" => %W[tel:#{user.international_whatsapp_number} whatsapp:#{user.international_whatsapp_number[1..user.international_whatsapp_number.length]}],
