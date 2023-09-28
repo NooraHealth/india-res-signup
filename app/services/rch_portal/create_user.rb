@@ -131,6 +131,7 @@ module RchPortal
                                                     case_no: self.rch_params[:case_no],
                                                     mobile_of: self.rch_params[:mobile_of],
                                                     address: self.rch_params[:address],
+                                                    blood_group: self.rch_params[:blood_group],
                                                     med_past_illness: self.rch_params[:med_past_illness],
                                                     rch_visit_1_date: self.rch_params[:rch_visit_1_date],
                                                     rch_visit_2_date: self.rch_params[:rch_visit_2_date],

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_194008) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_28_124902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -154,6 +154,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_194008) do
     t.datetime "rch_visit_7_date", precision: nil
     t.datetime "rch_visit_8_date", precision: nil
     t.string "district"
+    t.string "blood_group"
     t.index ["user_id"], name: "index_rch_profiles_on_user_id"
   end
 

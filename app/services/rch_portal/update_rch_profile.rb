@@ -47,6 +47,7 @@ module RchPortal
       rch_profile[:case_no] = self.update_params[:case_no] if rch_profile.case_no.blank?
       rch_profile[:mobile_of] = self.update_params[:mobile_of] if rch_profile.mobile_of.blank?
       rch_profile[:address] = self.update_params[:address] if rch_profile.address.blank?
+      rch_profile[:blood_group] = self.update_params[:blood_group] if rch_profile.blood_group.blank?
       rch_profile[:rch_visit_1_date] = self.update_params[:rch_visit_1_date] if rch_profile.rch_visit_1_date.blank?
       rch_profile[:rch_visit_2_date] = self.update_params[:rch_visit_2_date] if rch_profile.rch_visit_2_date.blank?
       rch_profile[:rch_visit_3_date] = self.update_params[:rch_visit_3_date] if rch_profile.rch_visit_3_date.blank?

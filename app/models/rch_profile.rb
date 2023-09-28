@@ -8,6 +8,7 @@
 #  anm_name            :text
 #  asha_contact        :string
 #  asha_name           :string
+#  blood_group         :string
 #  case_no             :integer
 #  district            :string
 #  health_block        :text
