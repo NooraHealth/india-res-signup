@@ -17,7 +17,7 @@ module Res
     class AcknowledgeConditionAreaChange < Res::Onboarding::Base
 
       attr_accessor :update_params, :res_user, :condition_area_id, :program_id, :onboarding_method_id,
-                    :language_id
+                    :language_id, :channel
 
       def initialize(logger, update_params)
         super(logger)
@@ -27,10 +27,10 @@ module Res
 
       def call
         # based on the channel, extract the mobile number
-        channel = self.update_params[:channel]
+        self.channel = self.update_params[:channel]
 
         # first extract the mobile number of the user
-        mobile_number = extract_mobile_number(channel, update_params)
+        mobile_number = extract_mobile_number(self.channel, update_params)
         if mobile_number.blank?
           self.errors << "Mobile number not found in params"
           return self
@@ -80,8 +80,15 @@ module Res
 
         if tracker.blank?
           # TODO - create a tracker that acknowledges the time at which this particular addition happened
-          self.errors << "Tracker not found for user with mobile: #{self.res_user.mobile_number}"
-          return self
+          tracker = self.res_user.user_signup_trackers.build(noora_program_id: self.res_user.program_id,
+                                                             state_id: self.res_user.state_id,
+                                                             onboarding_method_id: self.onboarding_method_id,
+                                                             completed: true,
+                                                             platform: self.channel,
+                                                             event_timestamp: DateTime.now)
+          tracker.save
+          # self.errors << "Tracker not found for user with mobile: #{self.res_user.mobile_number}"
+          # return self
         end
 
         unless tracker.update(completed: true, condition_area_id: self.condition_area_id, completed_at: DateTime.now)
@@ -90,8 +97,6 @@ module Res
         end
         true
       end
-
-
     end
   end
 end

@@ -8,7 +8,7 @@ module Res
   module Onboarding
     class Base < ApplicationService
 
-      attr_accessor :logger, :errors, :parsed_exotel_params
+      attr_accessor :logger, :errors, :parsed_exotel_params, :textit_group
 
       def initialize(logger)
         self.logger = logger

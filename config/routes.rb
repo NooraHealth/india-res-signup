@@ -265,6 +265,17 @@ Rails.application.routes.draw do
       post 'import_status', to: 'onboarding#check_import_status'
     end
 
+    namespace :madhya_pradesh do
+      post 'create_user', to: 'onboarding#create'
+      post 'import', to: 'onboarding#import'
+      put 'update_profile', to: 'onboarding#update_profile'
+      post 'link_based_signup', to: 'onboarding#link_based_signup'
+      get 'ivr_signup', to: 'onboarding#ivr_signup'
+
+      post 'bulk_import_users', to: 'onboarding#bulk_import_users'
+      post 'import_status', to: 'onboarding#check_import_status'
+    end
+
     put 'acknowledge_wa_signup', to: 'webhooks#acknowledge_wa_signup'
     post 'ivr_update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
     post 'update_onboarding_attempts', to: 'webhooks#update_ivr_onboarding_attempts'
@@ -296,6 +307,10 @@ Rails.application.routes.draw do
     # Andhra Pradesh RCH Endpoints
     get 'rch_portal/andhra_pradesh/ivr_signup', to: 'andhra_pradesh#rch_ivr_signup'
     post 'rch_portal/andhra_pradesh/link_based_signup', to: 'andhra_pradesh#rch_link_based_signup'
+
+    # Madhya Pradesh RCH Endpoints
+    get 'rch_portal/madhya_pradesh/ivr_signup', to: 'madhya_pradesh#rch_ivr_signup'
+    post 'rch_portal/madhya_pradesh/link_based_signup', to: 'madhya_pradesh#rch_link_based_signup'
 
   end
 
