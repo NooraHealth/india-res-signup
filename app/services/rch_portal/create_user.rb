@@ -33,6 +33,12 @@ module RchPortal
         return self
       end
 
+      self.state_id = State.id_for(self.rch_params[:state_name])
+      if self.state_id.blank?
+        self.errors << "State cannot be blank"
+        return
+      end
+
       # if the user is already present and signed up to WA, we check for whether they're part of RCH
       # or not, and if not sign them up to the relevant campaign
       if self.rch_user.present? and self.rch_user.signed_up_to_whatsapp?
@@ -87,12 +93,6 @@ module RchPortal
 
         self.errors << "User with RCH ID: #{self.rch_params[:rch_id]} already exists."
         return self
-      end
-
-      self.state_id = State.id_for(self.rch_params[:state_name])
-      if self.state_id.blank?
-        self.errors << "State cannot be blank"
-        return
       end
 
       # extract onboarding method from API params
