@@ -166,6 +166,7 @@ module Res
           completed_at: DateTime.now,
           event_timestamp: DateTime.now,
           exophone_id: self.exophone.id,
+          condition_area_id: self.exophone.condition_area_id,
           call_direction: self.parsed_exotel_params[:direction]
         )
         unless tracker.save
