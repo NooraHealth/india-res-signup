@@ -166,7 +166,7 @@ module Res
           completed_at: DateTime.now,
           event_timestamp: DateTime.now,
           exophone_id: self.exophone.id,
-          call_direction: "inbound"
+          call_direction: self.parsed_exotel_params[:direction]
         )
         unless tracker.save
           self.errors << tracker.errors.full_messages
