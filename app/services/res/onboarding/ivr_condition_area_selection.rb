@@ -121,7 +121,8 @@ module Res
           completed: true,
           exophone_id: self.exophone.id,
           event_timestamp: DateTime.now,
-          call_direction: self.parsed_exotel_params[:direction]
+          call_direction: self.parsed_exotel_params[:direction],
+          event_type_id: EventType.id_for(:signup)
         )
         unless tracker.save
           self.errors << tracker.errors.full_messages

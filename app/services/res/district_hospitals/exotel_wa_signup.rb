@@ -167,7 +167,8 @@ module Res
           event_timestamp: DateTime.now,
           exophone_id: self.exophone.id,
           condition_area_id: self.exophone.condition_area_id,
-          call_direction: self.parsed_exotel_params[:direction]
+          call_direction: self.parsed_exotel_params[:direction],
+          event_type_id: EventType.id_for(:signup)
         )
         unless tracker.save
           self.errors << tracker.errors.full_messages

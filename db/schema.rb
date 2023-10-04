@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_124902) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_142042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_124902) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["state_id"], name: "index_districts_on_state_id"
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "exophones", force: :cascade do |t|
@@ -236,8 +242,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_124902) do
     t.string "call_direction"
     t.datetime "event_timestamp", precision: nil
     t.string "platform"
+    t.bigint "event_type_id"
     t.index ["call_sid"], name: "index_user_signup_trackers_on_call_sid"
     t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
+    t.index ["event_type_id"], name: "index_user_signup_trackers_on_event_type_id"
     t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
     t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
     t.index ["noora_program_id"], name: "index_user_signup_trackers_on_noora_program_id"
@@ -308,6 +316,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_124902) do
   add_foreign_key "user_program_trackers", "noora_programs"
   add_foreign_key "user_program_trackers", "users"
   add_foreign_key "user_signup_trackers", "condition_areas"
+  add_foreign_key "user_signup_trackers", "event_types"
   add_foreign_key "user_signup_trackers", "languages"
   add_foreign_key "user_signup_trackers", "noora_programs"
   add_foreign_key "user_signup_trackers", "users"

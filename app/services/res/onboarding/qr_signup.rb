@@ -199,7 +199,8 @@ module Res
           qr_code_id: self.qr_code_id,
           condition_area_id: self.condition_area_id,
           completed: false,
-          event_timestamp: DateTime.now
+          event_timestamp: DateTime.now,
+          event_type_id: EventType.id_for(:signup)
         )
 
         unless tracker.save

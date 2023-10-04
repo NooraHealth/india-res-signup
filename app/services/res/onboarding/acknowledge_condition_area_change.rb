@@ -73,23 +73,25 @@ module Res
       private
 
       def update_signup_tracker
-        tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
+
+        # tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
+        #                                                    state_id: self.res_user.state_id,
+        #                                                    onboarding_method_id: self.onboarding_method_id,
+        #                                                    completed: false).first
+
+        # if tracker.blank?
+        # create a new event that captures the fact that the user updated their condition area with an event_type
+        tracker = self.res_user.user_signup_trackers.build(noora_program_id: self.res_user.program_id,
                                                            state_id: self.res_user.state_id,
                                                            onboarding_method_id: self.onboarding_method_id,
-                                                           completed: false).first
-
-        if tracker.blank?
-          # TODO - create a tracker that acknowledges the time at which this particular addition happened
-          tracker = self.res_user.user_signup_trackers.build(noora_program_id: self.res_user.program_id,
-                                                             state_id: self.res_user.state_id,
-                                                             onboarding_method_id: self.onboarding_method_id,
-                                                             completed: true,
-                                                             platform: self.channel,
-                                                             event_timestamp: DateTime.now)
-          tracker.save
+                                                           completed: true,
+                                                           platform: self.channel,
+                                                           event_timestamp: DateTime.now,
+                                                           event_type_id: EventType.id_for(:condition_area_confirmation))
+        tracker.save
           # self.errors << "Tracker not found for user with mobile: #{self.res_user.mobile_number}"
           # return self
-        end
+        # end
 
         unless tracker.update(completed: true, condition_area_id: self.condition_area_id, completed_at: DateTime.now)
           self.errors << tracker.errors.full_messages
