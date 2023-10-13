@@ -43,8 +43,11 @@ module Res
         # update it in the database and also call Textit's APIs to update the user's
         # language preference. If not, do nothing
         if self.language&.id != self.res_user.language_preference_id
-          self.res_user.update(language_preference_id: self.language.id)
-          op = TextitRapidproApi::UpdateLanguage.(id:  self.res_user.id, logger:  self.logger)
+          self.res_user.update(language_preference_id: self.language.id, language_selected: true)
+          fields = {
+            "language_selected": (self.res_user.language_selected ? "1" : "0")
+          }
+          op = TextitRapidproApi::UpdateLanguage.({id:  self.res_user.id, fields: fields}, logger:  self.logger)
           if op.errors.present?
             self.errors = op.errors
             return self
