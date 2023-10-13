@@ -47,7 +47,7 @@ module Res
           fields = {
             "language_selected": (self.res_user.language_selected ? "1" : "0")
           }
-          op = TextitRapidproApi::UpdateLanguage.({id:  self.res_user.id, fields: fields}, logger:  self.logger)
+          op = TextitRapidproApi::UpdateLanguage.(id:  self.res_user.id, fields: fields, logger:  self.logger)
           if op.errors.present?
             self.errors = op.errors
             return self
