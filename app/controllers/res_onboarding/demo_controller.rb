@@ -1,5 +1,5 @@
 module ResOnboarding
-  class DemoController < ApplicationController
+  class DemoController < ResOnboarding::Base
 
     def ccp_ivr_initialize_user
       op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)
