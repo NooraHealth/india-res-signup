@@ -242,6 +242,7 @@ Rails.application.routes.draw do
   get 'res/demo/ivr_initialize_user', to: 'res_onboarding/demo#ccp_ivr_initialize_user'
   get 'res/demo/ivr_select_condition_area', to: 'res_onboarding/demo#ccp_ivr_select_condition_area'
   get 'res/demo/ivr_select_language', to: 'res_onboarding/demo#ccp_ivr_select_language'
+  get 'res/demo/qr_signup', to: 'res_onboarding/demo#ccp_qr_signup'
 
   ##############################################################################################################
   ##################################################### Demo Campaign Endpoints ########################################################
