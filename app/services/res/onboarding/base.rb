@@ -50,7 +50,8 @@ module Res
           "date_joined" => (self.res_user.whatsapp_onboarding_date || DateTime.now),
           "onboarding_method" => onboarding_method,
           "qr_code_id" => qr_code_identifier,
-          "language_selected" => (self.res_user.language_selected ? "1" : "0")
+          "language_selected" => (self.res_user.language_selected ? "1" : "0"),
+          "expected_date_of_delivery" => self.res_user.expected_date_of_delivery
         }
 
         op = TextitRapidproApi::CreateUser.(params)
@@ -71,7 +72,8 @@ module Res
           "date_joined" => (self.res_user.whatsapp_onboarding_date || DateTime.now),
           "onboarding_method" => onboarding_method,
           "qr_code_id" => qr_code_identifier,
-          "language_selected" => (self.res_user.language_selected ? "1" : "0")
+          "language_selected" => (self.res_user.language_selected ? "1" : "0"),
+          "expected_date_of_delivery" => self.res_user.expected_date_of_delivery
         }
 
         op = TextitRapidproApi::UpdateGroup.(params)
