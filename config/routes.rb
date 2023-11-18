@@ -218,7 +218,7 @@ Rails.application.routes.draw do
   ##############################################################################################################
 
   get 'res/madhya_pradesh/dh_wa_signup', to: 'res_onboarding/madhya_pradesh#ccp_dh_signup'
-  post 'res_madhya_pradesh/qr_signup', to: 'res_onboarding/madhya_pradesh#ccp_qr_signup'
+  post 'res/madhya_pradesh/qr_signup', to: 'res_onboarding/madhya_pradesh#ccp_qr_signup'
 
 
   ##############################################################################################################
