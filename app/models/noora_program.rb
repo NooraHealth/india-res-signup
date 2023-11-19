@@ -27,7 +27,8 @@ class NooraProgram < ApplicationRecord
       :mohalla_clinic,
       :gems,
       :mch_community,
-      :ghw_high_volume
+      :ghw_high_volume,
+      :tb_res
     ]
   end
 

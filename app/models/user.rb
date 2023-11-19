@@ -2,37 +2,39 @@
 #
 # Table name: users
 #
-#  id                        :bigint           not null, primary key
-#  baby_date_of_birth        :datetime
-#  date_of_discharge         :datetime
-#  expected_date_of_delivery :datetime
-#  incoming_call_date        :datetime
-#  ivr_unsubscribe_date      :datetime
-#  language_selected         :boolean          default(FALSE)
-#  last_menstrual_period     :datetime
-#  mobile_number             :string
-#  name                      :string
-#  onboarding_attempts       :integer          default(0)
-#  qr_scan_date              :datetime
-#  registered_on_whatsapp    :boolean          default(TRUE)
-#  signed_up_to_ivr          :boolean          default(FALSE)
-#  signed_up_to_whatsapp     :boolean          default(FALSE)
-#  textit_uuid               :string
-#  whatsapp_mobile_number    :string
-#  whatsapp_number_confirmed :boolean          default(FALSE)
-#  whatsapp_onboarding_date  :datetime
-#  whatsapp_unsubscribe_date :datetime
-#  created_at                :datetime         not null
-#  updated_at                :datetime         not null
-#  condition_area_id         :integer
-#  hospital_id               :integer
-#  language_preference_id    :integer
-#  onboarding_method_id      :bigint
-#  program_id                :integer
-#  reference_user_id         :integer
-#  state_id                  :integer
-#  states_id                 :bigint
-#  whatsapp_id               :string
+#  id                         :bigint           not null, primary key
+#  baby_date_of_birth         :datetime
+#  date_of_discharge          :datetime
+#  expected_date_of_delivery  :datetime
+#  incoming_call_date         :datetime
+#  ivr_unsubscribe_date       :datetime
+#  language_selected          :boolean          default(FALSE)
+#  last_menstrual_period      :datetime
+#  mobile_number              :string
+#  name                       :string
+#  onboarding_attempts        :integer          default(0)
+#  qr_scan_date               :datetime
+#  registered_on_whatsapp     :boolean          default(TRUE)
+#  signed_up_to_ivr           :boolean          default(FALSE)
+#  signed_up_to_whatsapp      :boolean          default(FALSE)
+#  tb_diagnosis_date          :datetime
+#  textit_uuid                :string
+#  whatsapp_mobile_number     :string
+#  whatsapp_number_confirmed  :boolean          default(FALSE)
+#  whatsapp_onboarding_date   :datetime
+#  whatsapp_unsubscribe_date  :datetime
+#  whatsapp_unsubscribed_date :datetime
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  condition_area_id          :integer
+#  hospital_id                :integer
+#  language_preference_id     :integer
+#  onboarding_method_id       :bigint
+#  program_id                 :integer
+#  reference_user_id          :integer
+#  state_id                   :integer
+#  states_id                  :bigint
+#  whatsapp_id                :string
 #
 # Indexes
 #
@@ -72,6 +74,7 @@ class User < ApplicationRecord
   has_many :condition_areas, through: :user_condition_area_mappings
 
   has_one :rch_profile, dependent: :destroy
+  has_one :tb_profile, dependent: :destroy
 
   # after_save :update_whatsapp_id TODO - better way to do this
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_19_204451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -181,6 +181,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "tb_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "facility_state"
+    t.string "facility_district"
+    t.string "facility_tu"
+    t.string "facility_phi"
+    t.datetime "enrolment_date"
+    t.string "patient_taluka"
+    t.string "patient_state"
+    t.string "patient_district"
+    t.string "patient_tu"
+    t.string "pin_code"
+    t.string "basis_of_diagnosis_test_name"
+    t.string "basis_of_diagnosis_final_interpretation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tb_profiles_on_user_id"
+  end
+
   create_table "textit_group_user_mappings", force: :cascade do |t|
     t.integer "textit_group_id"
     t.integer "user_id"
@@ -297,6 +316,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "qr_scan_date", precision: nil
     t.boolean "registered_on_whatsapp", default: true
     t.integer "reference_user_id"
+    t.datetime "tb_diagnosis_date"
+    t.datetime "whatsapp_unsubscribed_date"
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["mobile_number"], name: "index_users_on_mobile_number"
@@ -316,6 +337,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
   add_foreign_key "qr_codes", "noora_programs"
   add_foreign_key "qr_codes", "states"
   add_foreign_key "rch_profiles", "users"
+  add_foreign_key "tb_profiles", "users"
   add_foreign_key "textit_group_user_mappings", "textit_groups"
   add_foreign_key "textit_group_user_mappings", "users"
   add_foreign_key "textit_groups", "condition_areas"

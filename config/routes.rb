@@ -236,6 +236,17 @@ Rails.application.routes.draw do
   ##################################################### AIIMS Nagpur Endpoints ########################################################
 
 
+  ##################################################### TB Karnataka Endpoints ################################################################
+  ###########################################################################################################################
+
+  get 'tb/karnataka/ivr_unsubscribe', to: 'tb/onboarding#ivr_unsubscribe'
+  get 'tb/karnataka/ivr_signup_for_whatsapp', to: 'tb/onboarding#ivr_signup_for_whatsapp'
+  post 'tb/karnataka/whatsapp_unsubscribe', to: 'tb/onboarding#whatsapp_unsubscribe'
+  post 'tb/karnataka/create', to: 'tb/onboarding#create'
+  put 'tb/karnataka/acknowledge_wa_signup', to: 'tb/onboarding#acknowledge_wa_signup'
+  put 'tb/karnataka/acknowledge_language_selection', to: 'tb/onboarding#acknowledge_language_selection'
+
+
 
   ##################################################### RCH Ingestion Endpoints ################################################################
   ###########################################################################################################################
