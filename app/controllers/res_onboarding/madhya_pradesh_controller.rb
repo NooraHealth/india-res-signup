@@ -42,11 +42,25 @@ module ResOnboarding
       end
     end
 
+    def ccp_qr_signup
+      op = Res::Onboarding::QrSignup.(self.logger, qr_code_params)
+      if op.errors.present?
+        logger.warn("QR Signup failed with the errors: #{op.errors.to_sentence}")
+        render json: {success: false, errors: op.errors}
+      else
+        render json: {success: true}
+      end
+    end
+
     private
 
     private
 
     def exotel_params
+      params.permit!
+    end
+
+    def qr_code_params
       params.permit!
     end
 
