@@ -14,6 +14,31 @@ module ResOnboarding
       render json: {success: true}
     end
 
+    # This action collects all users who call the number and initializes them to
+    # the MCH Neutral campaign
+    def ccp_ivr_initialize_user
+      op = Res::Onboarding::IvrInitialize.(self.logger, exotel_params)
+      if op.errors.present?
+        logger.warn("IVR initialization failed with the errors: #{op.errors.to_sentence}")
+        render json: {errors: op.errors}
+      else
+        render json: {}
+      end
+    end
+
+    # this endpoint updates the users condition area and adds them to the respective
+    # condition area in the MCH program
+    def ccp_ivr_select_condition_area
+      op = Res::Onboarding::IvrConditionAreaSelection.(self.logger, exotel_params)
+      if op.errors.present?
+        logger.warn("IVR Condition Area selection failed with the following errors: #{op.errors.to_sentence}")
+        render json: {errors: op.errors}
+      else
+        render json: {}
+      end
+
+    end
+
 
     # this endpoint will handle all link-based signups that happens for users on the RCH portal
     # The link essentially sends users a custom message that triggers a stack on Turn, which will specify
