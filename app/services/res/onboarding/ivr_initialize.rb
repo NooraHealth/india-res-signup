@@ -173,7 +173,8 @@ module Res
         self.textit_group = TextitGroup.where(program_id: self.exophone.program_id,
                                               language_id: self.exophone.language_id,
                                               state_id: self.exophone.state_id,
-                                              onboarding_method_id: OnboardingMethod.id_for(:ivr)).first
+                                              onboarding_method_id: OnboardingMethod.id_for(:ivr),
+                                              condition_area_id: nil).first
 
         if self.textit_group.blank?
           self.errors << "Textit group not found for user with number: #{self.res_user.mobile_number}"

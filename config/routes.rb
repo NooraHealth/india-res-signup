@@ -219,7 +219,8 @@ Rails.application.routes.draw do
 
   get 'res/madhya_pradesh/dh_wa_signup', to: 'res_onboarding/madhya_pradesh#ccp_dh_signup'
   post 'res/madhya_pradesh/qr_signup', to: 'res_onboarding/madhya_pradesh#ccp_qr_signup'
-
+  get 'res/madhya_pradesh/ivr_initialize_user', to: 'res_onboarding/madhya_pradesh#ccp_ivr_initialize_user'
+  get 'res/madhya_pradesh/ivr_select_condition_area', to: 'res_onboarding/madhya_pradesh#ccp_ivr_select_condition_area'
 
   ##############################################################################################################
   ##################################################### Madhya Pradesh Endpoints ########################################################
