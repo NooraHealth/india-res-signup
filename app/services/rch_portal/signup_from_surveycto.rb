@@ -179,7 +179,7 @@ module RchPortal
 
 
     def add_signup_tracker(user)
-      tracker = user.user_signup_trackers.build(
+      tracker = user.user_event_trackers.build(
         noora_program_id: self.program.id,
         onboarding_method_id: OnboardingMethod.id_for(:teletraining_call),
         call_sid: self.call_id,

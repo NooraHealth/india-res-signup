@@ -66,9 +66,7 @@ class User < ApplicationRecord
   belongs_to :onboarding_method, optional: true
   belongs_to :reference_user, class_name: "User", optional: true
 
-  has_many :user_signup_trackers, dependent: :destroy
-
-  has_many :active_signups, -> {active_signups}, class_name: "UserSignupTracker"
+  has_many :user_event_trackers, dependent: :destroy
 
   has_many :user_condition_area_mappings, dependent: :destroy
   has_many :condition_areas, through: :user_condition_area_mappings
@@ -183,7 +181,7 @@ class User < ApplicationRecord
   ######################## SIGNUP TRACKER RELATED METHODS #############################
 
   def add_signup_tracker(program_id, condition_area_id, language_id)
-    self.user_signup_trackers.build(condition_area_id: condition_area_id,
+    self.user_event_trackers.build(condition_area_id: condition_area_id,
                                     program_id: program_id,
                                     language_id: language_id)
   end

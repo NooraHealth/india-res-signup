@@ -94,7 +94,7 @@ module Res
       end
 
       def update_signup_tracker
-        tracker = self.res_user.user_signup_trackers.find_by(call_sid: self.parsed_exotel_params[:call_sid])
+        tracker = self.res_user.user_event_trackers.find_by(call_sid: self.parsed_exotel_params[:call_sid])
         tracker&.update(condition_area_id: self.condition_area_id, completed: true, completed_at: DateTime.now)
       end
 
@@ -112,7 +112,7 @@ module Res
       end
 
       def add_signup_tracker
-        tracker = self.res_user.user_signup_trackers.build(
+        tracker = self.res_user.user_event_trackers.build(
           noora_program_id: self.exophone.program_id,
           language_id: self.exophone.language_id,
           onboarding_method_id: OnboardingMethod.id_for(:ivr),
