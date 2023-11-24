@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   #   "channel": "" # textit, turn etc.
   # }
   def update_language
-    op = Res::Common::UpdateLanguage.(logger, textit_params)
+    op = Res::Common::UpdateLanguage.(logger, language_params)
     if op.errors.present?
       logger.warn("Language update failed with the errors: #{op.errors.to_sentence}")
       render json: {errors: op.errors}
@@ -43,6 +43,18 @@ class UsersController < ApplicationController
       render status: 404, json: {errors: ["User not found with mobile number: #{params[:mobile_number]}"]}
     else
       render status: 200, json: {language: user.language_preference}
+    end
+  end
+
+  # this action will update the textit group trail in the backend
+  # based on the parameters received from any platform
+  def update_textit_group
+    op = Res::Common::UpdateTextitGroup.(logger, textit_params)
+    if op.errors.present?
+      logger.warn("Textit group update failed with the errors: #{op.errors.to_sentence}")
+      render json: {errors: op.errors}
+    else
+      render json: {success: true}
     end
   end
 

@@ -102,6 +102,7 @@ Rails.application.routes.draw do
 
   put 'res/update_language', to: 'users#update_language'
   get 'res/retrieve_language', to: 'users#retrieve_language'
+  post 'res/update_textit_group', to: 'users#update_textit_group'
   
   ##############################################################################################################
   ##################################################### Himachal Pradesh (HP) Endpoints ########################################################

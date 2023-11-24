@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_23_102449) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_070338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -293,6 +293,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_102449) do
     t.index ["user_id"], name: "index_user_program_trackers_on_user_id"
   end
 
+  create_table "user_textit_group_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "textit_group_id", null: false
+    t.datetime "event_timestamp"
+    t.bigint "user_event_tracker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["textit_group_id"], name: "index_user_textit_group_mappings_on_textit_group_id"
+    t.index ["user_event_tracker_id"], name: "index_user_textit_group_mappings_on_user_event_tracker_id"
+    t.index ["user_id"], name: "index_user_textit_group_mappings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "mobile_number"
@@ -362,6 +374,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_102449) do
   add_foreign_key "user_event_trackers", "users"
   add_foreign_key "user_program_trackers", "noora_programs"
   add_foreign_key "user_program_trackers", "users"
+  add_foreign_key "user_textit_group_mappings", "textit_groups"
+  add_foreign_key "user_textit_group_mappings", "user_event_trackers"
+  add_foreign_key "user_textit_group_mappings", "users"
   add_foreign_key "users", "condition_areas"
   add_foreign_key "users", "hospitals"
   add_foreign_key "users", "languages", column: "language_preference_id"
