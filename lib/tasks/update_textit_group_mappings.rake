@@ -2,7 +2,8 @@ desc "Updating the UserTextitGroupMapping records for all users from dump"
 task :update_textit_group_mappings => :environment do
   logger = Logger.new("#{Rails.root}/log/update_campaign_trails/update_textit_group_mappings.log")
   # first read the file from disk where the dump is stored
-  dump_file = File.read("#{Rails.root}/log/update_campaign_trails/users_textit_group_mappings.json")
+  # dump_file = File.read("#{Rails.root}/log/update_campaign_trails/users_textit_group_mappings.json")
+  dump_file = File.read("#{Rails.root}/lib/tasks/users_textit_group_mappings.json")
   parsed_json = JSON.parse(dump_file)
   # now iterate over each user and create the mapping
   # between the user and the textit group
@@ -18,8 +19,10 @@ task :update_textit_group_mappings => :environment do
   #   "last_sent_success"=>"2023-11-05T18:30:49.089501Z"
   # }
 
-  parsed_json.each do |user|
-    user_mobile = user["user_mobile"]
+  parsed_json.each do |user_details|
+    # logger.info("JSON: #{user}")
+
+    user_mobile = user_details["user_mobile"]
     if user_mobile.starts_with?("91")
       # i.e. india
       mobile_number = "0#{user_mobile[2..]}"
@@ -40,13 +43,14 @@ task :update_textit_group_mappings => :environment do
       next
     end
 
-    textit_groups = user["textit_groups"]
+    textit_groups = user_details["textit_groups"]
+
     if textit_groups.blank?
       logger.warn("Textit groups not found for user with mobile number: #{mobile_number}")
       next
     end
 
-    date_joined = user["date-joined"]
+    date_joined = user_details["date-joined"]
     parsed_date_joined = DateTime.parse(date_joined) rescue nil
 
     if parsed_date_joined.blank?
@@ -74,7 +78,7 @@ task :update_textit_group_mappings => :environment do
       end
     end
 
-    user.update(present_on_wa: user["present_on_wa"])
+    user.update(present_on_wa: user_details["present_on_wa"])
 
   end
 end
