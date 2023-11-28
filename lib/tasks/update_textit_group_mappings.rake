@@ -77,7 +77,7 @@ task :update_textit_group_mappings => :environment do
         event_timestamp: parsed_date_joined
       )
       unless user_textit_group_mapping.save
-        logger.warn("UserTextitGroupMapping not created for user_id: #{user.id} and textit_group_id: #{textit_group_id}")
+        logger.warn("UserTextitGroupMapping not created for user_id: #{user.id} and textit_group_id: #{textit_group_id} because of errors: #{user_textit_group_mapping.errors.full_messages}")
       end
     end
 
