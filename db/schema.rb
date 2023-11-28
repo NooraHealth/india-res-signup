@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_24_070338) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_214809) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -222,6 +222,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_070338) do
     t.bigint "state_id"
     t.bigint "onboarding_method_id"
     t.bigint "qr_code_id"
+    t.boolean "direct_entry", default: false
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["onboarding_method_id"], name: "index_textit_groups_on_onboarding_method_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
@@ -338,6 +339,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_24_070338) do
     t.integer "reference_user_id"
     t.datetime "tb_diagnosis_date"
     t.datetime "whatsapp_unsubscribed_date"
+    t.boolean "present_on_wa", default: false
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["mobile_number"], name: "index_users_on_mobile_number"
