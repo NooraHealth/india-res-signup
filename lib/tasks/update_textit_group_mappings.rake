@@ -73,7 +73,7 @@ task :update_textit_group_mappings => :environment do
 
       user_textit_group_mapping = UserTextitGroupMapping.new(
         user_id: user.id,
-        textit_group_id: textit_group_id,
+        textit_group_id: textit_group.id,
         event_timestamp: parsed_date_joined
       )
       unless user_textit_group_mapping.save
