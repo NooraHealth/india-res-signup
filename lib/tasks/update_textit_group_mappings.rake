@@ -2,8 +2,11 @@ desc "Updating the UserTextitGroupMapping records for all users from dump"
 task :update_textit_group_mappings => :environment do
   logger = Logger.new("#{Rails.root}/log/update_campaign_trails/update_textit_group_mappings.log")
   # first read the file from disk where the dump is stored
-  # dump_file = File.read("#{Rails.root}/log/update_campaign_trails/users_textit_group_mappings.json")
-  dump_file = File.read("#{Rails.root}/lib/tasks/users_textit_group_mappings.json")
+  if Rails.env.staging? || Rails.env.production?
+    dump_file = File.read("#{Rails.root}/log/update_campaign_trails/users_textit_group_mappings.json")
+  else
+    dump_file = File.read("#{Rails.root}/lib/tasks/users_textit_group_mappings.json")
+  end
   parsed_json = JSON.parse(dump_file)
   # now iterate over each user and create the mapping
   # between the user and the textit group
