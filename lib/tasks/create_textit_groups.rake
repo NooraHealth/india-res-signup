@@ -26,6 +26,12 @@ task :create_textit_groups => :environment do
     textit_id = group_details["uuid"]
     name = group_details["name"]
 
+    textit_group = TextitGroup.find_by textit_id: textit_id
+    if textit_group.present?
+      logger.warn "Textit group already exists with id: #{textit_id}"
+      next
+    end
+
     # now create the textit group in the database
     textit_group = TextitGroup.new(
       textit_id: textit_id,
