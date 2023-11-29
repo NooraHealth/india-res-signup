@@ -71,6 +71,11 @@ task :update_textit_group_mappings => :environment do
         next
       end
 
+      if UserTextitGroupMapping.where(user_id: user.id, textit_group_id: textit_group.id).present?
+        logger.info("Trail already exists for this campaign and user, user details: #{mobile_number} and group: #{textit_group_id}")
+        next
+      end
+
       user_textit_group_mapping = UserTextitGroupMapping.new(
         user_id: user.id,
         textit_group_id: textit_group.id,
