@@ -34,3 +34,6 @@ scripts
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/lib/tasks/textit_groups.json
+/lib/tasks/users_textit_group_mappings.json
+
