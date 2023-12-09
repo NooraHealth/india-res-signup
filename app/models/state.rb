@@ -53,4 +53,8 @@ class State < ApplicationRecord
     ]
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name"]
+  end
+
 end

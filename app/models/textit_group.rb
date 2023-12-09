@@ -3,6 +3,7 @@
 # Table name: textit_groups
 #
 #  id                   :bigint           not null, primary key
+#  direct_entry         :boolean          default(FALSE)
 #  exotel_number        :string
 #  name                 :string
 #  created_at           :datetime         not null
@@ -40,5 +41,14 @@ class TextitGroup < ApplicationRecord
   belongs_to :state, optional: true
   belongs_to :onboarding_method, optional: true
   belongs_to :qr_code, optional: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name", "textit_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["condition_area", "program", "language", "state", "onboarding_method", "qr_code"]
+  end
+
 
 end

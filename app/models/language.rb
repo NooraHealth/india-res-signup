@@ -27,4 +27,9 @@ class Language < ApplicationRecord
   def self.with_code(code)
     find_by(iso_code: code.to_s)
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name"]
+  end
+
 end

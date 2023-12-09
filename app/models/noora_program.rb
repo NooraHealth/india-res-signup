@@ -35,4 +35,8 @@ class NooraProgram < ApplicationRecord
     self.program_id == NooraProgram.id_for(:sdh)
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name"]
+  end
+
 end

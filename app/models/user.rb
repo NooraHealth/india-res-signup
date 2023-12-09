@@ -2,37 +2,40 @@
 #
 # Table name: users
 #
-#  id                        :bigint           not null, primary key
-#  baby_date_of_birth        :datetime
-#  date_of_discharge         :datetime
-#  expected_date_of_delivery :datetime
-#  incoming_call_date        :datetime
-#  ivr_unsubscribe_date      :datetime
-#  language_selected         :boolean          default(FALSE)
-#  last_menstrual_period     :datetime
-#  mobile_number             :string
-#  name                      :string
-#  onboarding_attempts       :integer          default(0)
-#  qr_scan_date              :datetime
-#  registered_on_whatsapp    :boolean          default(TRUE)
-#  signed_up_to_ivr          :boolean          default(FALSE)
-#  signed_up_to_whatsapp     :boolean          default(FALSE)
-#  textit_uuid               :string
-#  whatsapp_mobile_number    :string
-#  whatsapp_number_confirmed :boolean          default(FALSE)
-#  whatsapp_onboarding_date  :datetime
-#  whatsapp_unsubscribe_date :datetime
-#  created_at                :datetime         not null
-#  updated_at                :datetime         not null
-#  condition_area_id         :integer
-#  hospital_id               :integer
-#  language_preference_id    :integer
-#  onboarding_method_id      :bigint
-#  program_id                :integer
-#  reference_user_id         :integer
-#  state_id                  :integer
-#  states_id                 :bigint
-#  whatsapp_id               :string
+#  id                         :bigint           not null, primary key
+#  baby_date_of_birth         :datetime
+#  date_of_discharge          :datetime
+#  expected_date_of_delivery  :datetime
+#  incoming_call_date         :datetime
+#  ivr_unsubscribe_date       :datetime
+#  language_selected          :boolean          default(FALSE)
+#  last_menstrual_period      :datetime
+#  mobile_number              :string
+#  name                       :string
+#  onboarding_attempts        :integer          default(0)
+#  present_on_wa              :boolean          default(FALSE)
+#  qr_scan_date               :datetime
+#  registered_on_whatsapp     :boolean          default(TRUE)
+#  signed_up_to_ivr           :boolean          default(FALSE)
+#  signed_up_to_whatsapp      :boolean          default(FALSE)
+#  tb_diagnosis_date          :datetime
+#  textit_uuid                :string
+#  whatsapp_mobile_number     :string
+#  whatsapp_number_confirmed  :boolean          default(FALSE)
+#  whatsapp_onboarding_date   :datetime
+#  whatsapp_unsubscribe_date  :datetime
+#  whatsapp_unsubscribed_date :datetime
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  condition_area_id          :integer
+#  hospital_id                :integer
+#  language_preference_id     :integer
+#  onboarding_method_id       :bigint
+#  program_id                 :integer
+#  reference_user_id          :integer
+#  state_id                   :integer
+#  states_id                  :bigint
+#  whatsapp_id                :string
 #
 # Indexes
 #
@@ -186,6 +189,14 @@ class User < ApplicationRecord
   end
 
 
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name", "mobile_number", "whatsapp_mobile_number", "whatsapp_id", "textit_uuid", "textit_id", "incoming_call_date", "whatsapp_onboarding_date", "whatsapp_unsubscribe_date", "ivr_unsubscribe_date", "whatsapp_unsubscribed_date", "qr_scan_date", "registered_on_whatsapp", "present_on_wa", "signed_up_to_whatsapp", "signed_up_to_ivr", "language_selected", "whatsapp_number_confirmed", "onboarding_attempts", "last_menstrual_period", "expected_date_of_delivery", "tb_diagnosis_date", "date_of_discharge", "baby_date_of_birth", "onboarding_method_id", "reference_user_id", "hospital_id", "state_id", "condition_area_id", "language_preference_id", "program_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["program", "condition_area", "language_preference", "hospital", "state", "onboarding_method", "reference_user"]
+  end
 
 
   private

@@ -47,4 +47,8 @@ class ConditionArea < ApplicationRecord
     self.name == "pnc"
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name"]
+  end
+
 end

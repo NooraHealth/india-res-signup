@@ -34,4 +34,14 @@ class QrCode < ApplicationRecord
   def self.id_from_text_identifier(text_identifier)
     QrCode.find_by(text_identifier: text_identifier)&.id
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    # here all attributes and associations will be added
+    ["id", "name", "text_identifier", "condition_area_id", "noora_program_id", "state_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    # here all attributes and associations will be added
+    ["condition_area", "noora_program", "state"]
+  end
 end

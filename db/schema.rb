@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_08_161918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "administrators", force: :cascade do |t|
     t.string "email"
@@ -23,6 +49,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "remember_token_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", limit: 128
+    t.string "confirmation_token", limit: 128
+    t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
+    t.index ["remember_token"], name: "index_administrators_on_remember_token", unique: true
   end
 
   create_table "condition_areas", force: :cascade do |t|
@@ -181,6 +211,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "tb_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "facility_state"
+    t.string "facility_district"
+    t.string "facility_tu"
+    t.string "facility_phi"
+    t.datetime "enrolment_date"
+    t.string "patient_taluka"
+    t.string "patient_state"
+    t.string "patient_district"
+    t.string "patient_tu"
+    t.string "pin_code"
+    t.string "basis_of_diagnosis_test_name"
+    t.string "basis_of_diagnosis_final_interpretation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tb_profiles_on_user_id"
+  end
+
   create_table "textit_group_user_mappings", force: :cascade do |t|
     t.integer "textit_group_id"
     t.integer "user_id"
@@ -203,6 +252,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.bigint "state_id"
     t.bigint "onboarding_method_id"
     t.bigint "qr_code_id"
+    t.boolean "direct_entry", default: false
     t.index ["condition_area_id"], name: "index_textit_groups_on_condition_area_id"
     t.index ["onboarding_method_id"], name: "index_textit_groups_on_onboarding_method_id"
     t.index ["program_id"], name: "index_textit_groups_on_program_id"
@@ -222,17 +272,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.index ["user_id"], name: "index_user_condition_area_mappings_on_user_id"
   end
 
-  create_table "user_program_trackers", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "noora_program_id"
-    t.boolean "active", default: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["noora_program_id"], name: "index_user_program_trackers_on_noora_program_id"
-    t.index ["user_id"], name: "index_user_program_trackers_on_user_id"
-  end
-
-  create_table "user_signup_trackers", force: :cascade do |t|
+  create_table "user_event_trackers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "condition_area_id"
     t.bigint "noora_program_id"
@@ -254,16 +294,46 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "event_timestamp", precision: nil
     t.string "platform"
     t.bigint "event_type_id"
-    t.index ["call_sid"], name: "index_user_signup_trackers_on_call_sid"
-    t.index ["condition_area_id"], name: "index_user_signup_trackers_on_condition_area_id"
-    t.index ["event_type_id"], name: "index_user_signup_trackers_on_event_type_id"
-    t.index ["exophone_id"], name: "index_user_signup_trackers_on_exophone_id"
-    t.index ["language_id"], name: "index_user_signup_trackers_on_language_id"
-    t.index ["noora_program_id"], name: "index_user_signup_trackers_on_noora_program_id"
-    t.index ["onboarding_method_id"], name: "index_user_signup_trackers_on_onboarding_method_id"
-    t.index ["qr_code_id"], name: "index_user_signup_trackers_on_qr_code_id"
-    t.index ["state_id"], name: "index_user_signup_trackers_on_state_id"
-    t.index ["user_id"], name: "index_user_signup_trackers_on_user_id"
+    t.bigint "user_event_type_id", default: 1, null: false
+    t.index ["call_sid"], name: "index_user_event_trackers_on_call_sid"
+    t.index ["condition_area_id"], name: "index_user_event_trackers_on_condition_area_id"
+    t.index ["event_type_id"], name: "index_user_event_trackers_on_event_type_id"
+    t.index ["exophone_id"], name: "index_user_event_trackers_on_exophone_id"
+    t.index ["language_id"], name: "index_user_event_trackers_on_language_id"
+    t.index ["noora_program_id"], name: "index_user_event_trackers_on_noora_program_id"
+    t.index ["onboarding_method_id"], name: "index_user_event_trackers_on_onboarding_method_id"
+    t.index ["qr_code_id"], name: "index_user_event_trackers_on_qr_code_id"
+    t.index ["state_id"], name: "index_user_event_trackers_on_state_id"
+    t.index ["user_event_type_id"], name: "index_user_event_trackers_on_user_event_type_id"
+    t.index ["user_id"], name: "index_user_event_trackers_on_user_id"
+  end
+
+  create_table "user_event_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_program_trackers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "noora_program_id"
+    t.boolean "active", default: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["noora_program_id"], name: "index_user_program_trackers_on_noora_program_id"
+    t.index ["user_id"], name: "index_user_program_trackers_on_user_id"
+  end
+
+  create_table "user_textit_group_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "textit_group_id", null: false
+    t.datetime "event_timestamp"
+    t.bigint "user_event_tracker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["textit_group_id"], name: "index_user_textit_group_mappings_on_textit_group_id"
+    t.index ["user_event_tracker_id"], name: "index_user_textit_group_mappings_on_user_event_tracker_id"
+    t.index ["user_id"], name: "index_user_textit_group_mappings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -297,6 +367,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
     t.datetime "qr_scan_date", precision: nil
     t.boolean "registered_on_whatsapp", default: true
     t.integer "reference_user_id"
+    t.datetime "tb_diagnosis_date"
+    t.datetime "whatsapp_unsubscribed_date"
+    t.boolean "present_on_wa", default: false
     t.index ["condition_area_id"], name: "index_users_on_condition_area_id"
     t.index ["language_preference_id"], name: "index_users_on_language_preference_id"
     t.index ["mobile_number"], name: "index_users_on_mobile_number"
@@ -316,6 +389,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
   add_foreign_key "qr_codes", "noora_programs"
   add_foreign_key "qr_codes", "states"
   add_foreign_key "rch_profiles", "users"
+  add_foreign_key "tb_profiles", "users"
   add_foreign_key "textit_group_user_mappings", "textit_groups"
   add_foreign_key "textit_group_user_mappings", "users"
   add_foreign_key "textit_groups", "condition_areas"
@@ -324,13 +398,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_211053) do
   add_foreign_key "user_condition_area_mappings", "condition_areas"
   add_foreign_key "user_condition_area_mappings", "noora_programs"
   add_foreign_key "user_condition_area_mappings", "users"
+  add_foreign_key "user_event_trackers", "condition_areas"
+  add_foreign_key "user_event_trackers", "event_types"
+  add_foreign_key "user_event_trackers", "languages"
+  add_foreign_key "user_event_trackers", "noora_programs"
+  add_foreign_key "user_event_trackers", "user_event_types"
+  add_foreign_key "user_event_trackers", "users"
   add_foreign_key "user_program_trackers", "noora_programs"
   add_foreign_key "user_program_trackers", "users"
-  add_foreign_key "user_signup_trackers", "condition_areas"
-  add_foreign_key "user_signup_trackers", "event_types"
-  add_foreign_key "user_signup_trackers", "languages"
-  add_foreign_key "user_signup_trackers", "noora_programs"
-  add_foreign_key "user_signup_trackers", "users"
+  add_foreign_key "user_textit_group_mappings", "textit_groups"
+  add_foreign_key "user_textit_group_mappings", "user_event_trackers"
+  add_foreign_key "user_textit_group_mappings", "users"
   add_foreign_key "users", "condition_areas"
   add_foreign_key "users", "hospitals"
   add_foreign_key "users", "languages", column: "language_preference_id"

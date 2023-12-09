@@ -33,4 +33,13 @@ class Exophone < ApplicationRecord
   belongs_to :program, class_name: "NooraProgram", optional: true
   belongs_to :state, optional: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    # all the attributes of the model come here
+    ["id", "virtual_number", "state_id", "language_id", "condition_area_id", "program_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["state", "language", "condition_area", "program"]
+  end
+
 end

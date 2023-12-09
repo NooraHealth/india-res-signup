@@ -21,4 +21,8 @@ class OnboardingMethod < ApplicationRecord
       :rch_portal_direct
     ]
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "name"]
+  end
 end
