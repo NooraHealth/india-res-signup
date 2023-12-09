@@ -13,7 +13,7 @@
 #   "pin_code": "",
 #   "basis_of_diagnosis_test_name": "",
 #   "basis_of_diagnosis_final_interpretation": "",
-#   "state": ""
+#   "state_name": ""
 # }
 
 
@@ -35,7 +35,7 @@ module TbRes
         self.tb_user = User.find_by mobile_number: create_params[:mobile_number]
 
         # now extract state
-        state_id = State.id_for(create_params[:state])
+        state_id = State.id_for(create_params[:state_name])
 
         if self.tb_user.present?
           self.errors << "User already present with ID: #{self.tb_user.id}"
