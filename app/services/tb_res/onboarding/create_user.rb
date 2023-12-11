@@ -4,6 +4,7 @@
 # {
 #   "mobile_number": "",
 #   "tb_diagnosis_date": "",
+#   "tb_treatment_start_date": "",
 #   "facility_state": "",
 #   "facility_district": "",
 #   "facility_tu": "",
@@ -45,6 +46,7 @@ module TbRes
         self.tb_user = User.new(program_id: NooraProgram.id_for(:tb),
                                 mobile_number: create_params[:mobile_number],
                                 tb_diagnosis_date: create_params[:tb_diagnosis_date],
+                                tb_treatment_start_date: create_params[:tb_treatment_start_date],
                                 language_preference_id: Language.id_for(:kannada),
                                 state_id: state_id,
                                 signed_up_to_ivr: true, # this is because all users are signed up by default
