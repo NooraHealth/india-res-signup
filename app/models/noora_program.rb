@@ -28,7 +28,8 @@ class NooraProgram < ApplicationRecord
       :gems,
       :mch_community,
       :ghw_high_volume,
-      :tb_res
+      :tb_res,
+      :demo
     ]
   end
 

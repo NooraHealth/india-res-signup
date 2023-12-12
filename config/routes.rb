@@ -74,9 +74,13 @@
 #                               tb_karnataka_ivr_unsubscribe GET    /tb/karnataka/ivr_unsubscribe(.:format)                                                           tb/onboarding#ivr_unsubscribe
 #                       tb_karnataka_ivr_signup_for_whatsapp GET    /tb/karnataka/ivr_signup_for_whatsapp(.:format)                                                   tb/onboarding#ivr_signup_for_whatsapp
 #                          tb_karnataka_whatsapp_unsubscribe POST   /tb/karnataka/whatsapp_unsubscribe(.:format)                                                      tb/onboarding#whatsapp_unsubscribe
-#                                        tb_karnataka_create POST   /tb/karnataka/create(.:format)                                                                    tb/onboarding#create
+#                                   tb_karnataka_create_user POST   /tb/karnataka/create_user(.:format)                                                               tb/onboarding#create
 #                         tb_karnataka_acknowledge_wa_signup PUT    /tb/karnataka/acknowledge_wa_signup(.:format)                                                     tb/onboarding#acknowledge_wa_signup
 #                tb_karnataka_acknowledge_language_selection PUT    /tb/karnataka/acknowledge_language_selection(.:format)                                            tb/onboarding#acknowledge_language_selection
+#                               res_demo_ivr_initialize_user GET    /res/demo/ivr_initialize_user(.:format)                                                           res_onboarding/demo#ccp_ivr_initialize_user
+#                         res_demo_ivr_select_condition_area GET    /res/demo/ivr_select_condition_area(.:format)                                                     res_onboarding/demo#ccp_ivr_select_condition_area
+#                               res_demo_ivr_select_language GET    /res/demo/ivr_select_language(.:format)                                                           res_onboarding/demo#ccp_ivr_select_language
+#                                         res_demo_qr_signup POST   /res/demo/qr_signup(.:format)                                                                     res_onboarding/demo#ccp_qr_signup
 #                              rch_portal_punjab_create_user POST   /rch_portal/punjab/create_user(.:format)                                                          rch_portal/punjab/onboarding#create
 #                                   rch_portal_punjab_import POST   /rch_portal/punjab/import(.:format)                                                               rch_portal/punjab/onboarding#import
 #                           rch_portal_punjab_update_profile PUT    /rch_portal/punjab/update_profile(.:format)                                                       rch_portal/punjab/onboarding#update_profile
@@ -386,6 +390,20 @@ Rails.application.routes.draw do
   post 'tb/karnataka/create_user', to: 'tb/onboarding#create'
   put 'tb/karnataka/acknowledge_wa_signup', to: 'tb/onboarding#acknowledge_wa_signup'
   put 'tb/karnataka/acknowledge_language_selection', to: 'tb/onboarding#acknowledge_language_selection'
+
+  ##################################################### TB Karnataka Endpoints ################################################################
+  ###########################################################################################################################
+
+  ##################################################### Demo Campaign Endpoints ########################################################
+  ##############################################################################################################
+
+  get 'res/demo/ivr_initialize_user', to: 'res_onboarding/demo#ccp_ivr_initialize_user'
+  get 'res/demo/ivr_select_condition_area', to: 'res_onboarding/demo#ccp_ivr_select_condition_area'
+  get 'res/demo/ivr_select_language', to: 'res_onboarding/demo#ccp_ivr_select_language'
+  post 'res/demo/qr_signup', to: 'res_onboarding/demo#ccp_qr_signup'
+
+  ##############################################################################################################
+  ##################################################### Demo Campaign Endpoints ########################################################
 
 
 
