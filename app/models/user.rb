@@ -73,6 +73,8 @@ class User < ApplicationRecord
   has_many :user_condition_area_mappings, dependent: :destroy
   has_many :condition_areas, through: :user_condition_area_mappings
 
+  has_many :user_textit_group_mappings, dependent: :destroy
+
   has_one :rch_profile, dependent: :destroy
   has_one :tb_profile, dependent: :destroy
 
