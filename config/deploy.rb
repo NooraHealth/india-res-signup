@@ -2,7 +2,14 @@
 lock "~> 3.18.0"
 
 set :application, "ind-res-signup"
-set :repo_url, "git@github.com-india-res:NooraHealth/india-res-signup.git"
+
+# if stage == :production
+#   set :repo_url, "git@github.com:NooraHealth/india-res-signup.git"
+# else
+#   set :repo_url, "git@github.com-india-res:NooraHealth/india-res-signup.git"
+# end
+
+set :repo_url, "git@github.com:NooraHealth/india-res-signup.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
