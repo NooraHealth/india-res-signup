@@ -98,7 +98,7 @@ module RchPortal
     private
 
     def add_signup_tracker
-      tracker = self.rch_user.user_signup_trackers.build(
+      tracker = self.rch_user.user_event_trackers.build(
         noora_program_id: self.exophone.program_id,
         language_id: self.exophone.language_id,
         onboarding_method_id: OnboardingMethod.id_for(:ivr),

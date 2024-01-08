@@ -3,6 +3,7 @@
 # Table name: textit_groups
 #
 #  id                   :bigint           not null, primary key
+#  direct_entry         :boolean          default(FALSE)
 #  exotel_number        :string
 #  name                 :string
 #  created_at           :datetime         not null

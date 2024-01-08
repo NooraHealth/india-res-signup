@@ -41,7 +41,7 @@ module Res
           end
 
           # also create an entry on the signup tracker which records details of a user's signup
-          self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:gems),
+          self.res_user.user_event_trackers.build(noora_program_id: NooraProgram.id_for(:gems),
                                                    language_id: self.res_user.language_preference_id,
                                                    active: true).save
           self.logger.info("User created in DB with ID: #{self.res_user.id}")
@@ -55,7 +55,7 @@ module Res
           # If they are part of the GEMS program already, ignore this
           unless self.res_user.active_signups.where(noora_program_id: NooraProgram.id_for(:gems)).present?
             self.res_user.active_signups.update(active: false)
-            self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:gems),
+            self.res_user.user_event_trackers.build(noora_program_id: NooraProgram.id_for(:gems),
                                                      language_id: self.res_user.language_preference_id,
                                                      active: true).save
           end

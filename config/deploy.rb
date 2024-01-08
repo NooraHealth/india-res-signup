@@ -1,8 +1,8 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.17.1"
+lock "~> 3.18.0"
 
 set :application, "ind-res-signup"
-set :repo_url, "git@github.com:NooraHealth/india-res-signup.git"
+set :repo_url, "git@github.com-india-res:NooraHealth/india-res-signup.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

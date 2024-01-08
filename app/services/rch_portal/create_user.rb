@@ -183,7 +183,7 @@ module RchPortal
     end
 
     def add_signup_tracker(user)
-      tracker = self.rch_user.user_signup_trackers.build(
+      tracker = self.rch_user.user_event_trackers.build(
         noora_program_id: NooraProgram.id_for(:rch),
         language_id: user.language_preference_id,
         onboarding_method_id: OnboardingMethod.id_for(:rch_portal_direct),
