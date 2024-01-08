@@ -29,7 +29,7 @@ module RchPortal
       self.parsed_params[:call_sids].each do |call_details|
         call_sid = call_details[:call_sid]
         status = call_details[:status]
-        if self.rch_user.user_signup_trackers.find_by(call_sid: call_sid).present?
+        if self.rch_user.user_event_trackers.find_by(call_sid: call_sid).present?
           # i.e. this call has already been recorded as a successful signup
           next
         end
@@ -39,9 +39,9 @@ module RchPortal
 
       # update onboarding attempts for this user
       # Ideally, this number should be equal to the number of ivr calls made to the
-      # user as recorded in the user_signup_tracker table
+      # user as recorded in the user_event_tracker table
       # The number of unique campaigns will tell us the number of onboarding attempts
-      # onboarding_attempts = self.rch_user.user_signup_trackers.pluck(:campaign_sid).uniq.count
+      # onboarding_attempts = self.rch_user.user_event_trackers.pluck(:campaign_sid).uniq.count
       # self.rch_user.update(onboarding_attempts: onboarding_attempts)
 
       self.rch_user.update(onboarding_attempts: (self.rch_user.onboarding_attempts + 1))
@@ -53,7 +53,7 @@ module RchPortal
     private
 
     def add_signup_tracker(call_sid, status)
-      tracker = self.rch_user.user_signup_trackers.build(
+      tracker = self.rch_user.user_event_trackers.build(
         noora_program_id: NooraProgram.id_for(:rch),
         language_id: self.rch_user.language_preference_id,
         onboarding_method_id: OnboardingMethod.id_for(:ivr),

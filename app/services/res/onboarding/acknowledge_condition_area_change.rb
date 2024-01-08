@@ -4,7 +4,7 @@
 # changes. The "channel" attribute gives us where the request is coming from
 # Parameters:
 # {
-#   "mobile_number": "",
+#   "mobile_number"=>["whatsapp:91XXXXX", "tel:+91XXXXX"]
 #   "condition_area": "",
 #   "program_name": "",
 #   "onboarding_method": "",
@@ -73,14 +73,14 @@ module Res
       private
 
       def update_signup_tracker
-        tracker = self.res_user.user_signup_trackers.where(noora_program_id: self.res_user.program_id,
+        tracker = self.res_user.user_event_trackers.where(noora_program_id: self.res_user.program_id,
                                                            state_id: self.res_user.state_id,
                                                            onboarding_method_id: self.onboarding_method_id,
                                                            completed: false).first
 
         if tracker.blank?
           # TODO - create a tracker that acknowledges the time at which this particular addition happened
-          tracker = self.res_user.user_signup_trackers.build(noora_program_id: self.res_user.program_id,
+          tracker = self.res_user.user_event_trackers.build(noora_program_id: self.res_user.program_id,
                                                              state_id: self.res_user.state_id,
                                                              onboarding_method_id: self.onboarding_method_id,
                                                              completed: true,

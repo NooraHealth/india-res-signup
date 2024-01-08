@@ -43,7 +43,7 @@ module Res
           end
 
           # also create an entry on the signup tracker which records details of a user's signup
-          self.res_user.user_signup_trackers.build(noora_program_id: NooraProgram.id_for(:mch),
+          self.res_user.user_event_trackers.build(noora_program_id: NooraProgram.id_for(:mch),
                                                    language_id: self.res_user.language_preference_id,
                                                    active: true).save
 
