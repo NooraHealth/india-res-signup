@@ -53,8 +53,8 @@ module Res
 
           # if the user is already part of another program, update that they have signed up for the GEMS program
           # If they are part of the GEMS program already, ignore this
-          unless self.res_user.active_signups.where(noora_program_id: NooraProgram.id_for(:gems)).present?
-            self.res_user.active_signups.update(active: false)
+          unless self.res_user.user_event_trackers.where(noora_program_id: NooraProgram.id_for(:gems)).present?
+            self.res_user.user_event_trackers.update(active: false)
             self.res_user.user_event_trackers.build(noora_program_id: NooraProgram.id_for(:gems),
                                                      language_id: self.res_user.language_preference_id,
                                                      active: true).save
