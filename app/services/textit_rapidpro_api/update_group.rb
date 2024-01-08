@@ -72,6 +72,14 @@ module TextitRapidproApi
       if self.response.status == 200 || self.response.status == 201
         # success response, also log it
         self.logger&.info("SUCCESSFUL updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number}")
+        # also update the user's textit uuid in the database
+        contacts = self.parse_response["results"]
+        if contacts.present?
+          uuid = contacts.first["uuid"]
+          self.user.update(textit_uuid: uuid)
+        else
+          logger&.info("User DOES NOT exist on TextIt with number: #{self.user.mobile_number}")
+        end
       elsif self.response.status == 400
         parsed_response = JSON.parse(self.response.body)
         self.logger&.info("FAILED updation of user group to #{self.user_params[:textit_group_id]} for user with number #{self.user.mobile_number} with reason: #{parsed_response}")

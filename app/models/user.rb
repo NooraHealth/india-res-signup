@@ -13,11 +13,13 @@
 #  mobile_number              :string
 #  name                       :string
 #  onboarding_attempts        :integer          default(0)
+#  present_on_wa              :boolean          default(FALSE)
 #  qr_scan_date               :datetime
 #  registered_on_whatsapp     :boolean          default(TRUE)
 #  signed_up_to_ivr           :boolean          default(FALSE)
 #  signed_up_to_whatsapp      :boolean          default(FALSE)
 #  tb_diagnosis_date          :datetime
+#  tb_treatment_start_date    :datetime
 #  textit_uuid                :string
 #  whatsapp_mobile_number     :string
 #  whatsapp_number_confirmed  :boolean          default(FALSE)
