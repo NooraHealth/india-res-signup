@@ -43,7 +43,7 @@ module TbRes
           return self
         end
 
-        self.tb_user = User.new(program_id: NooraProgram.id_for(:tb),
+        self.tb_user = User.new(program_id: NooraProgram.id_for(:tb_res),
                                 mobile_number: create_params[:mobile_number],
                                 tb_diagnosis_date: create_params[:tb_diagnosis_date],
                                 tb_treatment_start_date: create_params[:tb_treatment_start_date],
