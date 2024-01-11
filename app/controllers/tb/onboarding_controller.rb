@@ -24,7 +24,7 @@ module Tb
     # {
     #  "uuid": "e3f4b3e0-4b8c-4b8c-8b8c-8b8c8b8c8b8c",
     #  "urns": [
-    #     "whatsapp:919999999999", tel:919999999999"
+    #     "whatsapp:919999999999", "tel:919999999999"
     #  ],
     # }
     def acknowledge_wa_signup
@@ -45,6 +45,14 @@ module Tb
 
     # this updates the fact that the user has explicitly selected their language
     # so that they're not asked this question again
+    # API params:
+    # {
+    #  "uuid": "e3f4b3e0-4b8c-4b8c-8b8c-8b8c8b8c8b8c",
+    #  "urns": [
+    #     "whatsapp:919999999999", "tel:919999999999"
+    #  ],
+    #  "language": "eng"
+    # }
     def acknowledge_language_selection
       user = extract_user_from_textit_params
 
@@ -54,7 +62,14 @@ module Tb
         return
       end
 
-      user.update(language_selected: true)
+      # extract the language that the user selected
+      lang_code = extract_language_from_textit_params
+      language = Language.with_code(lang_code)
+      if language.blank?
+        self.logger.warn("Language not found with code: #{lang_code} from params: #{textit_params}")
+      end
+
+      user.update(language_selected: true, language_id: language&.id)
       self.logger.info("Successfully updated user #{user.mobile_number} as having selected their language")
       render json: {success: true}
     end
@@ -111,6 +126,15 @@ module Tb
 
 
     private
+
+    def extract_language_from_textit_params
+      lang_code = textit_params["contact"]["language"]
+      unless lang_code
+        self.logger.warn("Language not found in params: #{textit_params}")
+        return nil
+      end
+      lang_code
+    end
 
     # this method extracts the user from Textit webhook params.
     # It returns the user if found, else returns nil
