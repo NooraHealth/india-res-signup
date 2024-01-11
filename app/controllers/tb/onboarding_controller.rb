@@ -36,9 +36,11 @@ module Tb
         return
       end
 
+      uuid = extract_uuid_from_textit_params
+
       # update the user's flag, their textit UUID, and the date of onboarding
       user.update(signed_up_to_whatsapp: true, textit_uuid: uuid, whatsapp_onboarding_date: DateTime.now)
-      self.logger.info("Successfully updated user #{mobile_number} as signed up to WA")
+      self.logger.info("Successfully updated user #{user.mobile_number} as signed up to WA")
       render json: {success: true}
     end
 
@@ -69,7 +71,7 @@ module Tb
         self.logger.warn("Language not found with code: #{lang_code} from params: #{textit_params}")
       end
 
-      user.update(language_selected: true, language_id: language&.id)
+      user.update(language_selected: true, language_preference_id: language&.id)
       self.logger.info("Successfully updated user #{user.mobile_number} as having selected their language")
       render json: {success: true}
     end
@@ -80,10 +82,10 @@ module Tb
     def whatsapp_signup_from_ivr
       op = TbRes::WhatsappSignupFromIvr.(logger, exotel_params)
       if op.errors.present?
-        logger.warn("Whatsapp signup from IVR for user: #{op.tb_res_user.mobile_number} with errors: #{op.errors.to_sentence}")
+        logger.warn("Whatsapp signup from IVR for user: #{op.tb_user.mobile_number} with errors: #{op.errors.to_sentence}")
         render json: {errors: op.errors}
       else
-        logger.info("Whatsapp signup from IVR for user: #{op.tb_res_user.mobile_number} successful")
+        logger.info("Whatsapp signup from IVR for user: #{op.tb_user.mobile_number} successful")
         render json: {success: true}
       end
     end
@@ -134,6 +136,15 @@ module Tb
         return nil
       end
       lang_code
+    end
+
+    def extract_uuid_from_textit_params
+      uuid = textit_params["contact"]["uuid"]
+      unless uuid
+        self.logger.warn("UUID not found in params: #{textit_params}")
+        return nil
+      end
+      uuid
     end
 
     # this method extracts the user from Textit webhook params.
