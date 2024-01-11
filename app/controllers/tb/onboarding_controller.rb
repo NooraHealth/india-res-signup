@@ -23,7 +23,7 @@ module Tb
     # API params:
     # {
     #  "uuid": "e3f4b3e0-4b8c-4b8c-8b8c-8b8c8b8c8b8c",
-    #  "urns": [
+    #  "urn": [
     #     "whatsapp:919999999999", "tel:919999999999"
     #  ],
     # }
@@ -48,7 +48,7 @@ module Tb
     # API params:
     # {
     #  "uuid": "e3f4b3e0-4b8c-4b8c-8b8c-8b8c8b8c8b8c",
-    #  "urns": [
+    #  "urn": [
     #     "whatsapp:919999999999", "tel:919999999999"
     #  ],
     #  "language": "eng"
@@ -139,7 +139,7 @@ module Tb
     # this method extracts the user from Textit webhook params.
     # It returns the user if found, else returns nil
     def extract_user_from_textit_params
-      urns = textit_params["contact"]["urns"]
+      urns = textit_params["contact"]["urn"]
       urn = urns.select { |urn| urn.include? "whatsapp" }
 
       if urn.first.blank?
