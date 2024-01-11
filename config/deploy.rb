@@ -9,6 +9,7 @@ set :application, "ind-res-signup"
 #   set :repo_url, "git@github.com-india-res:NooraHealth/india-res-signup.git"
 # end
 
+# set :repo_url, "git@github.com-india-res:NooraHealth/india-res-signup.git"
 set :repo_url, "git@github.com:NooraHealth/india-res-signup.git"
 
 # Default branch is :master
