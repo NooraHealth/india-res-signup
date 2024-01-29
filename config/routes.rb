@@ -77,6 +77,7 @@
 #                                   tb_karnataka_create_user POST   /tb/karnataka/create_user(.:format)                                                               tb/onboarding#create
 #                         tb_karnataka_acknowledge_wa_signup PUT    /tb/karnataka/acknowledge_wa_signup(.:format)                                                     tb/onboarding#acknowledge_wa_signup
 #                tb_karnataka_acknowledge_language_selection PUT    /tb/karnataka/acknowledge_language_selection(.:format)                                            tb/onboarding#acknowledge_language_selection
+#                                   res_tamil_nadu_qr_signup POST   /res/tamil_nadu/qr_signup(.:format)                                                               res_onnboarding/tamil_nadu#ccp_qr_signup
 #                               res_demo_ivr_initialize_user GET    /res/demo/ivr_initialize_user(.:format)                                                           res_onboarding/demo#ccp_ivr_initialize_user
 #                         res_demo_ivr_select_condition_area GET    /res/demo/ivr_select_condition_area(.:format)                                                     res_onboarding/demo#ccp_ivr_select_condition_area
 #                               res_demo_ivr_select_language GET    /res/demo/ivr_select_language(.:format)                                                           res_onboarding/demo#ccp_ivr_select_language
@@ -392,6 +393,14 @@ Rails.application.routes.draw do
   put 'tb/karnataka/acknowledge_language_selection', to: 'tb/onboarding#acknowledge_language_selection'
 
   ##################################################### TB Karnataka Endpoints ################################################################
+  ###########################################################################################################################
+
+  ##################################################### tamil Nadu Endpoints ################################################################
+  ###########################################################################################################################
+
+  post 'res/tamil_nadu/qr_signup', to: 'res_onnboarding/tamil_nadu#ccp_qr_signup'
+
+  ##################################################### Tamil Nadu Endpoints ################################################################
   ###########################################################################################################################
 
   ##################################################### Demo Campaign Endpoints ########################################################
