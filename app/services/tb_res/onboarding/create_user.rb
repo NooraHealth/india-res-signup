@@ -2,6 +2,7 @@
 # Incoming params are as follows:
 
 # {
+#   "name":
 #   "mobile_number": "",
 #   "tb_diagnosis_date": "",
 #   "tb_treatment_start_date": "",
@@ -48,6 +49,7 @@ module TbRes
                                 tb_diagnosis_date: create_params[:tb_diagnosis_date],
                                 tb_treatment_start_date: create_params[:tb_treatment_start_date],
                                 language_preference_id: Language.id_for(:kannada),
+                                name: create_params[:name],
                                 state_id: state_id,
                                 signed_up_to_ivr: true, # this is because all users are signed up by default
                                 )
