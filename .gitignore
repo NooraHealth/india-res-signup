@@ -8,6 +8,7 @@
 /.bundle
 
 lib/tasks/textit_groups.json
+lib/tasks/textit_groups_v2.json
 lib/tasks/users_textit_group_mappings.json
 
 # Ignore the default SQLite database.
