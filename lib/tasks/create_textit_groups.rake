@@ -19,7 +19,7 @@ task :create_textit_groups => :environment do
   logger = Logger.new("#{Rails.root}/log/update_campaign_trails_v2/create_textit_groups.log")
 
   # first read the file from disk where the dump is stored
-  groups_dump_file = File.read("#{Rails.root}/log/update_campaign_trails_v2/textit_groups.json")
+  groups_dump_file = File.read("#{Rails.root}/log/update_campaign_trails_v2/textit_groups_v2.json")
   parsed_json = JSON.parse(groups_dump_file)
 
   parsed_json.each do |group_details|
